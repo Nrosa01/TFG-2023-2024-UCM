@@ -1,5 +1,5 @@
 #include <iostream>
-#define SDL_MAIN_HANDLED
+
 #include <SDL.h>
 
 #define SCREEN_WIDTH 800
@@ -7,7 +7,7 @@
 
 int main()
 {
-    SDL_SetMainReady();
+    
 
     //Init sdl and create window
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
