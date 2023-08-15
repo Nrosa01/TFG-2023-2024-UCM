@@ -35,15 +35,14 @@
 
 *.idb
 
+*.vs
 
-Logica/.vs
+Logica/Exes/
 
-Logica/.vs/Exes/
+Logica/Temp/
 
-Logica/.vs/Temp/
+Logica/.vs/
 
-Logica/.vs/.vs/
+Logica/lib/
 
-Practica2/lib/
-
-Practica2/Dependencies/
+Logica/Dependencies/
