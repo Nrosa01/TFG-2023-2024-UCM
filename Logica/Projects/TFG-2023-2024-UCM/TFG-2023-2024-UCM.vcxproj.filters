@@ -13,10 +13,69 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de encabezado\imgui">
+      <UniqueIdentifier>{67813b87-c266-42ff-80b8-d80c331249dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\imgui">
+      <UniqueIdentifier>{502762aa-386a-420a-b7bc-d11d4cd8f1ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\imgui\backends">
+      <UniqueIdentifier>{51b0de08-6f0a-4468-b8fa-30b7671ede27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\imgui\backends">
+      <UniqueIdentifier>{5ec61e62-6722-42f3-a491-51f8cd4471a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_widgets.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_demo.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_draw.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_tables.cpp">
+      <Filter>Archivos de origen\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdlrenderer2.cpp">
+      <Filter>Archivos de origen\imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdl2.cpp">
+      <Filter>Archivos de origen\imgui\backends</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_truetype.h">
+      <Filter>Archivos de encabezado\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imconfig.h">
+      <Filter>Archivos de encabezado\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imgui.h">
+      <Filter>Archivos de encabezado\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imgui_internal.h">
+      <Filter>Archivos de encabezado\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_rectpack.h">
+      <Filter>Archivos de encabezado\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_textedit.h">
+      <Filter>Archivos de encabezado\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdl2.h">
+      <Filter>Archivos de encabezado\imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdlrenderer2.h">
+      <Filter>Archivos de encabezado\imgui\backends</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

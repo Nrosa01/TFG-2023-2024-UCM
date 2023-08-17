@@ -48,11 +48,15 @@
     <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <SourcePath>$(SolutionDir)Exes\$(Platform)\$(Configuration)\;$(SolutionDir)Src\;$(SourcePath)</SourcePath>
+    <PublicIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <AllProjectIncludesArePublic>false</AllProjectIncludesArePublic>
+    <AllProjectBMIsArePublic>false</AllProjectBMIsArePublic>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Exes\</OutDir>
     <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <SourcePath>$(SolutionDir)Exes\$(Platform)\$(Configuration)\;$(SolutionDir)Src\;$(SourcePath)</SourcePath>
+    <PublicIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -60,7 +64,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SDL2-2.24.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SDL2-2.24.0\include;$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -80,7 +84,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SDL2-2.24.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\SDL2-2.24.0\include;$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -95,7 +99,24 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui.cpp" />
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_demo.cpp" />
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_draw.cpp" />
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_tables.cpp" />
+    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_widgets.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdlrenderer2.h" />
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imconfig.h" />
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imgui.h" />
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imgui_internal.h" />
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_rectpack.h" />
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_textedit.h" />
+    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
