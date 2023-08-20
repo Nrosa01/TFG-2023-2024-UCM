@@ -48,15 +48,17 @@
     <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <SourcePath>$(SolutionDir)Exes\$(Platform)\$(Configuration)\;$(SolutionDir)Src\;$(SourcePath)</SourcePath>
-    <PublicIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <PublicIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(SolutionDir)Dependencies\glfw3\include;$(SolutionDir)Dependencies\glad\include;$(PublicIncludeDirectories)</PublicIncludeDirectories>
     <AllProjectIncludesArePublic>false</AllProjectIncludesArePublic>
     <AllProjectBMIsArePublic>false</AllProjectBMIsArePublic>
+    <LibraryPath>$(SolutionDir)Dependencies\glfw3;$(SolutionDir)Dependencies\glad;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)Exes\</OutDir>
     <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <SourcePath>$(SolutionDir)Exes\$(Platform)\$(Configuration)\;$(SolutionDir)Src\;$(SourcePath)</SourcePath>
-    <PublicIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <PublicIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(SolutionDir)Dependencies\glfw3\include;$(SolutionDir)Dependencies\glad\include;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <LibraryPath>$(SolutionDir)Dependencies\glfw3;$(SolutionDir)Dependencies\glad;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -69,8 +71,9 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SDL2-2.24.0\VisualC\x64\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)"Dependencies\SDL2-2.24.0\SDL2_d.dll "$(OutDir)"</Command>
@@ -91,16 +94,16 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\SDL2-2.24.0\VisualC\x64\Release</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>xcopy /y /d "$(SolutionDir)"Dependencies\SDL2-2.24.0\SDL2.dll "$(OutDir)"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdl2.cpp" />
-    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="..\..\Dependencies\glad\glad.c" />
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui.cpp" />
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_demo.cpp" />
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_draw.cpp" />
@@ -109,8 +112,6 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdl2.h" />
-    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdlrenderer2.h" />
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imconfig.h" />
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imgui.h" />
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imgui_internal.h" />

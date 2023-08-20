@@ -25,6 +25,9 @@
     <Filter Include="Archivos de origen\imgui\backends">
       <UniqueIdentifier>{5ec61e62-6722-42f3-a491-51f8cd4471a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de origen\glad">
+      <UniqueIdentifier>{45e8cda9-6842-4256-ada8-8f7dca6036a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp">
@@ -45,11 +48,8 @@
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_tables.cpp">
       <Filter>Archivos de origen\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdlrenderer2.cpp">
-      <Filter>Archivos de origen\imgui\backends</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdl2.cpp">
-      <Filter>Archivos de origen\imgui\backends</Filter>
+    <ClCompile Include="..\..\Dependencies\glad\glad.c">
+      <Filter>Archivos de origen\glad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,12 +70,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_textedit.h">
       <Filter>Archivos de encabezado\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdl2.h">
-      <Filter>Archivos de encabezado\imgui\backends</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_sdlrenderer2.h">
-      <Filter>Archivos de encabezado\imgui\backends</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
