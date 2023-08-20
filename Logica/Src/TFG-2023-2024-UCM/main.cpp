@@ -1,4 +1,8 @@
-#include "imgui.h"
+
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include <stdio.h>
 #include <iostream>
 #include <glad/glad.h>
@@ -10,16 +14,18 @@
 // Vertex Shader source code
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
+"uniform float size;\n"
 "void main()\n"
 "{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"   gl_Position = vec4(size * aPos.x, size *  aPos.y, size *  aPos.z, 1.0);\n"
 "}\0";
 //Fragment Shader source code
 const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
+"uniform vec4 color;\n"
 "void main()\n"
 "{\n"
-"   FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);\n"
+"   FragColor = color;\n"
 "}\n\0";
 
 
@@ -114,23 +120,69 @@ int main(int, char**)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void) io;
+	ImGui::StyleColorsDark();
+	ImGui_ImplGlfw_InitForOpenGL(window.get(), true);
+	ImGui_ImplOpenGL3_Init("#version 330"); // Because I'm using version 3.3 of GLSL
+
+	bool drawTriangle = true;
+
+	float size = 1.0f;
+	float color[4] = { 0.8f, 0.3f, 0.02f, 1.0f };
+	glUseProgram(shaderProgram);
+	glUniform1f(glGetUniformLocation(shaderProgram, "size"), size);
+	glUniform4f(glGetUniformLocation(shaderProgram, "color"), color[0], color[1], color[2], color[3]);
+
 	while (!glfwWindowShouldClose(window.get()))
 	{
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		// We have to make some wrapper for this kind of stuff idk
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		if (!io.WantCaptureMouse)
+		{
+			//Handle input here, so you don't handle input while interacting with ImGui component
+		}
+
 		// Tell OpenGL which Shader Program we want to use
 		glUseProgram(shaderProgram);
 		// Bind the VAO so OpenGL knows to use it
 		glBindVertexArray(VAO);
 		// Draw the triangle using the GL_TRIANGLES primitive
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		if(drawTriangle)
+			glDrawArrays(GL_TRIANGLES, 0, 3);
+		
+		ImGui::Begin("Test Windows");
+		ImGui::Checkbox("Draw Triangle", &drawTriangle);
+		ImGui::SliderFloat("Size", &size, 0.5f, 2.0f);
+		ImGui::ColorEdit4("Color", color);
+		ImGui::End();
+		
+		glUseProgram(shaderProgram);
+		glUniform1f(glGetUniformLocation(shaderProgram, "size"), size);
+		glUniform4f(glGetUniformLocation(shaderProgram, "color"), color[0], color[1], color[2], color[3]);
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 		// Swap the back buffer with the front buffer
 		glfwSwapBuffers(window.get());
 		// Take care of all GLFW events
 		glfwPollEvents();
 	}
+
+	// Terminate ImGui
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	// Delete all the objects we've created
 	glDeleteVertexArrays(1, &VAO);
