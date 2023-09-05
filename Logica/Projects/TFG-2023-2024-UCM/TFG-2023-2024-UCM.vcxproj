@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\App.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Camera.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\SandSimulation.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Triangle.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Viewport.cpp" />
   </ItemGroup>
@@ -128,6 +129,7 @@
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_truetype.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\App.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Camera.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\SandSimulation.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Triangle.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Viewport.h" />
   </ItemGroup>

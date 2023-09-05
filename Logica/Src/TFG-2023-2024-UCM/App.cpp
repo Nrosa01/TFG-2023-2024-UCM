@@ -5,12 +5,18 @@
 #include <iostream>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+#include <thread>
 
 #include "Viewport.h"
 #include "Camera.h"
 #include "Triangle.h"
+#include "SandSimulation.h"
 
-App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr) {}
+App* App::currentApp = nullptr;
+
+App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr) {
+    currentApp = this;
+}
 
 App::~App() {}
 
@@ -36,8 +42,10 @@ bool App::init() {
     camera = std::make_unique<Camera>();
 
     glfwSetKeyCallback(window.get(), keyCallback);
+    glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
     triangle = std::make_unique<Triangle>();
+    sandSimulation = std::make_unique<SandSimulation>(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     // Init ImGui
     IMGUI_CHECKVERSION();
@@ -51,33 +59,41 @@ bool App::init() {
 }
 
 void App::run() {
+    double targetFrameTime = 1.0 / static_cast<double>(TARGET_FPS);
+    double lastFrameTime = glfwGetTime();
+    double fpsUpdateTime = 0.0;
+    int frameCount = 0;
+
     while (!glfwWindowShouldClose(window.get()) && isRunning) {
-        // Specify the color of the background
-        glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-        // Clean the back buffer and assign the new color to it
-        glClear(GL_COLOR_BUFFER_BIT);
+        double currentTime = glfwGetTime();
+        double deltaTime = currentTime - lastFrameTime;
+        lastFrameTime = currentTime;
 
-        // We have to make some wrapper for this kind of stuff idk
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        if (!io->WantCaptureMouse)
-        {
-            //Handle input here, so you don't handle input while interacting with ImGui component
+        // Limitar la velocidad de actualización a 60 FPS (por alguna razón no va a más de 40)
+        if (deltaTime < targetFrameTime) {
+            double sleepTime = targetFrameTime - deltaTime;
+            std::this_thread::sleep_for(std::chrono::duration<double>(sleepTime));
+            currentTime = glfwGetTime();
+            deltaTime = currentTime - lastFrameTime;
+            lastFrameTime = currentTime;
         }
 
-        triangle->render();
+        update();
+        render();
 
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        // Calcular FPS y mostrarlos en la consola
+        fpsUpdateTime += deltaTime;
+        frameCount++;
 
-        // Swap the back buffer with the front buffer
-        glfwSwapBuffers(window.get());
-        // Take care of all GLFW events
-        glfwPollEvents();
+        if (fpsUpdateTime >= 1.0) {
+            double fps = (double)(frameCount) / fpsUpdateTime;
+            std::cout << "FPS: " << fps << std::endl;
+            frameCount = 0;
+            fpsUpdateTime = 0.0;
+        }
     }
 }
+
 
 void App::release() {
     // Terminate ImGui
@@ -92,4 +108,55 @@ void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
+}
+
+void App::mouseCallback(GLFWwindow* window, int button, int action, int mods) {
+    if (action == GLFW_PRESS) {
+        if (button == GLFW_MOUSE_BUTTON_LEFT) {
+            double mouseX, mouseY;
+            glfwGetCursorPos(window, &mouseX, &mouseY);
+
+            // Convierte las coordenadas del cursor a las coordenadas de la simulación
+            int simX = static_cast<int>(mouseX);
+            int simY = static_cast<int>(mouseY);
+
+            // Agrega partículas de arena en las coordenadas de la simulación
+            std::cout << "Pressing\n";
+            currentApp->sandSimulation->setParticle(simX, simY);
+        }
+    }
+}
+
+void App::render()
+{
+    // Specify the color of the background
+    glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+    // Clean the back buffer and assign the new color to it
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // We have to make some wrapper for this kind of stuff idk
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    if (!io->WantCaptureMouse)
+    {
+        //Handle input here, so you don't handle input while interacting with ImGui component
+    }
+
+    //triangle->render();
+    sandSimulation->render();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    // Swap the back buffer with the front buffer
+    glfwSwapBuffers(window.get());
+    // Take care of all GLFW events
+    glfwPollEvents();
+}
+
+void App::update()
+{
+    sandSimulation->update();
 }
