@@ -66,7 +66,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,7 +87,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\imgui-1.89.8\backends;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\imgui-1.89.8;$(PublicIncludeDirectories);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,7 +111,11 @@
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_draw.cpp" />
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_tables.cpp" />
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\App.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Camera.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Triangle.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_glfw.h" />
@@ -122,6 +126,10 @@
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_rectpack.h" />
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_textedit.h" />
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_truetype.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\App.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Camera.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Triangle.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Viewport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

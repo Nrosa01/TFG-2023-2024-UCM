@@ -57,6 +57,18 @@
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_opengl3.cpp">
       <Filter>Archivos de origen\imgui\backends</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\App.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Camera.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Viewport.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Triangle.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_truetype.h">
@@ -82,6 +94,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\backends\imgui_impl_glfw.h">
       <Filter>Archivos de encabezado\imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\App.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Camera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Viewport.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Triangle.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
