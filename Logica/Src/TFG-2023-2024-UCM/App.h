@@ -24,6 +24,8 @@ private:
     void render();
     void update();
     
+    bool pressingMouse = false; //esta feo pero por ahora sive
+
     static App* currentApp;
     static const int TARGET_FPS = 60;
 
