@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <glm.hpp>
+#include <gtc/type_ptr.hpp>
 #include <ext/matrix_clip_space.hpp>
 
 // Vertex Shader source code
@@ -161,7 +162,7 @@ void SandSimulation::render() {
     GLint projectionLoc = glGetUniformLocation(shaderProgram, "projection");
 
     // Envía la matriz de proyección al shader
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, &projection[0][0]);
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, value_ptr(projection));
 
     glUseProgram(shaderProgram);
     glBindVertexArray(VAO);

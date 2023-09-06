@@ -5,6 +5,7 @@
 #include <memory>
 #include <imgui.h>
 
+class Quad;
 class SandSimulation;
 class Triangle;
 class Viewport;
@@ -36,5 +37,6 @@ private:
 
     ImGuiIO* io;
     std::unique_ptr<Triangle> triangle;
+    std::unique_ptr<Quad> quad;
     std::unique_ptr<SandSimulation> sandSimulation;
 };

@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "Triangle.h"
 #include "SandSimulation.h"
+#include "Quad.h"
 
 App* App::currentApp = nullptr;
 
@@ -45,6 +46,7 @@ bool App::init() {
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
 	triangle = std::make_unique<Triangle>();
+	quad = std::make_unique<Quad>(WINDOW_WIDTH, WINDOW_HEIGHT);
 	sandSimulation = std::make_unique<SandSimulation>(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// Init ImGui
@@ -136,6 +138,7 @@ void App::render()
 	}
 
 	//triangle->render();
+	quad->render();
 	sandSimulation->render();
 
 	ImGui::Render();
