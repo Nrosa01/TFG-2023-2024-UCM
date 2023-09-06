@@ -112,11 +112,14 @@ void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 }
 
 void App::mouseCallback(GLFWwindow* window, int button, int action, int mods) {
-
-	if (action == GLFW_PRESS && button == GLFW_MOUSE_BUTTON_LEFT)
-		currentApp->pressingMouse = true;
-	else if (action == GLFW_RELEASE)
-		currentApp->pressingMouse = false;
+	//Handle input here, so you don't handle input while interacting with ImGui component
+	if (!currentApp->io->WantCaptureMouse)
+	{
+		if (action == GLFW_PRESS && button == GLFW_MOUSE_BUTTON_LEFT)
+			currentApp->pressingMouse = true;
+		else if (action == GLFW_RELEASE)
+			currentApp->pressingMouse = false;
+	}
 }
 
 void App::render()
@@ -131,14 +134,9 @@ void App::render()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	if (!io->WantCaptureMouse)
-	{
-		//Handle input here, so you don't handle input while interacting with ImGui component
-	}
-
 	//quad->render();
 	sandSimulation->render();
-	//triangle->render();
+	triangle->render();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

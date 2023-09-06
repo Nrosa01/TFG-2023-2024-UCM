@@ -101,6 +101,9 @@ void SandSimulation::update() {
                     nextFrame[x + 1][y - 1] = true;
                     currentFrame[x][y] = false;
                 }
+                else
+                    // Si no puede moverse, todo se mantiene igual
+                    nextFrame[x][y] = currentFrame[x][y];
             }
         }
     }
