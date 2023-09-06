@@ -1,7 +1,13 @@
+// SandSimulation.h
+
 #pragma once
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <memory>
+#include <vector>
+
+class Quad;
 
 class SandSimulation {
 public:
@@ -22,10 +28,11 @@ private:
     int height;
     bool** currentFrame; // Estado actual
     bool** nextFrame; // Estado siguiente
-    GLuint VAO;
-    GLuint VBO;
-    GLuint shaderProgram;
+    GLuint textureID; // ID de la textura
+    std::unique_ptr<Quad> quad;
+    std::vector<unsigned char> textureData; // Datos de textura RGBA
 
-    void initializeBuffers();
-    void createShaderProgram();
+    void initializeTexture();
+    void updateTexture();
 };
+

@@ -83,7 +83,7 @@ Triangle::Triangle()
 
 	color[0] = 0.8f;
 	color[1] = 0.3f;
-	color[2] = 0.02f;
+	color[2] = 0.4f;
 	color[3] = 1.0f;
 }
 
@@ -96,6 +96,9 @@ Triangle::~Triangle()
 
 void Triangle::render()
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// Tell OpenGL which Shader Program we want to use
 	glUseProgram(shaderProgram);
 	// Bind the VAO so OpenGL knows to use it
@@ -113,4 +116,5 @@ void Triangle::render()
 	glUseProgram(shaderProgram);
 	glUniform1f(glGetUniformLocation(shaderProgram, "size"), size);
 	glUniform4f(glGetUniformLocation(shaderProgram, "color"), color[0], color[1], color[2], color[3]);
+	glDisable(GL_BLEND);
 }

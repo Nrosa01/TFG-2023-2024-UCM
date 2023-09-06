@@ -4,31 +4,7 @@
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
 #include <ext/matrix_clip_space.hpp>
-
-// Vertex Shader source code
-const char* sandVertexShaderSource = R"(
-    #version 330 core
-    layout (location = 0) in vec2 position;
-
-    uniform mat4 projection; // Matriz de proyección
-
-    void main()
-    {
-        // Aplica la matriz de proyección a la posición del vértice
-        gl_Position = projection * vec4(position, 0.0, 1.0);
-    }
-
-)";
-
-// Fragment Shader source code
-const char* sandFragmentShaderSource = R"(
-    #version 330 core
-    out vec4 FragColor;
-    void main()
-    {
-        FragColor = vec4(1.0, 0.8, 0.0, 1.0); // Color de las partículas (amarillo)
-    }
-)";
+#include "Quad.h"
 
 SandSimulation::SandSimulation(int width, int height) : width(width), height(height) {
     currentFrame = new bool* [width];
@@ -44,8 +20,9 @@ SandSimulation::SandSimulation(int width, int height) : width(width), height(hei
         }
     }
 
-    initializeBuffers();
-    createShaderProgram();
+    textureData.resize(width * height * 4, 0);
+    initializeTexture();
+    quad = std::make_unique<Quad>(width, height, textureID);
 }
 
 SandSimulation::~SandSimulation() {
@@ -55,78 +32,82 @@ SandSimulation::~SandSimulation() {
     }
     delete[] currentFrame;
     delete[] nextFrame;
-
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteProgram(shaderProgram);
 }
 
-void SandSimulation::initializeBuffers() {
-    // Crear y configurar el Vertex Array Object (VAO)
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+void SandSimulation::initializeTexture()
+{
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
 
-    // Crear y configurar el Vertex Buffer Object (VBO)
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    // Define parámetros de la textura (puedes ajustarlos según tus necesidades)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    // Configurar el atributo de posición de los vértices
-    GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-    glEnableVertexAttribArray(posAttrib);
-    glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    // Define el tamaño y el formato de la textura (RGBA)
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
-    // Desvincular el VAO y el VBO
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // Establece los datos iniciales de la textura
+    std::fill(textureData.begin(), textureData.end(), 0);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void SandSimulation::createShaderProgram() {
-    // Crear el Vertex Shader
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &sandVertexShaderSource, NULL);
-    glCompileShader(vertexShader);
+void SandSimulation::updateTexture() {
+    // Recorre los datos de la simulación y actualiza textureData según el estado actual
+    for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+            if (currentFrame[x][y]) {
+                // Si hay una partícula en esta posición, establece el color a amarillo (255, 255, 0, 255)
+                textureData[(y * width + x) * 4 + 0] = 255; // R
+                textureData[(y * width + x) * 4 + 1] = 255; // G
+                textureData[(y * width + x) * 4 + 2] = 0;   // B
+                textureData[(y * width + x) * 4 + 3] = 255; // A
+            }
+            else {
+                // Si no hay partícula, establece el color a transparente (0, 0, 0, 0)
+                textureData[(y * width + x) * 4 + 0] = 0;   // R
+                textureData[(y * width + x) * 4 + 1] = 0;   // G
+                textureData[(y * width + x) * 4 + 2] = 0;   // B
+                textureData[(y * width + x) * 4 + 3] = 0;   // A
+            }
+        }
+    }
 
-    // Crear el Fragment Shader
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &sandFragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-    // Crear el Shader Program y enlazar los shaders
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    // Eliminar los shaders compilados ya que no los necesitamos más
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    // Luego, actualiza la textura con los nuevos datos
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, textureData.data());
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
+
 
 void SandSimulation::update() {
     for (int x = 0; x < width; ++x) {
-        for (int y = height - 2; y >= 0; --y) {
+        for (int y = 1; y < height; ++y) { // Cambiar el bucle para ir de abajo hacia arriba
             if (currentFrame[x][y]) {
-                // Si hay una partícula en esta posición, mueva hacia abajo si es posible
-                if (!currentFrame[x][y + 1] && !nextFrame[x][y + 1]) {
-                    nextFrame[x][y + 1] = true;
+                // Si hay una partícula en esta posición, mueva hacia arriba si es posible
+                if (!currentFrame[x][y - 1] && !nextFrame[x][y - 1]) {
+                    nextFrame[x][y - 1] = true;
                     currentFrame[x][y] = false;
                 }
-                else if (!currentFrame[x - 1][y + 1] && !nextFrame[x - 1][y + 1]) {
-                    // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
-                    nextFrame[x - 1][y + 1] = true;
+                else if (!currentFrame[x - 1][y - 1] && !nextFrame[x - 1][y - 1]) {
+                    // Si no puede moverse hacia arriba, intente moverse hacia la izquierda
+                    nextFrame[x - 1][y - 1] = true;
                     currentFrame[x][y] = false;
                 }
-                else if (!currentFrame[x + 1][y + 1] && !nextFrame[x + 1][y + 1]) {
-                    // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
-                    nextFrame[x + 1][y + 1] = true;
+                else if (!currentFrame[x + 1][y - 1] && !nextFrame[x + 1][y - 1]) {
+                    // Si no puede moverse hacia arriba ni hacia la izquierda, intente moverse hacia la derecha
+                    nextFrame[x + 1][y - 1] = true;
                     currentFrame[x][y] = false;
                 }
             }
         }
     }
 
-    // Intercambia los frames actual y siguiente después de una actualización, esto no es eficiente porque es O(n) pero en fin
+    // Intercambia los frames actual y siguiente después de una actualización
     std::swap(currentFrame, nextFrame);
+    updateTexture();
 }
 
 bool SandSimulation::isInside(int x, int y) const {
@@ -134,8 +115,8 @@ bool SandSimulation::isInside(int x, int y) const {
 }
 
 void SandSimulation::setParticle(int x, int y) {
-    if (isInside(x, y)) {
-        currentFrame[x][y] = true;
+    if (isInside(x, height - y - 1)) {
+        currentFrame[x][height - y - 1] = true;
     }
 }
 
@@ -155,35 +136,5 @@ int SandSimulation::getHeight() const {
 }
 
 void SandSimulation::render() {
-    // Configura la matriz de proyección ortográfica
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height), -1.0f, 1.0f);
-
-    // Obtén la ubicación de la variable uniform "projection" en el shader
-    GLint projectionLoc = glGetUniformLocation(shaderProgram, "projection");
-
-    // Envía la matriz de proyección al shader
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, value_ptr(projection));
-
-    glUseProgram(shaderProgram);
-    glBindVertexArray(VAO);
-
-    // Renderiza partículas de arena como puntos
-    glPointSize(10.0f); // Tamaño de los puntos para representar las partículas
-
-    std::vector<GLfloat> vertices;
-    for (int x = 0; x < width; ++x) {
-        for (int y = 0; y < height; ++y) {
-            if (isParticle(x, y)) {
-                vertices.push_back(static_cast<GLfloat>(x));
-                vertices.push_back(static_cast<GLfloat>(y));
-            }
-        }
-    }
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-    glDrawArrays(GL_POINTS, 0, static_cast<GLsizei>(vertices.size() / 2));
-
-    glBindVertexArray(0);
+    quad->render();
 }

@@ -46,7 +46,6 @@ bool App::init() {
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
 	triangle = std::make_unique<Triangle>();
-	quad = std::make_unique<Quad>(WINDOW_WIDTH, WINDOW_HEIGHT);
 	sandSimulation = std::make_unique<SandSimulation>(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// Init ImGui
@@ -137,9 +136,9 @@ void App::render()
 		//Handle input here, so you don't handle input while interacting with ImGui component
 	}
 
-	//triangle->render();
-	quad->render();
+	//quad->render();
 	sandSimulation->render();
+	//triangle->render();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
