@@ -11,7 +11,7 @@ class Quad;
 
 class SandSimulation {
 public:
-    SandSimulation(int width, int height);
+    SandSimulation(int width, int height, int wWidth, int wHeight);
     ~SandSimulation();
 
     void update(); // Actualiza el estado de la simulación
@@ -24,6 +24,8 @@ public:
     void render();
 
 private:
+    int wWidth;
+    int wHeight;
     int width;
     int height;
     bool** currentFrame; // Estado actual

@@ -6,7 +6,7 @@
 #include <ext/matrix_clip_space.hpp>
 #include "Quad.h"
 
-SandSimulation::SandSimulation(int width, int height) : width(width), height(height) {
+SandSimulation::SandSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight) {
     currentFrame = new bool* [width];
     nextFrame = new bool* [width];
 
@@ -16,13 +16,13 @@ SandSimulation::SandSimulation(int width, int height) : width(width), height(hei
 
         for (int y = 0; y < height; ++y) {
             currentFrame[x][y] = false;
-            nextFrame[x][y] = false;
+            nextFrame[x][y] = currentFrame[x][y];
         }
     }
 
     textureData.resize(width * height * 4, 0);
     initializeTexture();
-    quad = std::make_unique<Quad>(width, height, textureID);
+    quad = std::make_unique<Quad>(wWidth, wHeight, textureID);
 }
 
 SandSimulation::~SandSimulation() {
@@ -84,20 +84,20 @@ void SandSimulation::updateTexture() {
 
 void SandSimulation::update() {
     for (int x = 0; x < width; ++x) {
-        for (int y = 1; y < height; ++y) { // Cambiar el bucle para ir de abajo hacia arriba
+        for (int y = 0; y < height; ++y) { // Cambiar el bucle para ir de abajo hacia arriba
             if (currentFrame[x][y]) {
-                // Si hay una partícula en esta posición, mueva hacia arriba si es posible
-                if (!currentFrame[x][y - 1] && !nextFrame[x][y - 1]) {
+                // Si hay una partícula en esta posición, mueva hacia abajo si es posible
+                if (y > 0 && !currentFrame[x][y - 1] && !nextFrame[x][y - 1]) {
                     nextFrame[x][y - 1] = true;
                     currentFrame[x][y] = false;
                 }
-                else if (!currentFrame[x - 1][y - 1] && !nextFrame[x - 1][y - 1]) {
-                    // Si no puede moverse hacia arriba, intente moverse hacia la izquierda
+                // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
+                else if (x > 0 && y > 0 && !currentFrame[x - 1][y - 1] && !nextFrame[x - 1][y - 1]) {
                     nextFrame[x - 1][y - 1] = true;
                     currentFrame[x][y] = false;
                 }
-                else if (!currentFrame[x + 1][y - 1] && !nextFrame[x + 1][y - 1]) {
-                    // Si no puede moverse hacia arriba ni hacia la izquierda, intente moverse hacia la derecha
+                else if (x < width - 1 && y > 0 && !currentFrame[x + 1][y - 1] && !nextFrame[x + 1][y - 1]) {
+                    // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
                     nextFrame[x + 1][y - 1] = true;
                     currentFrame[x][y] = false;
                 }
@@ -118,8 +118,12 @@ bool SandSimulation::isInside(int x, int y) const {
 }
 
 void SandSimulation::setParticle(int x, int y) {
-    if (isInside(x, height - y - 1)) {
-        currentFrame[x][height - y - 1] = true;
+    // Convierte las coordenadas de pantalla a coordenadas de la simulación
+    int simX = (x * width) / wWidth;
+    int simY = height - (y * height) / wHeight - 1;
+
+    if (isInside(simX, simY)) {
+        currentFrame[simX][simY] = true;
     }
 }
 

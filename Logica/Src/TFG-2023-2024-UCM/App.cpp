@@ -46,7 +46,7 @@ bool App::init() {
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
 	triangle = std::make_unique<Triangle>();
-	sandSimulation = std::make_unique<SandSimulation>(WINDOW_WIDTH, WINDOW_HEIGHT);
+	sandSimulation = std::make_unique<SandSimulation>(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// Init ImGui
 	IMGUI_CHECKVERSION();
@@ -136,7 +136,7 @@ void App::render()
 
 	//quad->render();
 	sandSimulation->render();
-	triangle->render();
+	//triangle->render();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -159,7 +159,6 @@ void App::update()
 		int simY = static_cast<int>(mouseY);
 
 		// Agrega partículas de arena en las coordenadas de la simulación
-		std::cout << "Pressing\n";
 		currentApp->sandSimulation->setParticle(simX, simY);
 	}
 
