@@ -134,6 +134,11 @@ void App::render()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
+	// Depurar FPS desde ImGui
+	ImGui::Begin("FPS Window");
+	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+	ImGui::End();
+
 	//quad->render();
 	sandSimulation->render();
 	//triangle->render();
