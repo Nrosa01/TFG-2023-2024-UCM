@@ -68,31 +68,58 @@ void App::run() {
 	while (!glfwWindowShouldClose(window.get()) && isRunning) {
 		double currentTime = glfwGetTime();
 		double deltaTime = currentTime - lastFrameTime;
-		lastFrameTime = currentTime;
 
-		// Limitar la velocidad de actualización a 60 FPS (por alguna razón no va a más de 40)
-		if (deltaTime < targetFrameTime) {
-			double sleepTime = targetFrameTime - deltaTime;
-			std::this_thread::sleep_for(std::chrono::duration<double>(sleepTime));
-			currentTime = glfwGetTime();
-			deltaTime = currentTime - lastFrameTime;
+		// Limitar la velocidad de actualización a 60 FPS
+		if (deltaTime >= targetFrameTime) {
+			update();
+			render();
+
 			lastFrameTime = currentTime;
-		}
 
-		update();
-		render();
+			fpsUpdateTime += deltaTime;
+			frameCount++;
 
-		// Calcular FPS y mostrarlos en la consola
-		fpsUpdateTime += deltaTime;
-		frameCount++;
+			// Calcular FPS y mostrarlos en la consola
+			if (fpsUpdateTime >= 1.0) {
+				double fps = static_cast<double>(frameCount) / fpsUpdateTime;
+				std::cout << "FPS: " << fps << std::endl;
+				frameCount = 0;
+				fpsUpdateTime = 0.0;
+			}
 
-		if (fpsUpdateTime >= 1.0) {
-			double fps = (double)(frameCount) / fpsUpdateTime;
-			std::cout << "FPS: " << fps << std::endl;
-			frameCount = 0;
-			fpsUpdateTime = 0.0;
+			// Calcular el tiempo que debemos dormir para alcanzar 60 FPS
+			double sleepTime = targetFrameTime - deltaTime;
+			if (sleepTime > 0.0) {
+				std::this_thread::sleep_for(std::chrono::duration<double>(sleepTime));
+			}
 		}
 	}
+
+
+	//sin sleep_for
+	//while (!glfwWindowShouldClose(window.get()) && isRunning) {
+	//	double currentTime = glfwGetTime();
+	//	double deltaTime = currentTime - lastFrameTime;
+	//	
+	//	
+	//	// Limitar la velocidad de actualización a 60 FPS (por alguna razón no va a más de 40)
+	//	if (deltaTime >= targetFrameTime) {
+	//		update();
+	//		render();
+
+	//		lastFrameTime = currentTime;
+
+	//		fpsUpdateTime += deltaTime;
+	//		frameCount++;
+	//		// Calcular FPS y mostrarlos en la consola
+	//		if (fpsUpdateTime >= 1.0) {
+	//			double fps = (double)(frameCount) / fpsUpdateTime;
+	//			std::cout << "FPS: " << fps << std::endl;
+	//			frameCount = 0;
+	//			fpsUpdateTime = 0.0;
+	//		}
+	//	}
+	//}
 }
 
 
