@@ -71,7 +71,7 @@ void App::run() {
 
 		// Limitar la velocidad de actualización a 60 FPS
 		if (deltaTime >= targetFrameTime) {
-			update();
+			update(deltaTime);
 			render();
 
 			lastFrameTime = currentTime;
@@ -179,7 +179,7 @@ void App::render()
 	glfwPollEvents();
 }
 
-void App::update()
+void App::update(double delta_time)
 {
 	if (pressingMouse)
 	{
@@ -194,5 +194,5 @@ void App::update()
 		currentApp->sandSimulation->setParticle(simX, simY);
 	}
 
-	sandSimulation->update();
+	sandSimulation->update(delta_time);
 }

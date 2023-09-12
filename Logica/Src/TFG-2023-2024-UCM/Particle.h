@@ -26,6 +26,8 @@ struct colour_t {
 struct Particle {
 	bool is_stagnant = false;
 	material mat = empty;
-	//colour_t colour;
+	int velocity = 100;
 	bool has_been_updated = false;
+	double last_mov = 0;
+	//colour_t colour;
 };

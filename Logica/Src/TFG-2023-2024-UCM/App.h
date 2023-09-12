@@ -22,12 +22,12 @@ public:
 
 private:
     void render();
-    void update();
+    void update(double delta_time);
     
     bool pressingMouse = false; //esta feo pero por ahora sive
 
     static App* currentApp;
-    static const int TARGET_FPS = 60;
+    static const int TARGET_FPS = 10;
 
     std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window;
     std::unique_ptr<Viewport> viewport;
