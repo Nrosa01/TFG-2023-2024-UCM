@@ -72,6 +72,7 @@ void App::run() {
 		// Limitar la velocidad de actualización a 60 FPS
 		if (deltaTime >= targetFrameTime) {
 			update();
+			fixedUpdate(deltaTime);
 			render();
 
 			lastFrameTime = currentTime;
@@ -94,32 +95,6 @@ void App::run() {
 			}
 		}
 	}
-
-
-	//sin sleep_for
-	//while (!glfwWindowShouldClose(window.get()) && isRunning) {
-	//	double currentTime = glfwGetTime();
-	//	double deltaTime = currentTime - lastFrameTime;
-	//	
-	//	
-	//	// Limitar la velocidad de actualización a 60 FPS (por alguna razón no va a más de 40)
-	//	if (deltaTime >= targetFrameTime) {
-	//		update();
-	//		render();
-
-	//		lastFrameTime = currentTime;
-
-	//		fpsUpdateTime += deltaTime;
-	//		frameCount++;
-	//		// Calcular FPS y mostrarlos en la consola
-	//		if (fpsUpdateTime >= 1.0) {
-	//			double fps = (double)(frameCount) / fpsUpdateTime;
-	//			std::cout << "FPS: " << fps << std::endl;
-	//			frameCount = 0;
-	//			fpsUpdateTime = 0.0;
-	//		}
-	//	}
-	//}
 }
 
 
@@ -193,6 +168,20 @@ void App::update()
 		// Agrega partículas de arena en las coordenadas de la simulación
 		currentApp->sandSimulation->setParticle(simX, simY);
 	}
+}
 
-	sandSimulation->update();
+void App::fixedUpdate(float deltaTime)
+{
+	accumulator += deltaTime;
+	uint16_t physics_step_this_frame = 0;
+
+
+	while (accumulator >= PHYSICS_STEP && physics_step_this_frame < MAX_PHYSICS_STEP_PER_FRAME)
+	{
+		// Here we should call scene.fixedUpdate or something like that
+		sandSimulation->update();
+
+		accumulator -= PHYSICS_STEP;
+		physics_step_this_frame++;
+	}
 }

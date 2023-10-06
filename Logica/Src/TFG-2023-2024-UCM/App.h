@@ -21,8 +21,13 @@ public:
     static void mouseCallback(GLFWwindow* window, int button, int action, int mods);
 
 private:
+    const double PHYSICS_STEP = 0.02;
+    const uint16_t MAX_PHYSICS_STEP_PER_FRAME = 5;
+    double accumulator;
+
     void render();
     void update();
+    void fixedUpdate(float deltaTime);
     
     bool pressingMouse = false; //esta feo pero por ahora sive
 
