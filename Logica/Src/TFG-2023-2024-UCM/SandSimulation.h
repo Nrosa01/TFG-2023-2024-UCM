@@ -17,7 +17,7 @@ public:
     ~SandSimulation();
 
 
-    void update(double delta_time); // Actualiza el estado de la simulación
+    void update(); // Actualiza el estado de la simulación
     void setParticle(int x, int y); // Coloca una partícula en la posición (x, y)
     bool isParticle(int x, int y) const; // Verifica si hay una partícula en la posición (x, y)
     bool isInside(int x, int y) const;
@@ -46,12 +46,6 @@ private:
 
     void updateParticle(position lastPos, position nextPos);
 
-    bool tryMove(position& pos, Particle& p);  
-
-    void updateSand(uint32_t x, uint32_t y, double delta_time);
-
-    //void update(double delta_time);
-
-  
+    void updateSand(uint32_t x, uint32_t y);
 };
 

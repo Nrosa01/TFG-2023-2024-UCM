@@ -6,7 +6,6 @@
 #include <ext/matrix_clip_space.hpp>
 #include <GLFW/glfw3.h>
 #include "Quad.h"
-#include <iostream>
 
 SandSimulation::SandSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight) {
   
@@ -86,9 +85,6 @@ void SandSimulation::updateTexture() {
 
 
 bool SandSimulation::isEmpty(uint32_t x, uint32_t y) {
-    if (x > width)x = width;
-    if (y > height) y = height;
-    //if (x > width || x < 0 || y < 0 || y > height) return false;
     return  chunk_state[x][y].mat == empty;
 }
 
@@ -98,85 +94,38 @@ void SandSimulation::updateParticle(position next_pos, position last_pos) {
     chunk_state[last_pos.x][last_pos.y].mat = empty;
 }
 
-bool SandSimulation::tryMove(position& pos, Particle& p) {
-	// Si hay una partícula en esta posición, mueva hacia abajo si es posible
-    if (pos.y > 0 && isEmpty(pos.x, pos.y - 1)) {
-		updateParticle({ pos.x,pos.y - 1 }, { pos.x,pos.y });
-        pos = { pos.x,pos.y - 1 };
-		return true;
-	}
-
-	// Si no puede moverse hacia abajo, intente moverse hacia la izquierda
-    else if (pos.x > 0 && pos.y > 0 && isEmpty(pos.x - 1, pos.y - 1)) {
-		updateParticle({ pos.x - 1,pos.y - 1 }, { pos.x,pos.y });
-        pos =   { pos.x - 1,pos.y - 1 };
-		return true;
-	}
-
-    else if (pos.x < width - 1 && pos.y > 0 && isEmpty(pos.x + 1, pos.y - 1)) {
-		// Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
-		updateParticle({ pos.x + 1,pos.y - 1 }, { pos.x,pos.y });
-		pos = { pos.x + 1,pos.y - 1 };
-		return true;
-	}
-    p.is_stagnant = true;
-	return false;
-}
-
-void SandSimulation::updateSand(uint32_t x, uint32_t y, double delta_time) {
+void SandSimulation::updateSand(uint32_t x, uint32_t y) {
 
     Particle p = chunk_state[x][y];
 
-    
     //nada que comprobar, ya es suelo fijo;
     if (p.is_stagnant || p.has_been_updated) return;
     
-    int next_mov = 0; 
-    double frame_mov = p.velocity * delta_time + p.last_mov;
-    //calculo si me puedo mover
-    if (frame_mov > 1.0) {
-        //muevo los enteros
-        next_mov = std::trunc(frame_mov);
-        //guardo los decimales para el proximo frame
-        std::modf(p.last_mov ,&frame_mov);
-    }
-    //no me puedo mover de bloque
-    else {
-        p.last_mov += frame_mov;
-        return;
-    }
-    bool can_move = true;
-    std::cout << next_mov << std::endl;
-    position next_pos{ x,y };
-    for (int i = 0; i < next_mov && can_move; i++) {
-        can_move = tryMove(next_pos,p);
-    }
+    // Si hay una partícula en esta posición, mueva hacia abajo si es posible
+    if (y > 0 && isEmpty(x, y - 1))
+        updateParticle({ x,y - 1 }, { x,y });
 
-    //// Si hay una partícula en esta posición, mueva hacia abajo si es posible
-    //if (y > 0 && isEmpty(x, y - next_mov))
-    //    updateParticle({ x,y - next_mov }, { x,y });
+    // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
+    else if (x > 0 && y > 0 && isEmpty(x - 1, y - 1))
+        updateParticle({ x - 1,y - 1 }, { x,y });
 
-    //// Si no puede moverse hacia abajo, intente moverse hacia la izquierda
-    //else if (x > 0 && y > 0 && isEmpty(x - next_mov, y - next_mov))
-    //    updateParticle({ x - next_mov +1/ 2,y - next_mov+1/2 }, { x,y });
+    else if (x < width - 1 && y > 0 && isEmpty(x + 1, y - 1))
+        // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
+        updateParticle({ x + 1 ,y - 1 }, { x,y });
 
-    //else if (x < width - 1 && y > 0 && isEmpty(x + next_mov, y - next_mov))
-    //    // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
-    //    updateParticle({ x + next_mov+1/2 ,y - next_mov+1/2 }, { x,y });
-
-    //// en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
-    //// señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
-    // else p.is_stagnant = true;
+    // en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
+    // señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
+     else p.is_stagnant = true;
 }
 
-void SandSimulation::update(double delta_time) {
+void SandSimulation::update() {
 
     // se actualiza en orden de abajo a arriba
     for (uint32_t y = height - 1; y > 0; --y) {
         for (uint32_t x = 0; x < width; x++) {
             material mat = chunk_state[x][y].mat;
             if(chunk_state[x][y].mat == sand)
-                updateSand(x, y, delta_time);
+                updateSand(x, y);
            
         }
     }
