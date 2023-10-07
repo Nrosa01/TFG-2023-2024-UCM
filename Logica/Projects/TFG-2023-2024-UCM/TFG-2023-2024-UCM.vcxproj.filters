@@ -69,7 +69,7 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Triangle.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\SandSimulation.cpp">
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Quad.cpp">
@@ -113,7 +113,7 @@
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Triangle.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\SandSimulation.h">
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Quad.h">

@@ -5,7 +5,7 @@
 #include <memory>
 #include <imgui.h>
 
-class SandSimulation;
+class ParticleSimulation;
 class Triangle;
 class Viewport;
 class Camera;
@@ -36,5 +36,5 @@ private:
 
     ImGuiIO* io;
     std::unique_ptr<Triangle> triangle;
-    std::unique_ptr<SandSimulation> sandSimulation;
+    std::unique_ptr<ParticleSimulation> sandSimulation;
 };

@@ -1,4 +1,4 @@
-#include "SandSimulation.h"
+#include "ParticleSimulation.h"
 #include <vector>
 #include <algorithm>
 #include <glm.hpp>
@@ -7,7 +7,7 @@
 #include <GLFW/glfw3.h>
 #include "Quad.h"
 
-SandSimulation::SandSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight) {
+ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight) {
   
     chunk_state = new Particle * [width];
     for (int x = 0; x < width; ++x) {
@@ -25,7 +25,7 @@ SandSimulation::SandSimulation(int width, int height, int wWidth, int wHeight) :
     quad = std::make_unique<Quad>(wWidth, wHeight, textureID);
 }
 
-SandSimulation::~SandSimulation() {
+ParticleSimulation::~ParticleSimulation() {
     for (int x = 0; x < width; ++x) {
         delete[] chunk_state[x];
    
@@ -34,7 +34,7 @@ SandSimulation::~SandSimulation() {
    
 }
 
-void SandSimulation::initializeTexture()
+void ParticleSimulation::initializeTexture()
 {
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_2D, textureID);
@@ -54,7 +54,7 @@ void SandSimulation::initializeTexture()
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void SandSimulation::updateTexture() {
+void ParticleSimulation::updateTexture() {
     // Recorre los datos de la simulación y actualiza textureData según el estado actual
     for (int x = 0; x < width; ++x) {
         for (int y = 0; y < height; ++y) {
@@ -84,25 +84,34 @@ void SandSimulation::updateTexture() {
 }
 
 
-bool SandSimulation::isEmpty(uint32_t x, uint32_t y) {
+bool ParticleSimulation::isEmpty(uint32_t x, uint32_t y) {
     return  chunk_state[x][y].mat == empty;
 }
 
-void SandSimulation::updateParticle(position next_pos, position last_pos) {
+void ParticleSimulation::updateParticle(position next_pos, position last_pos) {
     chunk_state[next_pos.x][next_pos.y].mat = sand;
     chunk_state[next_pos.x][next_pos.y].has_been_updated = true;
     chunk_state[last_pos.x][last_pos.y].mat = empty;
 }
 
-void SandSimulation::updateSand(uint32_t x, uint32_t y) {
+
+void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
+
+}
+
+void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
+
+}
+
+void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 
     Particle p = chunk_state[x][y];
 
     //nada que comprobar, ya es suelo fijo;
-    if (p.is_stagnant || p.has_been_updated) return;
-    
+    if (p.has_been_updated) return;
+   
     // Si hay una partícula en esta posición, mueva hacia abajo si es posible
-    if (y > 0 && isEmpty(x, y - 1))
+    if (y > 0 && isEmpty(x, y - 1) )
         updateParticle({ x,y - 1 }, { x,y });
 
     // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
@@ -118,15 +127,30 @@ void SandSimulation::updateSand(uint32_t x, uint32_t y) {
      else p.is_stagnant = true;
 }
 
-void SandSimulation::update() {
+void ParticleSimulation::update() {
 
     // se actualiza en orden de abajo a arriba
     for (uint32_t y = height - 1; y > 0; --y) {
         for (uint32_t x = 0; x < width; x++) {
             material mat = chunk_state[x][y].mat;
-            if(chunk_state[x][y].mat == sand)
+
+            switch (mat)
+            {
+            case sand:
                 updateSand(x, y);
-           
+                break;
+            case gas:
+                updateGas(x, y);
+                break;
+            case water:
+                break;
+            case empty:
+                break;
+            default:
+                break;
+            }
+            
+
         }
     }
 
@@ -138,35 +162,50 @@ void SandSimulation::update() {
             chunk_state[i][j].has_been_updated = false;
 }
 
-bool SandSimulation::isInside(int x, int y) const {
+bool ParticleSimulation::isInside(int x, int y) const {
     return x >= 0 && x < width && y >= 0 && y < height;
 }
 
-void SandSimulation::setParticle(int x, int y) {
+void ParticleSimulation::setParticle(int x, int y) {
     // Convierte las coordenadas de pantalla a coordenadas de la simulación
     int simX = (x * width) / wWidth;
     int simY = height - (y * height) / wHeight - 1;
 
     if (isInside(simX, simY)) {
-        chunk_state[simX][simY].mat = sand;
-    }
+        switch (type_particle) {
+            case sand: {
+                chunk_state[simX][simY].mat = sand;
+                break;
+            }
+            case gas: {
+                chunk_state[simX][simY].mat = gas;
+            }
+
+            case water: {
+                //chunk_state[simX][simY].mat = water;
+            }
+        }
+       
+    
+     }
+
 }
 
-bool SandSimulation::isParticle(int x, int y) const {
+bool ParticleSimulation::isParticle(int x, int y) const {
     if (isInside(x, y)) {
         return  chunk_state[x][y].mat == sand;
     }
     return false;
 }
 
-int SandSimulation::getWidth() const {
+int ParticleSimulation::getWidth() const {
     return width;
 }
 
-int SandSimulation::getHeight() const {
+int ParticleSimulation::getHeight() const {
     return height;
 }
 
-void SandSimulation::render() {
+void ParticleSimulation::render() {
     quad->render();
 }

@@ -1,4 +1,4 @@
-// SandSimulation.h
+// ParticleSimulation.h
 
 #pragma once
 
@@ -9,12 +9,16 @@
 #include "Particle.h"
 
 
+//type of particle to be used
+//this is just for testing, it will be removed in the future
+static const material type_particle = sand;
+
 class Quad;
 
-class SandSimulation {
+class ParticleSimulation {
 public:
-    SandSimulation(int width, int height, int wWidth, int wHeight);
-    ~SandSimulation();
+    ParticleSimulation(int width, int height, int wWidth, int wHeight);
+    ~ParticleSimulation();
 
 
     void update(); // Actualiza el estado de la simulación
@@ -45,6 +49,10 @@ private:
     bool isEmpty(uint32_t x, uint32_t y);
 
     void updateParticle(position lastPos, position nextPos);
+
+    void updateWater(uint32_t x, uint32_t y);
+
+    void updateGas(uint32_t x, uint32_t y);
 
     void updateSand(uint32_t x, uint32_t y);
 };

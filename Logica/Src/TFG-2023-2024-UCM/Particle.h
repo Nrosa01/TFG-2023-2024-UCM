@@ -5,7 +5,7 @@
 
 #define yellow {255,255,0,255}
 
-enum material { sand, empty };
+enum material { sand,gas,water, empty };
 
 
 struct position {
