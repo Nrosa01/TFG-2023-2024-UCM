@@ -3,7 +3,6 @@
 
 //Sand particle
 
-#define yellow {255,255,0,255}
 
 enum material { sand,gas,water, empty };
 
@@ -28,4 +27,12 @@ struct Particle {
 	material mat = empty;
 	//colour_t colour;
 	bool has_been_updated = false;
+
+	//time in which the particles dissapear
+	//only applicable to gas and combustionable particles
+	uint32_t frame_life = 300;
 };
+
+
+const static colour_t yellow{ 255,255,0,255 };
+const static colour_t grey{ 128,128,128,255 };

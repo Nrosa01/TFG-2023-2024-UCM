@@ -11,7 +11,7 @@
 
 //type of particle to be used
 //this is just for testing, it will be removed in the future
-static const material type_particle = sand;
+static const material type_particle = gas;
 
 class Quad;
 
@@ -48,7 +48,7 @@ private:
 
     bool isEmpty(uint32_t x, uint32_t y);
 
-    void updateParticle(position lastPos, position nextPos);
+    void updateParticle(position next_pos, position last_pos, const Particle& particle);
 
     void updateWater(uint32_t x, uint32_t y);
 
