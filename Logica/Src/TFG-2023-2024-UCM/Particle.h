@@ -4,7 +4,7 @@
 //Sand particle
 
 
-enum material { sand,gas,water, empty };
+enum material { sand,gas,water,rock, empty };
 
 
 struct position {
@@ -28,7 +28,7 @@ struct Particle {
 
 	//time in which the particles dissapear
 	//only applicable to gas and combustionable particles
-	uint32_t life_time = 300;
+	uint32_t life_time = 0;
 
 
 	//colour_t colour;
@@ -37,8 +37,10 @@ struct Particle {
 
 const static colour_t yellow{ 255,255,0,255 };
 const static colour_t grey{ 128,128,128,255 };
+const static colour_t blue{ 173, 216, 230,255 };
+const static colour_t dark_grey{ 169, 169, 169 ,255 };
 
-const static int gas_life_time = 700;
+const static int gas_life_time = 400;
 
 //const static colour_t empty_colour{ 0,0,0,0 };
 //

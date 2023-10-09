@@ -11,7 +11,8 @@
 
 //type of particle to be used
 //this is just for testing, it will be removed in the future
-static const material type_particle = gas;
+static const material type_particle = rock;
+static const float brush_size = 2;
 
 class Quad;
 
@@ -48,6 +49,8 @@ private:
     void updateTexture();
 
     bool isEmpty(uint32_t x, uint32_t y);
+
+    bool isGas(uint32_t x, uint32_t y);
 
     void updateParticle(position next_pos, position last_pos, const Particle& particle);
 

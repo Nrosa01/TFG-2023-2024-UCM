@@ -72,8 +72,14 @@ void ParticleSimulation::updateTexture() {
                 c = grey;
                 c.a = grey.a * chunk_state[x][y].life_time / gas_life_time;
             	break;
+            case water:
+                c = blue;
+				break;
+            case rock:
+                c = dark_grey;
+                break;
             default:
-              
+                
                 break;
             }
             int pos_text = (y * width + x) * 4;
@@ -104,7 +110,33 @@ void ParticleSimulation::updateParticle(position next_pos, position last_pos,con
 
 
 void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
+    Particle& p = chunk_state[x][y];
 
+    //nada que comprobar, ya es suelo fijo;
+    if (has_been_updated[y * width + x]) return;
+
+    //std::cout << "position: " << x << " " << y << "\n";
+
+    // Si hay una partícula en esta posición, mueva hacia abajo si es posible
+    if (y > 0 && isEmpty(x, y - 1))
+        updateParticle({ x,y - 1 }, { x,y }, p);
+
+    // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
+    else if (x > 0 && y > 0 && isEmpty(x - 1, y - 1))
+        updateParticle({ x - 1,y - 1 }, { x,y }, p);
+
+    // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
+    else if (x < width - 1 && y > 0 && isEmpty(x + 1, y - 1))
+        updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
+
+    else if (x > 0 && y > 0 && isEmpty(x - 1, y))
+        updateParticle({ x - 1,y  }, { x,y }, p);
+
+    else if (x < width - 1 && y > 0 && isEmpty(x + 1, y ))
+        updateParticle({ x + 1 ,y  }, { x,y }, p);
+    // en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
+    // señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
+    else p.is_stagnant = true;
 }
 
 void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
@@ -179,6 +211,9 @@ void ParticleSimulation::update() {
                 updateGas(x, y);
                 break;
             case water:
+                updateWater(x, y);
+                break;
+            case rock:
                 break;
             case empty:
                 break;
@@ -200,31 +235,51 @@ bool ParticleSimulation::isInside(int x, int y) const {
     return x >= 0 && x < width && y >= 0 && y < height;
 }
 
+static const double PI = 3.1415926535;
+
 void ParticleSimulation::setParticle(int x, int y) {
     // Convierte las coordenadas de pantalla a coordenadas de la simulación
     int simX = (x * width) / wWidth;
     int simY = height - (y * height) / wHeight - 1;
 
-    if (isInside(simX, simY)) {
-        switch (type_particle) {
-            case sand: 
-                chunk_state[simX][simY].mat = sand;
-                break;
-            
-            case gas: 
-                chunk_state[simX][simY].mat = gas;
-                chunk_state[simX][simY].life_time = gas_life_time;
+
+    double minAngle = acos(1. - 1. / brush_size);
+    minAngle *= 0.9;
+
+
+    int simX_aux = simX;
+    int simY_aux = simY;
+
+    double angle, x1, y1;
+
+    for (angle = 0; angle < 360; angle += minAngle)
+    {
+        x1 = brush_size * cos(angle * PI / 180);
+        y1 = brush_size * sin(angle * PI / 180);      
+
+        if (isInside(simX + x1, simY + y1)) {
+            simX_aux = simX + x1;
+            simY_aux = simY + y1;
+            switch (type_particle) {
+            case sand:
+                chunk_state[simX_aux][simY_aux].mat = sand;
                 break;
 
-            case water: 
-                //chunk_state[simX][simY].mat = water;
+            case gas:
+                chunk_state[simX_aux][simY_aux].mat = gas;
+                chunk_state[simX_aux][simY_aux].life_time = gas_life_time;
                 break;
-            
+
+            case water:
+                chunk_state[simX_aux][simY_aux].mat = water;
+                break;
+            case rock:
+                chunk_state[simX_aux][simY_aux].mat = rock;
+            }
         }
-       
-    
-     }
+	}
 
+   
 }
 
 bool ParticleSimulation::isParticle(int x, int y) const {
