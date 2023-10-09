@@ -8,6 +8,10 @@
 #include "Quad.h"
 #include <iostream>
 
+
+static const double PI = 3.1415926535;
+
+
 ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight) {
   
     chunk_state = new Particle * [width];
@@ -235,7 +239,7 @@ bool ParticleSimulation::isInside(int x, int y) const {
     return x >= 0 && x < width && y >= 0 && y < height;
 }
 
-static const double PI = 3.1415926535;
+
 
 void ParticleSimulation::setParticle(int x, int y) {
     // Convierte las coordenadas de pantalla a coordenadas de la simulación
