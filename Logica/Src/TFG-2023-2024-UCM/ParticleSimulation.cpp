@@ -14,12 +14,14 @@ ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wH
     for (int x = 0; x < width; ++x) {
         chunk_state[x] = new Particle[height];
 
-        for (int y = 0; y < height; ++y) {
-            chunk_state[x][y].has_been_updated = false;
+        for (int y = 0; y < height; ++y) 
             chunk_state[x][y].mat = empty;
         
-        }
+        
     }
+
+    has_been_updated = new bool [width * height] ;
+    std::memset(has_been_updated, false, width * height);
 
     textureData.resize(width * height * 4, 0);
     initializeTexture();
@@ -68,7 +70,7 @@ void ParticleSimulation::updateTexture() {
                 break;
             case gas:
                 c = grey;
-                c.a = grey.a * chunk_state[x][y].frame_life / 300;
+                c.a = grey.a * chunk_state[x][y].life_time / gas_life_time;
             	break;
             default:
               
@@ -95,8 +97,8 @@ bool ParticleSimulation::isEmpty(uint32_t x, uint32_t y) {
 
 void ParticleSimulation::updateParticle(position next_pos, position last_pos,const Particle& particle) {
     chunk_state[next_pos.x][next_pos.y].mat = particle.mat;
-    chunk_state[next_pos.x][next_pos.y].frame_life = particle.frame_life;
-    chunk_state[next_pos.x][next_pos.y].has_been_updated = true;
+    chunk_state[next_pos.x][next_pos.y].life_time = particle.life_time;
+    has_been_updated[next_pos.x + next_pos.y* width] = true;
     chunk_state[last_pos.x][last_pos.y].mat = empty;
 }
 
@@ -108,13 +110,13 @@ void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
 void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
     Particle& p = chunk_state[x][y];
     
-    p.frame_life = p.frame_life - 1;
-    if (p.frame_life <= 0) {
+    p.life_time = p.life_time - 1;
+    if (p.life_time <= 0) {
 		p.mat = empty;
 		return;
 	}
     //nada que comprobar, ya es suelo fijo;
-    if (p.has_been_updated) return;
+    if (has_been_updated[y * width + x]) return;
 
     // Si hay una partícula en esta posición, mueva hacia abajo si es posible
     if (y < height && isEmpty(x, y + 1))
@@ -134,7 +136,7 @@ void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
     else p.is_stagnant = true;
 
    
-    std::cout << p.frame_life << "\n";
+    //std::cout << p.life_time << "\n";
 }
 
 void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
@@ -142,7 +144,7 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
     Particle& p = chunk_state[x][y];
 
     //nada que comprobar, ya es suelo fijo;
-    if (p.has_been_updated) return;
+    if (has_been_updated[y*width + x]) return;
 
     //std::cout << "position: " << x << " " << y << "\n";
     
@@ -168,10 +170,7 @@ void ParticleSimulation::update() {
     // se actualiza en orden de abajo a arriba
     for (uint32_t y = 0; y < height; ++y) {
         for (uint32_t x = 0; x < width; x++) {
-            material mat = chunk_state[x][y].mat;
-            if (mat != empty)
-                int n = 0;
-            switch (mat)
+            switch (chunk_state[x][y].mat)
             {
             case sand:
                 updateSand(x, y);
@@ -194,9 +193,7 @@ void ParticleSimulation::update() {
     updateTexture();
 
     //señalo otra vez todas las particulas como no modificadas
-    for (int i = 0; i < height; i++)
-        for (int j = 0; j < width; j++)
-            chunk_state[i][j].has_been_updated = false;
+    std::memset(has_been_updated, false, width * height);
 }
 
 bool ParticleSimulation::isInside(int x, int y) const {
@@ -216,6 +213,7 @@ void ParticleSimulation::setParticle(int x, int y) {
             
             case gas: 
                 chunk_state[simX][simY].mat = gas;
+                chunk_state[simX][simY].life_time = gas_life_time;
                 break;
 
             case water: 

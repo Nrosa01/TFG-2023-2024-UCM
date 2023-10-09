@@ -25,14 +25,26 @@ struct colour_t {
 struct Particle {
 	bool is_stagnant = false;
 	material mat = empty;
-	//colour_t colour;
-	bool has_been_updated = false;
 
 	//time in which the particles dissapear
 	//only applicable to gas and combustionable particles
-	uint32_t frame_life = 300;
+	uint32_t life_time = 300;
+
+
+	//colour_t colour;
 };
 
 
 const static colour_t yellow{ 255,255,0,255 };
 const static colour_t grey{ 128,128,128,255 };
+
+const static int gas_life_time = 700;
+
+//const static colour_t empty_colour{ 0,0,0,0 };
+//
+//const static Particle empty_particle{ false,empty,0 };
+//const static Particle sand_particle{ false,sand,0  };
+//const static Particle gas_particle{ false,gas,300 };
+
+
+

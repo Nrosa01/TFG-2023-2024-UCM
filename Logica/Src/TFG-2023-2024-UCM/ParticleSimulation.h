@@ -39,6 +39,7 @@ private:
     int height;
 
     Particle** chunk_state;
+    bool* has_been_updated;
     GLuint textureID; // ID de la textura
     std::unique_ptr<Quad> quad;
     std::vector<unsigned char> textureData; // Datos de textura RGBA
