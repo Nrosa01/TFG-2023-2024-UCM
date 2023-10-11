@@ -121,7 +121,68 @@ void ParticleSimulation::updateParticle(position next_pos, position last_pos,con
     chunk_state[last_pos.x][last_pos.y].mat = empty;
 }
 void ParticleSimulation::pushOtherParticle(position pos) {
-    Particle& p = chunk_state[pos.x][pos.y];
+    
+    for (int i = -3; i < 3; ++i) {
+        for (int j = 1; j < 10; ++j) {
+            if (isInside(pos.x+i, pos.y+j) && isEmpty(pos.x + i, pos.y + j)) {
+                updateParticle({ pos.x + i, pos.y + j }, pos, chunk_state[pos.x][pos.y]);
+                break;
+            }
+        }
+    }
+}
+
+
+void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
+
+    Particle& p = chunk_state[x][y];
+
+    //nada que comprobar, ya es suelo fijo;
+    if (has_been_updated[y * width + x]) return;
+    
+    // Si hay una partícula en esta posición, mueva hacia abajo si es posible
+    if (y > 0 && isEmpty(x, y - 1))
+        updateParticle({ x,y - 1 }, { x,y }, p);
+
+    else {
+        bool can_move_left = x > 0 && y > 0 && isEmpty(x - 1, y - 1);
+        bool can_move_right = x < width - 1 && y > 0 && isEmpty(x + 1, y - 1);
+
+        if (can_move_left && can_move_right) {
+            int left = rand() % 2;
+            if(left)
+				updateParticle({ x - 1,y - 1 }, { x,y }, p);
+			else
+				updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
+        }
+        // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
+        else if (can_move_left)
+            updateParticle({ x - 1,y - 1 }, { x,y }, p);
+        // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
+        else if (can_move_right)
+            updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
+        //std::cout << "position: " << x << " " << y << "\n";
+
+            //check if the particles below have lower density
+        else if (y > 0 && Particle::materialPhysics[p.mat].density > Particle::materialPhysics[chunk_state[x][y - 1].mat].density) {
+            pushOtherParticle({ x,y - 1 });
+            updateParticle({ x,y - 1 }, { x,y }, p);
+        }
+
+        else if (x > 0 && y > 0 && Particle::materialPhysics[p.mat].density > Particle::materialPhysics[chunk_state[x - 1][y - 1].mat].density) {
+            pushOtherParticle({ x - 1,y - 1 });
+            updateParticle({ x - 1,y - 1 }, { x,y }, p);
+        }
+        else if (x < width - 1 && y > 0 && Particle::materialPhysics[p.mat].density > Particle::materialPhysics[chunk_state[x + 1][y - 1].mat].density) {
+            pushOtherParticle({ x + 1,y - 1 });
+            updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
+        }
+
+
+        // en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
+        // señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
+        else p.is_stagnant = true;
+    }
 }
 
 
@@ -133,26 +194,51 @@ void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
 
     //std::cout << "position: " << x << " " << y << "\n";
 
-    // Si hay una partícula en esta posición, mueva hacia abajo si es posible
+     // Si hay una partícula en esta posición, mueva hacia abajo si es posible
     if (y > 0 && isEmpty(x, y - 1))
         updateParticle({ x,y - 1 }, { x,y }, p);
 
-    // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
-    else if (x > 0 && y > 0 && isEmpty(x - 1, y - 1))
-        updateParticle({ x - 1,y - 1 }, { x,y }, p);
+    else {
+        bool can_move_left = x > 0 && y > 0 && isEmpty(x - 1, y - 1);
+        bool can_move_right = x < width - 1 && y > 0 && isEmpty(x + 1, y - 1);
 
-    // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
-    else if (x < width - 1 && y > 0 && isEmpty(x + 1, y - 1))
-        updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
+        if (can_move_left && can_move_right) {
+            int left = rand() % 2;
+            if (left)
+                updateParticle({ x - 1,y - 1 }, { x,y }, p);
+            else
+                updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
+        }
+        // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
+        else if (can_move_left)
+            updateParticle({ x - 1,y - 1 }, { x,y }, p);
+        // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
+        else if (can_move_right)
+            updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
+        //std::cout << "position: " << x << " " << y << "\n";
+        else {
+            can_move_left = x > 0 && y > 0 && isEmpty(x - 1, y);
+            can_move_right = x < width - 1 && y > 0 && isEmpty(x + 1, y);
 
-    else if (x > 0 && y > 0 && isEmpty(x - 1, y))
-        updateParticle({ x - 1,y  }, { x,y }, p);
-
-    else if (x < width - 1 && y > 0 && isEmpty(x + 1, y ))
-        updateParticle({ x + 1 ,y  }, { x,y }, p);
-    // en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
-    // señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
-    else p.is_stagnant = true;
+            if (can_move_left && can_move_right) {
+                int left = rand() % 2;
+                if (left)
+                    updateParticle({ x - 1,y }, { x,y }, p);
+                else
+                    updateParticle({ x + 1 ,y }, { x,y }, p);
+            }
+            // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
+            else if (can_move_left)
+                updateParticle({ x - 1,y }, { x,y }, p);
+            // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
+            else if (can_move_right)
+                updateParticle({ x + 1 ,y }, { x,y }, p);
+            else p.is_stagnant = true;
+        }
+        // en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
+        // señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
+      
+    }
 }
 
 void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
@@ -187,47 +273,6 @@ void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
     //std::cout << p.life_time << "\n";
 }
 
-void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
-
-    Particle& p = chunk_state[x][y];
-
-    //nada que comprobar, ya es suelo fijo;
-    if (has_been_updated[y*width + x]) return;
-
-    //std::cout << "position: " << x << " " << y << "\n";
-    
-    // Si hay una partícula en esta posición, mueva hacia abajo si es posible
-    if (y > 0 && isEmpty(x, y - 1) )
-        updateParticle({ x,y - 1 }, { x,y }, p);
-
-    // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
-    else if (x > 0 && y > 0 && isEmpty(x - 1, y - 1))
-        updateParticle({ x - 1,y - 1 }, { x,y }, p);
-
-    else if (x < width - 1 && y > 0 && isEmpty(x + 1, y - 1))
-        // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
-        updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
-
-    //check if the particles below have lower density
-    else if (y > 0 && Particle::materialPhysics[p.mat].density > Particle::materialPhysics[chunk_state[x][y - 1].mat].density) {
-        pushOtherParticle({ x,y - 1 });
-        updateParticle({ x,y - 1 }, { x,y }, p);
-    }
-
-    else if (x > 0 && y > 0 && Particle::materialPhysics[p.mat].density > Particle::materialPhysics[chunk_state[x - 1][y - 1].mat].density) {
-        pushOtherParticle({ x-1,y - 1 });
-        updateParticle({ x - 1,y - 1 }, { x,y }, p);
-    }
-    else if (x < width - 1 && y > 0 && Particle::materialPhysics[p.mat].density > Particle::materialPhysics[chunk_state[x + 1][y - 1].mat].density) {
-        pushOtherParticle({ x + 1,y - 1 });
-        updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
-    }
-
-
-    // en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
-    // señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
-     else p.is_stagnant = true;
-}
 
 void ParticleSimulation::setMaterial(material mat)
 {
