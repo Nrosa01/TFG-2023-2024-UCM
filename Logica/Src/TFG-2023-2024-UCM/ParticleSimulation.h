@@ -7,7 +7,7 @@
 #include <memory>
 #include <vector>
 #include "Particle.h"
-
+#include "Common_utils.h"
 
 //type of particle to be used
 //this is just for testing, it will be removed in the future
@@ -54,9 +54,13 @@ private:
 
     bool isEmpty(uint32_t x, uint32_t y);
 
+    void updateTemporalParticle(position next_pos, position last_pos, const Particle& particle);
+
     bool isGas(uint32_t x, uint32_t y);
 
     void updateParticle(position next_pos, position last_pos, const Particle& particle);
+
+    void pushOtherParticle(position pos);
 
     void updateWater(uint32_t x, uint32_t y);
 

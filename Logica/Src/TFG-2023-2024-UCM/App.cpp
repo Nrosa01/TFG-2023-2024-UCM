@@ -71,6 +71,7 @@ void App::run() {
 
 		// Limitar la velocidad de actualización a 60 FPS
 		if (deltaTime >= targetFrameTime) {
+			handleInput();
 			update();
 			fixedUpdate(deltaTime);
 			render();
@@ -113,17 +114,12 @@ void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 		if (key == GLFW_KEY_ESCAPE)
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 		//provisional Input
-		else if (key == GLFW_KEY_W)
-			currentApp->sandSimulation.get()->setMaterial(water);
-
-		else if (key == GLFW_KEY_S)
-			currentApp->sandSimulation.get()->setMaterial(sand);
-
-		else if (key == GLFW_KEY_R)
-			currentApp->sandSimulation.get()->setMaterial(rock);
-
-		else if (key == GLFW_KEY_G)
-			currentApp->sandSimulation.get()->setMaterial(gas);
+		else if (key == GLFW_KEY_W ||
+				key == GLFW_KEY_S ||
+				key == GLFW_KEY_R ||
+				key == GLFW_KEY_G)
+			currentApp->events.push(key);
+	
 
 		
 	}
@@ -137,6 +133,22 @@ void App::mouseCallback(GLFWwindow* window, int button, int action, int mods) {
 			currentApp->pressingMouse = true;
 		else if (action == GLFW_RELEASE)
 			currentApp->pressingMouse = false;
+	}
+}
+
+void App::handleInput()
+{
+	while (!events.empty()) {
+		int key = events.front();
+		if(key == GLFW_KEY_W)
+			sandSimulation->setMaterial(water);
+		else if (key == GLFW_KEY_S)
+			sandSimulation->setMaterial(sand);
+		else if (key == GLFW_KEY_R)
+			sandSimulation->setMaterial(rock);
+		else if (key == GLFW_KEY_G)
+			sandSimulation->setMaterial(gas);
+		events.pop();
 	}
 }
 

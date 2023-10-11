@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 #include <imgui.h>
+#include <queue>
 
 class ParticleSimulation;
 class Triangle;
@@ -25,11 +26,14 @@ private:
     const uint16_t MAX_PHYSICS_STEP_PER_FRAME = 5;
     double accumulator;
 
+    void handleInput();
     void render();
     void update();
     void fixedUpdate(float deltaTime);
     
     bool pressingMouse = false; //esta feo pero por ahora sive
+    //inpput events
+    std::queue<int> events;
 
     static App* currentApp;
     static const int TARGET_FPS = 60;
@@ -42,4 +46,6 @@ private:
     ImGuiIO* io;
     std::unique_ptr<Triangle> triangle;
     std::unique_ptr<ParticleSimulation> sandSimulation;
+
+    
 };

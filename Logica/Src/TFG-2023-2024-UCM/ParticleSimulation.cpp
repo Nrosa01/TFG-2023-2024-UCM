@@ -7,7 +7,7 @@
 #include <GLFW/glfw3.h>
 #include "Quad.h"
 #include <iostream>
-
+#include "Common_utils.h"
 
 static const double PI = 3.1415926535;
 
@@ -23,6 +23,8 @@ ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wH
         
         
     }
+    Particle::initializeMaterialPhysics();
+
 
     has_been_updated = new bool [width * height] ;
     std::memset(has_been_updated, false, width * height);
@@ -74,7 +76,7 @@ void ParticleSimulation::updateTexture() {
                 break;
             case gas:
                 c = grey;
-                c.a = grey.a * chunk_state[x][y].life_time / gas_life_time;
+                c.a = grey.a * chunk_state[x][y].life_time / Particle::gas_life_time;
             	break;
             case water:
                 c = blue;
@@ -102,14 +104,24 @@ void ParticleSimulation::updateTexture() {
 
 
 bool ParticleSimulation::isEmpty(uint32_t x, uint32_t y) {
-    return  chunk_state[x][y].mat == empty ;
+    return  chunk_state[x][y].mat == empty;
 }
+
+void ParticleSimulation::updateTemporalParticle(position next_pos, position last_pos, const Particle& particle) {
+    chunk_state[next_pos.x][next_pos.y].mat = particle.mat;
+    chunk_state[next_pos.x][next_pos.y].life_time = particle.life_time;
+    has_been_updated[next_pos.x + next_pos.y * width] = true;
+    chunk_state[last_pos.x][last_pos.y].mat = empty;
+}
+
 
 void ParticleSimulation::updateParticle(position next_pos, position last_pos,const Particle& particle) {
     chunk_state[next_pos.x][next_pos.y].mat = particle.mat;
-    chunk_state[next_pos.x][next_pos.y].life_time = particle.life_time;
     has_been_updated[next_pos.x + next_pos.y* width] = true;
     chunk_state[last_pos.x][last_pos.y].mat = empty;
+}
+void ParticleSimulation::pushOtherParticle(position pos) {
+    Particle& p = chunk_state[pos.x][pos.y];
 }
 
 
@@ -156,15 +168,15 @@ void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
 
     // Si hay una partícula en esta posición, mueva hacia abajo si es posible
     if (y < height && isEmpty(x, y + 1))
-        updateParticle({ x,y + 1 }, { x,y }, p);
+        updateTemporalParticle({ x,y + 1 }, { x,y }, p);
 
     // Si no puede moverse hacia abajo, intente moverse hacia la izquierda
     else if (x > 0 && y < height && isEmpty(x - 1, y + 1))
-        updateParticle({ x - 1,y + 1 }, { x,y }, p);
+        updateTemporalParticle({ x - 1,y + 1 }, { x,y }, p);
 
     else if (x < width - 1 && y < height && isEmpty(x + 1, y + 1))
         // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
-        updateParticle({ x + 1 ,y + 1 }, { x,y }, p);
+        updateTemporalParticle({ x + 1 ,y + 1 }, { x,y }, p);
 
  
     // en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
@@ -195,6 +207,22 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
     else if (x < width - 1 && y > 0 && isEmpty(x + 1, y - 1))
         // Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
         updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
+
+    //check if the particles below have lower density
+    else if (y > 0 && Particle::materialPhysics[p.mat].density > Particle::materialPhysics[chunk_state[x][y - 1].mat].density) {
+        pushOtherParticle({ x,y - 1 });
+        updateParticle({ x,y - 1 }, { x,y }, p);
+    }
+
+    else if (x > 0 && y > 0 && Particle::materialPhysics[p.mat].density > Particle::materialPhysics[chunk_state[x - 1][y - 1].mat].density) {
+        pushOtherParticle({ x-1,y - 1 });
+        updateParticle({ x - 1,y - 1 }, { x,y }, p);
+    }
+    else if (x < width - 1 && y > 0 && Particle::materialPhysics[p.mat].density > Particle::materialPhysics[chunk_state[x + 1][y - 1].mat].density) {
+        pushOtherParticle({ x + 1,y - 1 });
+        updateParticle({ x + 1 ,y - 1 }, { x,y }, p);
+    }
+
 
     // en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
     // señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
@@ -257,7 +285,7 @@ void ParticleSimulation::setParticle(int x, int y) {
         for (int j = simY - radius_brush; j < simY + radius_brush; ++j) {
             int simX_aux = i - simX; // horizontal offset
             int simY_aux = j - simY; // vertical offset
-            if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside (i, j))
+            if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside (i, j) && isEmpty(i,j))
             {
                
                 switch (type_particle) {
@@ -267,7 +295,7 @@ void ParticleSimulation::setParticle(int x, int y) {
 
                 case gas:
                     chunk_state[i][j].mat = gas;
-                    chunk_state[i][j].life_time = gas_life_time;
+                    chunk_state[i][j].life_time = Particle::gas_life_time;
                     break;
 
                 case water:
@@ -306,7 +334,7 @@ void ParticleSimulation::setParticle(int x, int y) {
 
 bool ParticleSimulation::isParticle(int x, int y) const {
     if (isInside(x, y)) {
-        return  chunk_state[x][y].mat == sand;
+        return  !chunk_state[x][y].mat == empty;
     }
     return false;
 }
