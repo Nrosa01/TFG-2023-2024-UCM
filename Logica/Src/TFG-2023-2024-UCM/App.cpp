@@ -112,7 +112,7 @@ void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 
 		if (key == GLFW_KEY_ESCAPE)
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
-		//provision Input
+		//provisional Input
 		else if (key == GLFW_KEY_W)
 			currentApp->sandSimulation.get()->setMaterial(water);
 

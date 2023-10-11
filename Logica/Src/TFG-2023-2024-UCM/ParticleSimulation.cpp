@@ -250,45 +250,58 @@ void ParticleSimulation::setParticle(int x, int y) {
     // Convierte las coordenadas de pantalla a coordenadas de la simulación
     int simX = (x * width) / wWidth;
     int simY = height - (y * height) / wHeight - 1;
-
-
-    double minAngle = acos(1. - 1. / brush_size);
-    minAngle *= 0.9;
-
-
     int simX_aux = simX;
     int simY_aux = simY;
 
-    double angle, x1, y1;
+    for(int i = simX- radius_brush; i< simX + radius_brush; ++i)
+        for (int j = simY - radius_brush; j < simY + radius_brush; ++j) {
+            int simX_aux = i - simX; // horizontal offset
+            int simY_aux = j - simY; // vertical offset
+            if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside (i, j))
+            {
+               
+                switch (type_particle) {
+                case sand:
+                    chunk_state[i][j].mat = sand;
+                    break;
 
-    for (angle = 0; angle < 360; angle += minAngle)
-    {
-        x1 = brush_size * cos(angle * PI / 180);
-        y1 = brush_size * sin(angle * PI / 180);      
+                case gas:
+                    chunk_state[i][j].mat = gas;
+                    chunk_state[i][j].life_time = gas_life_time;
+                    break;
 
-        if (isInside(simX + x1, simY + y1)) {
-            simX_aux = simX + x1;
-            simY_aux = simY + y1;
-            switch (type_particle) {
-            case sand:
-                chunk_state[simX_aux][simY_aux].mat = sand;
-                break;
-
-            case gas:
-                chunk_state[simX_aux][simY_aux].mat = gas;
-                chunk_state[simX_aux][simY_aux].life_time = gas_life_time;
-                break;
-
-            case water:
-                chunk_state[simX_aux][simY_aux].mat = water;
-                break;
-            case rock:
-                chunk_state[simX_aux][simY_aux].mat = rock;
+                case water:
+                    chunk_state[i][j].mat = water;
+                    break;
+                case rock:
+                    chunk_state[i][j].mat = rock;
+                }
             }
         }
-	}
-
    
+  
+
+
+    //if (isInside(simX + x1, simY + y1)) {
+    //    simX_aux = simX + x1;
+    //    simY_aux = simY + y1;
+    //    switch (type_particle) {
+    //    case sand:
+    //        chunk_state[simX_aux][simY_aux].mat = sand;
+    //        break;
+
+    //    case gas:
+    //        chunk_state[simX_aux][simY_aux].mat = gas;
+    //        chunk_state[simX_aux][simY_aux].life_time = gas_life_time;
+    //        break;
+
+    //    case water:
+    //        chunk_state[simX_aux][simY_aux].mat = water;
+    //        break;
+    //    case rock:
+    //        chunk_state[simX_aux][simY_aux].mat = rock;
+    //    }
+    //}
 }
 
 bool ParticleSimulation::isParticle(int x, int y) const {

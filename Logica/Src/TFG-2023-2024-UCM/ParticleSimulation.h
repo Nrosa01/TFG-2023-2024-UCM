@@ -12,7 +12,8 @@
 //type of particle to be used
 //this is just for testing, it will be removed in the future
 
-static const float brush_size = 2;
+static const float brush_size = 5;
+static const float radius_brush = brush_size / 2;
 
 class Quad;
 
