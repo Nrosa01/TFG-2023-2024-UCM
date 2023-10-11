@@ -201,6 +201,11 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
      else p.is_stagnant = true;
 }
 
+void ParticleSimulation::setMaterial(material mat)
+{
+    type_particle = mat;
+}
+
 void ParticleSimulation::update() {
 
     // se actualiza en orden de abajo a arriba

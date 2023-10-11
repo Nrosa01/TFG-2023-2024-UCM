@@ -108,8 +108,24 @@ void App::release() {
 }
 
 void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	if (action == GLFW_PRESS) {
+
+		if (key == GLFW_KEY_ESCAPE)
+			glfwSetWindowShouldClose(window, GLFW_TRUE);
+		//provision Input
+		else if (key == GLFW_KEY_W)
+			currentApp->sandSimulation.get()->setMaterial(water);
+
+		else if (key == GLFW_KEY_S)
+			currentApp->sandSimulation.get()->setMaterial(sand);
+
+		else if (key == GLFW_KEY_R)
+			currentApp->sandSimulation.get()->setMaterial(rock);
+
+		else if (key == GLFW_KEY_G)
+			currentApp->sandSimulation.get()->setMaterial(gas);
+
+		
 	}
 }
 

@@ -11,7 +11,7 @@
 
 //type of particle to be used
 //this is just for testing, it will be removed in the future
-static const material type_particle = rock;
+
 static const float brush_size = 2;
 
 class Quad;
@@ -28,12 +28,15 @@ public:
     bool isInside(int x, int y) const;
     int getWidth() const; // Obtiene el ancho de la simulación
     int getHeight() const; // Obtiene la altura de la simulación
+    void setMaterial(material mat); //change the material to be used
 
     void render();
 
 
 
 private:
+    material type_particle = sand;
+
     int wWidth;
     int wHeight;
     int width;
@@ -59,5 +62,9 @@ private:
     void updateGas(uint32_t x, uint32_t y);
 
     void updateSand(uint32_t x, uint32_t y);
+
+   
+
+    
 };
 
