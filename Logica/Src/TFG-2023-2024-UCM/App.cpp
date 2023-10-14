@@ -15,7 +15,7 @@
 
 App* App::currentApp = nullptr;
 
-App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr) {
+App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr), selectedMaterial(sand), accumulator(0) {
 	currentApp = this;
 }
 
@@ -140,14 +140,15 @@ void App::handleInput()
 {
 	while (!events.empty()) {
 		int key = events.front();
-		if(key == GLFW_KEY_W)
-			sandSimulation->setMaterial(water);
+		if (key == GLFW_KEY_W)
+			selectedMaterial = water;
 		else if (key == GLFW_KEY_S)
-			sandSimulation->setMaterial(sand);
+			selectedMaterial = sand;
 		else if (key == GLFW_KEY_R)
-			sandSimulation->setMaterial(rock);
+			selectedMaterial = rock;
 		else if (key == GLFW_KEY_G)
-			sandSimulation->setMaterial(gas);
+			selectedMaterial = gas;
+		
 		events.pop();
 	}
 }
@@ -167,6 +168,27 @@ void App::render()
 	// Depurar FPS desde ImGui
 	ImGui::Begin("FPS Window");
 	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+	ImGui::End();
+
+	// En tu función de renderizado de ImGui:
+	ImGui::Begin("Material Selector");
+
+
+	if (ImGui::RadioButton("Water", selectedMaterial == water)) {
+		selectedMaterial = water;
+	}
+	if (ImGui::RadioButton("Sand", selectedMaterial == sand)) {
+		selectedMaterial = sand;
+	}
+	if (ImGui::RadioButton("Rock", selectedMaterial == rock)) {
+		selectedMaterial = rock;
+	}
+	if (ImGui::RadioButton("Gas", selectedMaterial == gas)) {
+		selectedMaterial = gas;
+	}
+
+	sandSimulation->setMaterial(selectedMaterial);
+
 	ImGui::End();
 
 	//quad->render();

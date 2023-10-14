@@ -10,6 +10,7 @@ class ParticleSimulation;
 class Triangle;
 class Viewport;
 class Camera;
+enum material;
 
 class App {
 public:
@@ -47,5 +48,5 @@ private:
     std::unique_ptr<Triangle> triangle;
     std::unique_ptr<ParticleSimulation> sandSimulation;
 
-    
+    material selectedMaterial;
 };
