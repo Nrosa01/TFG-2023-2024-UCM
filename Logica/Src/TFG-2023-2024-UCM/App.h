@@ -49,4 +49,5 @@ private:
     std::unique_ptr<ParticleSimulation> sandSimulation;
 
     material selectedMaterial;
+    bool showMaterialNames = true;
 };

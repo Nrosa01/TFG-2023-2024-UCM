@@ -173,19 +173,29 @@ void App::render()
 	// En tu función de renderizado de ImGui:
 	ImGui::Begin("Material Selector");
 
-
-	if (ImGui::RadioButton("Water", selectedMaterial == water)) {
+	if (ImGui::Selectable("Water", selectedMaterial == water)) {
 		selectedMaterial = water;
 	}
-	if (ImGui::RadioButton("Sand", selectedMaterial == sand)) {
+	ImGui::SameLine();
+	ImGui::ColorButton("WaterColor", ImVec4(0.0f, 0.0f, 1.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+
+	if (ImGui::Selectable("Sand", selectedMaterial == sand)) {
 		selectedMaterial = sand;
 	}
-	if (ImGui::RadioButton("Rock", selectedMaterial == rock)) {
+	ImGui::SameLine();
+	ImGui::ColorButton("SandColor", ImVec4(0.86f, 0.66f, 0.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+
+	if (ImGui::Selectable("Rock", selectedMaterial == rock)) {
 		selectedMaterial = rock;
 	}
-	if (ImGui::RadioButton("Gas", selectedMaterial == gas)) {
+	ImGui::SameLine();
+	ImGui::ColorButton("RockColor", ImVec4(0.5f, 0.5f, 0.5f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+
+	if (ImGui::Selectable("Gas", selectedMaterial == gas)) {
 		selectedMaterial = gas;
 	}
+	ImGui::SameLine();
+	ImGui::ColorButton("GasColor", ImVec4(0.8f, 0.8f, 0.8f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
 
 	sandSimulation->setMaterial(selectedMaterial);
 
