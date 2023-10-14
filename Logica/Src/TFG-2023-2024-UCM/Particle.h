@@ -1,38 +1,49 @@
 #pragma once
 #include <cstdint>
+#include <unordered_map>
 
 //Sand particle
 
+enum material { sand, gas, water, rock, empty };
 
-enum material { sand,gas,water, empty };
+/*
+* density summary:
+* 0 = go-through (gas)
+* 1 = light-fluid (water)
+* 2 = heavy-fluid (oil)
+* 3 = solid (sand, rock etc)
+* the rest of the values are multipliers for velocity, 1 is normal, 2 is twice as fast, 0 is immobile
+*/
 
-
-struct position {
-	uint32_t x;
-	uint32_t y;
+struct physics_data {
+	uint8_t density;
+	uint8_t falling_speed ;
+	uint8_t propagation_speed;
 };
+
+class Particle {
+
+
 	
+public:
+	static std::unordered_map<material, physics_data> materialPhysics;
+	static const int gas_life_time = 300;
+	static void initializeMaterialPhysics();
 
-struct colour_t {
-	uint8_t r;
-	uint8_t g;
-	uint8_t b;
-	uint8_t a;
-	
-};
-
-
-struct Particle {
 	bool is_stagnant = false;
 	material mat = empty;
-	//colour_t colour;
-	bool has_been_updated = false;
 
 	//time in which the particles dissapear
 	//only applicable to gas and combustionable particles
-	uint32_t frame_life = 300;
+	uint32_t life_time = 0;
+	
+
+
+	//colour_t colour;
 };
 
 
-const static colour_t yellow{ 255,255,0,255 };
-const static colour_t grey{ 128,128,128,255 };
+
+
+
+

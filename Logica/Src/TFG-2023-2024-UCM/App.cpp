@@ -71,7 +71,9 @@ void App::run() {
 
 		// Limitar la velocidad de actualización a 60 FPS
 		if (deltaTime >= targetFrameTime) {
+			handleInput();
 			update();
+			fixedUpdate(deltaTime);
 			render();
 
 			lastFrameTime = currentTime;
@@ -94,32 +96,6 @@ void App::run() {
 			}
 		}
 	}
-
-
-	//sin sleep_for
-	//while (!glfwWindowShouldClose(window.get()) && isRunning) {
-	//	double currentTime = glfwGetTime();
-	//	double deltaTime = currentTime - lastFrameTime;
-	//	
-	//	
-	//	// Limitar la velocidad de actualización a 60 FPS (por alguna razón no va a más de 40)
-	//	if (deltaTime >= targetFrameTime) {
-	//		update();
-	//		render();
-
-	//		lastFrameTime = currentTime;
-
-	//		fpsUpdateTime += deltaTime;
-	//		frameCount++;
-	//		// Calcular FPS y mostrarlos en la consola
-	//		if (fpsUpdateTime >= 1.0) {
-	//			double fps = (double)(frameCount) / fpsUpdateTime;
-	//			std::cout << "FPS: " << fps << std::endl;
-	//			frameCount = 0;
-	//			fpsUpdateTime = 0.0;
-	//		}
-	//	}
-	//}
 }
 
 
@@ -133,8 +109,19 @@ void App::release() {
 }
 
 void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	if (action == GLFW_PRESS) {
+
+		if (key == GLFW_KEY_ESCAPE)
+			glfwSetWindowShouldClose(window, GLFW_TRUE);
+		//provisional Input
+		else if (key == GLFW_KEY_W ||
+				key == GLFW_KEY_S ||
+				key == GLFW_KEY_R ||
+				key == GLFW_KEY_G)
+			currentApp->events.push(key);
+	
+
+		
 	}
 }
 
@@ -146,6 +133,22 @@ void App::mouseCallback(GLFWwindow* window, int button, int action, int mods) {
 			currentApp->pressingMouse = true;
 		else if (action == GLFW_RELEASE)
 			currentApp->pressingMouse = false;
+	}
+}
+
+void App::handleInput()
+{
+	while (!events.empty()) {
+		int key = events.front();
+		if(key == GLFW_KEY_W)
+			sandSimulation->setMaterial(water);
+		else if (key == GLFW_KEY_S)
+			sandSimulation->setMaterial(sand);
+		else if (key == GLFW_KEY_R)
+			sandSimulation->setMaterial(rock);
+		else if (key == GLFW_KEY_G)
+			sandSimulation->setMaterial(gas);
+		events.pop();
 	}
 }
 
@@ -193,6 +196,20 @@ void App::update()
 		// Agrega partículas de arena en las coordenadas de la simulación
 		currentApp->sandSimulation->setParticle(simX, simY);
 	}
+}
 
-	sandSimulation->update();
+void App::fixedUpdate(float deltaTime)
+{
+	accumulator += deltaTime;
+	uint16_t physics_step_this_frame = 0;
+
+
+	while (accumulator >= PHYSICS_STEP && physics_step_this_frame < MAX_PHYSICS_STEP_PER_FRAME)
+	{
+		// Here we should call scene.fixedUpdate or something like that
+		sandSimulation->update();
+
+		accumulator -= PHYSICS_STEP;
+		physics_step_this_frame++;
+	}
 }

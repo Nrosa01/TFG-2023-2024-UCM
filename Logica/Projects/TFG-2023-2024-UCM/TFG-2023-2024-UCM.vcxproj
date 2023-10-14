@@ -116,6 +116,7 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\App.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Camera.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Particle.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Quad.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Triangle.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_truetype.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\App.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Camera.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Common_utils.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Particle.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Quad.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.h" />

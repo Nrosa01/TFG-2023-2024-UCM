@@ -7,11 +7,13 @@
 #include <memory>
 #include <vector>
 #include "Particle.h"
-
+#include "Common_utils.h"
 
 //type of particle to be used
 //this is just for testing, it will be removed in the future
-static const material type_particle = gas;
+
+static const float brush_size = 5;
+static const float radius_brush = brush_size / 2;
 
 class Quad;
 
@@ -27,18 +29,22 @@ public:
     bool isInside(int x, int y) const;
     int getWidth() const; // Obtiene el ancho de la simulación
     int getHeight() const; // Obtiene la altura de la simulación
+    void setMaterial(material mat); //change the material to be used
 
     void render();
 
 
 
 private:
+    material type_particle = sand;
+
     int wWidth;
     int wHeight;
     int width;
     int height;
 
     Particle** chunk_state;
+    bool* has_been_updated;
     GLuint textureID; // ID de la textura
     std::unique_ptr<Quad> quad;
     std::vector<unsigned char> textureData; // Datos de textura RGBA
@@ -48,12 +54,30 @@ private:
 
     bool isEmpty(uint32_t x, uint32_t y);
 
+    void updateTemporalParticle(position next_pos, position last_pos, const Particle& particle);
+
+    bool isGas(uint32_t x, uint32_t y);
+
     void updateParticle(position next_pos, position last_pos, const Particle& particle);
+
+    void pushOtherParticle(position pos);
 
     void updateWater(uint32_t x, uint32_t y);
 
     void updateGas(uint32_t x, uint32_t y);
 
+    inline bool goDown(uint32_t x, uint32_t y, const Particle& particle);
+
+    inline bool goDownSides(uint32_t x, uint32_t y, const Particle& particle);
+
+    inline bool goDownDensity(uint32_t x, uint32_t y, const Particle& particle);
+
+    inline bool goSides(uint32_t x, uint32_t y, const Particle& particle);
+
     void updateSand(uint32_t x, uint32_t y);
+
+   
+
+    
 };
 
