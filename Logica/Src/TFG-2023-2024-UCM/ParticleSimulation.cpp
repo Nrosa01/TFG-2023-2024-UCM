@@ -428,19 +428,22 @@ void ParticleSimulation::setParticle(int x, int y) {
             int simY_aux = j - simY; // vertical offset
             if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside (i, j) && isEmpty(i,j))
             {
-               
+               // TODO: Create a particle factory
                 switch (type_particle) {
                 case sand:
                     chunk_state[i][j].mat = sand;
+                    chunk_state[i][j].speed = 1;
                     break;
 
                 case gas:
                     chunk_state[i][j].mat = gas;
                     chunk_state[i][j].life_time = Particle::gas_life_time;
+                    chunk_state[i][j].speed = 3;
                     break;
 
                 case water:
                     chunk_state[i][j].mat = water;
+                    chunk_state[i][j].speed = 4;
                     break;
                 case rock:
                     chunk_state[i][j].mat = rock;

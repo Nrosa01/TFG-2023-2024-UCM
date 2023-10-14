@@ -21,11 +21,9 @@ struct physics_data {
 	uint8_t propagation_speed;
 };
 
-class Particle {
-
-
-	
+struct Particle {
 public:
+	// TODO: Convert everything to camelCase. Const members should be ALL_CAPS
 	static std::unordered_map<material, physics_data> materialPhysics;
 	static const int gas_life_time = 300;
 	static void initializeMaterialPhysics();
@@ -37,8 +35,14 @@ public:
 	//only applicable to gas and combustionable particles
 	uint32_t life_time = 0;
 	
-
-
+	// This variable control how many pixels per frame the particle will transverse
+	// This generates dependency from the physics step, but we prefer this. We could also measeure the time
+	// in miliseconds between frame to not be depending on the number of times the physics process is called but...
+	// That brings inconsistency in the update, fixed update was implemented to avoid this, so it doesn't make sense to add it at all...
+	// Best we can do for now it's stick with this and disallow users to be able to change the physics update rate.
+	
+	// Furthermore this speed parameter doesn't make sense, is this falling speed? propagation? This is just here temporarilly to test the speed implmenetation
+	uint32_t speed = 0;
 	//colour_t colour;
 };
 
