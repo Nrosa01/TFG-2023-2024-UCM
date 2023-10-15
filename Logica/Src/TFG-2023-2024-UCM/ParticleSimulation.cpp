@@ -158,27 +158,51 @@ bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle
 	return true;
 }
 
+// This method should split in goDownLeft and goDownRight
 bool ParticleSimulation::goDownSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed) {
-	bool can_move_left = x > 0 && y > 0 && isEmpty(x - 1, y - 1);
-	bool can_move_right = x < width - 1 && y > 0 && isEmpty(x + 1, y - 1);
+	bool can_move_left = (x > 0) && (y > 0) && (x - 1 < width) && (y - 1 < height) && isEmpty(x - 1, y - 1);
 
-	if (can_move_left && can_move_right) {
-		int left = rand() % 2;
-		if (left)
-			updateParticle({ x - 1,y - 1 }, { x,y }, particle);
-		else
-			updateParticle({ x + 1 ,y - 1 }, { x,y }, particle);
+	uint32_t new_x = x;
+	uint32_t new_y = y;
+
+	if (can_move_left) {
+		while (speed > 0) {
+			if (new_x > 0 && new_y > 0 && new_x - 1 < width && new_y - 1 < height && isEmpty(new_x - 1, new_y - 1)) {
+				new_x -= 1;
+				new_y -= 1;
+				speed--;
+			}
+			else {
+				break;
+			}
+		}
 	}
-	// Si no puede moverse hacia abajo, intente moverse hacia la izquierda
-	else if (can_move_left)
-		updateParticle({ x - 1,y - 1 }, { x,y }, particle);
-	// Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
-	else if (can_move_right)
-		updateParticle({ x + 1 ,y - 1 }, { x,y }, particle);
+	else {
+		bool can_move_right = (x < width - 1) && (y > 0) && (x + 1 < width) && (y - 1 < height) && isEmpty(x + 1, y - 1);
 
-	return can_move_left || can_move_right;
+		if (can_move_right) {
+			while (speed > 0) {
+				if (new_x < width - 1 && new_y > 0 && new_x + 1 < width && new_y - 1 < height && isEmpty(new_x + 1, new_y - 1)) {
+					new_x += 1;
+					new_y -= 1;
+					speed--;
+				}
+				else {
+					break;
+				}
+			}
+		}
+	}
 
+	if (new_x != x || new_y != y) {
+		chunk_state[new_x][new_y] = particle;
+		chunk_state[x][y] = Particle();
+		return true;
+	}
+
+	return false;
 }
+
 
 bool ParticleSimulation::goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed) {
 
@@ -229,9 +253,9 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 	if (has_been_updated[y * width + x]) return;
 
 	if (goDown(x, y, p, p.speed)) return;
-	//if (goDownSides(x, y, p, p.speed))return;
-	//if (goDownDensity(x, y, p, p.speed)) return;
-	//else p.is_stagnant = true;
+	if (goDownSides(x, y, p, p.speed))return;
+	if (goDownDensity(x, y, p, p.speed)) return;
+	else p.is_stagnant = true;
 }
 
 
