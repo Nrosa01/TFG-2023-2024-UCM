@@ -66,13 +66,13 @@ private:
 
     void updateGas(uint32_t x, uint32_t y);
 
-    inline bool goDown(uint32_t x, uint32_t y, const Particle& particle);
+    inline bool goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
 
-    inline bool goDownSides(uint32_t x, uint32_t y, const Particle& particle);
+    inline bool goDownSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
 
-    inline bool goDownDensity(uint32_t x, uint32_t y, const Particle& particle);
+    inline bool goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
 
-    inline bool goSides(uint32_t x, uint32_t y, const Particle& particle);
+    inline bool goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
 
     void updateSand(uint32_t x, uint32_t y);
 
