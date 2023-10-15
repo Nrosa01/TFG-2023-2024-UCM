@@ -70,7 +70,9 @@ private:
     
     inline bool goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
 
-    inline bool goDownSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
+    inline bool goDownRight(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
+    
+    inline bool goDownLeft(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
 
     inline bool goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
 
