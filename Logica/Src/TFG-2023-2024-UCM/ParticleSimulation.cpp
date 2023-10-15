@@ -153,6 +153,7 @@ bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle
 		return false;
 
 	chunk_state[x][y - i] = particle;
+	has_been_updated[(y - i) * width + x] = true;
 	chunk_state[x][y] = Particle();
 
 	return true;
@@ -196,6 +197,7 @@ bool ParticleSimulation::goDownSides(uint32_t x, uint32_t y, const Particle& par
 
 	if (new_x != x || new_y != y) {
 		chunk_state[new_x][new_y] = particle;
+		has_been_updated[new_y * width + new_x] = true;
 		chunk_state[x][y] = Particle();
 		return true;
 	}
