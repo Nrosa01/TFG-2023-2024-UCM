@@ -22,7 +22,6 @@ struct physics_data {
 };
 
 struct Particle {
-public:
 	// TODO: Convert everything to camelCase. Const members should be ALL_CAPS
 	static std::unordered_map<material, physics_data> materialPhysics;
 	static const int gas_life_time = 300;

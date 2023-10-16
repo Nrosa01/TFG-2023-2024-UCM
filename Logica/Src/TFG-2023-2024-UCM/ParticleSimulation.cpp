@@ -14,15 +14,12 @@ static const double PI = 3.1415926535;
 
 ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight) {
 
-	chunk_state = new Particle * [width];
-	for (int x = 0; x < width; ++x) {
-		chunk_state[x] = new Particle[height];
+	chunk_state = new Particle [width * height];
+	
+	//std::memset(chunk_state , empty, width * height);
+	for (int x = 0; x < width * height; ++x) 
+			chunk_state[x].mat = empty;
 
-		for (int y = 0; y < height; ++y)
-			chunk_state[x][y].mat = empty;
-
-
-	}
 	Particle::initializeMaterialPhysics();
 
 
@@ -35,10 +32,7 @@ ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wH
 }
 
 ParticleSimulation::~ParticleSimulation() {
-	for (int x = 0; x < width; ++x) {
-		delete[] chunk_state[x];
-
-	}
+	
 	delete[] chunk_state;
 
 }
@@ -65,18 +59,16 @@ void ParticleSimulation::initializeTexture()
 
 void ParticleSimulation::updateTexture() {
 	// Recorre los datos de la simulación y actualiza textureData según el estado actual
-	for (int x = 0; x < width; ++x) {
-		for (int y = 0; y < height; ++y) {
-
+	for (int x = width * height  - 1 ; x > 0; --x) {
 			colour_t c{ 0,0,0,0 };
-			switch (chunk_state[x][y].mat)
+			switch (chunk_state[x].mat)
 			{
 			case sand:
 				c = yellow;
 				break;
 			case gas:
 				c = grey;
-				c.a = grey.a * chunk_state[x][y].life_time / Particle::gas_life_time;
+				c.a = grey.a * chunk_state[x].life_time / Particle::gas_life_time;
 				break;
 			case water:
 				c = blue;
@@ -88,12 +80,12 @@ void ParticleSimulation::updateTexture() {
 
 				break;
 			}
-			int pos_text = (y * width + x) * 4;
+			int pos_text = (x) * 4;
 			textureData[pos_text + 0] = c.r;   // R
 			textureData[pos_text + 1] = c.g;   // G
 			textureData[pos_text + 2] = c.b;   // B
 			textureData[pos_text + 3] = c.a;   // A
-		}
+		
 	}
 
 	// Luego, actualiza la textura con los nuevos datos
@@ -104,30 +96,33 @@ void ParticleSimulation::updateTexture() {
 
 
 bool ParticleSimulation::isEmpty(uint32_t x, uint32_t y) {
-	return  chunk_state[x][y].mat == empty;
+	return  chunk_state[x + width *y].mat == empty;
 }
 
 void ParticleSimulation::updateTemporalParticle(position next_pos, position last_pos, const Particle& particle) {
-	chunk_state[next_pos.x][next_pos.y].mat = particle.mat;
+	/*chunk_state[next_pos.x][next_pos.y].mat = particle.mat;
 	chunk_state[next_pos.x][next_pos.y].life_time = particle.life_time;
 	has_been_updated[next_pos.x + next_pos.y * width] = true;
-	chunk_state[last_pos.x][last_pos.y].mat = empty;
+	chunk_state[last_pos.x][last_pos.y].mat = empty;*/
 }
 
 // We should update it to use memset or something to overwrite all particle stuff withuot having us to change us everytime we change the
 // particle struct
 void ParticleSimulation::updateParticle(position next_pos, position last_pos, const Particle& particle) {
-	chunk_state[next_pos.x][next_pos.y].mat = particle.mat;
-	chunk_state[next_pos.x][next_pos.y].speed = particle.speed;
+	
+	chunk_state[next_pos.x + width * next_pos.y] = particle;
+	/*chunk_state[next_pos.x][next_pos.y].mat = particle.mat;
+	chunk_state[next_pos.x][next_pos.y].speed = particle.speed;*/
+	
+	chunk_state[last_pos.x + width * last_pos.y].mat = empty;
 	has_been_updated[next_pos.x + next_pos.y * width] = true;
-	chunk_state[last_pos.x][last_pos.y].mat = empty;
 }
 void ParticleSimulation::pushOtherParticle(position pos) {
 
 	for (int i = -3; i < 3; ++i) {
 		for (int j = 1; j < 10; ++j) {
 			if (isInside(pos.x + i, pos.y + j) && isEmpty(pos.x + i, pos.y + j)) {
-				updateParticle({ pos.x + i, pos.y + j }, pos, chunk_state[pos.x][pos.y]);
+				updateParticle({ pos.x + i, pos.y + j }, pos, chunk_state[pos.x + width * pos.y]);
 				break;
 			}
 		}
@@ -147,12 +142,13 @@ bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle
 		}
 
 		// Density of current particle
-		uint8_t current_density = Particle::materialPhysics[chunk_state[x][y_pos].mat].density;
+		uint8_t current_density = Particle::materialPhysics[chunk_state[x + width * y_pos].mat].density;
 
 		// Density check
 		if (current_density == 0 || current_density == 1 || current_density == 2) {
 			// Pushing is now swapping
-			std::swap(chunk_state[x][y], chunk_state[x][y_pos]);
+			std::swap(chunk_state[x + width * y], chunk_state[x+ width *y_pos]);
+			has_been_updated[x + width * y_pos] = true;
 			y -= 1;
 			has_moved = true;
 		}
@@ -177,9 +173,9 @@ bool ParticleSimulation::goDownLeft(uint32_t x, uint32_t y, const Particle& part
 
 		while (speed > 0) {
 			if (new_x > 0 && new_y > 0 && new_x - 1 < width && new_y - 1 < height && isEmpty(new_x - 1, new_y - 1)) {
-				chunk_state[new_x - 1][new_y - 1] = particle;
-				has_been_updated[(new_y - 1) * width + (new_x - 1)] = true;
-				chunk_state[x][y] = Particle();
+				chunk_state[(new_x - 1) + (width * (new_y - 1))] = particle;
+				has_been_updated[((new_y - 1) * width) + (new_x - 1)] = true;
+				chunk_state[x + width * y] = Particle();
 				has_been_updated[y * width + x] = true;
 				new_x -= 1;
 				new_y -= 1;
@@ -205,9 +201,9 @@ bool ParticleSimulation::goDownRight(uint32_t x, uint32_t y, const Particle& par
 
 		while (speed > 0) {
 			if (new_x < width - 1 && new_y > 0 && new_x + 1 < width && new_y - 1 < height && isEmpty(new_x + 1, new_y - 1)) {
-				chunk_state[new_x + 1][new_y - 1] = particle;
-				has_been_updated[(new_y - 1) * width + (new_x + 1)] = true;
-				chunk_state[x][y] = Particle();
+				chunk_state[(new_x + 1) + (width * (new_y - 1))] = particle;
+				has_been_updated[((new_y - 1) * width) + (new_x + 1)] = true;
+				chunk_state[x + width * y] = Particle();
 				has_been_updated[y * width + x] = true;
 				new_x += 1;
 				new_y -= 1;
@@ -228,18 +224,18 @@ bool ParticleSimulation::goDownRight(uint32_t x, uint32_t y, const Particle& par
 bool ParticleSimulation::goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed) {
 
 	//check if the particles below have lower density
-	if (y > 0 && Particle::materialPhysics[particle.mat].density > Particle::materialPhysics[chunk_state[x][y - 1].mat].density) {
+	if (y > 0 && Particle::materialPhysics[particle.mat].density > Particle::materialPhysics[chunk_state[x + width * (y - 1)].mat].density) {
 		pushOtherParticle({ x,y - 1 });
 		updateParticle({ x,y - 1 }, { x,y }, particle);
 		return true;
 	}
 
-	else if (x > 0 && y > 0 && Particle::materialPhysics[particle.mat].density > Particle::materialPhysics[chunk_state[x - 1][y - 1].mat].density) {
+	else if (x > 0 && y > 0 && Particle::materialPhysics[particle.mat].density > Particle::materialPhysics[chunk_state[x - 1 + width * (y - 1)].mat].density) {
 		pushOtherParticle({ x - 1,y - 1 });
 		updateParticle({ x - 1,y - 1 }, { x,y }, particle);
 		return true;
 	}
-	else if (x < width - 1 && y > 0 && Particle::materialPhysics[particle.mat].density > Particle::materialPhysics[chunk_state[x + 1][y - 1].mat].density) {
+	else if (x < width - 1 && y > 0 && Particle::materialPhysics[particle.mat].density > Particle::materialPhysics[chunk_state[x + 1 + width * (y - 1)].mat].density) {
 		pushOtherParticle({ x + 1,y - 1 });
 		updateParticle({ x + 1 ,y - 1 }, { x,y }, particle);
 		return true;
@@ -268,7 +264,7 @@ bool ParticleSimulation::goSides(uint32_t x, uint32_t y, const Particle& particl
 }
 
 void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
-	Particle& p = chunk_state[x][y];
+	Particle& p = chunk_state[x + width * y];
 
 	//nada que comprobar, ya es suelo fijo;
 	if (has_been_updated[y * width + x]) return;
@@ -282,7 +278,7 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 
 
 void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
-	Particle& p = chunk_state[x][y];
+	Particle& p = chunk_state[x + width * y];
 
 	//nada que comprobar, ya es suelo fijo;
 	if (has_been_updated[y * width + x]) return;
@@ -332,18 +328,18 @@ void ParticleSimulation::setMaterial(material mat)
 void ParticleSimulation::update() {
 
 	// se actualiza en orden de abajo a arriba
-	for (uint32_t y = 0; y < height; ++y) {
-		for (uint32_t x = 0; x < width; x++) {
-			switch (chunk_state[x][y].mat)
+	for (uint32_t x = 0; x < width * height - 1; ++x) {
+		//for (uint32_t x = 0; x < width; x++) {
+			switch (chunk_state[x].mat)
 			{
 			case sand:
-				updateSand(x, y);
+				updateSand(x % width, x / width);
 				break;
 			case gas:
-				updateGas(x, y);
+				updateGas(x % width, x/width);
 				break;
 			case water:
-				updateWater(x, y);
+				updateWater(x % width, x/width);
 				break;
 			case rock:
 				break;
@@ -354,7 +350,7 @@ void ParticleSimulation::update() {
 			}
 
 
-		}
+		
 	}
 
 	updateTexture();
@@ -385,22 +381,22 @@ void ParticleSimulation::setParticle(int x, int y) {
 				// TODO: Create a particle factory
 				switch (type_particle) {
 				case sand:
-					chunk_state[i][j].mat = sand;
-					chunk_state[i][j].speed = 1;
+					chunk_state[i + width * j].mat = sand;
+					chunk_state[i + width * j].speed = 1;
 					break;
 
 				case gas:
-					chunk_state[i][j].mat = gas;
-					chunk_state[i][j].life_time = Particle::gas_life_time;
-					chunk_state[i][j].speed = 10;
+					chunk_state[i + width * j].mat = gas;
+					chunk_state[i + width * j].life_time = Particle::gas_life_time;
+					chunk_state[i + width * j].speed = 10;
 					break;
 
 				case water:
-					chunk_state[i][j].mat = water;
-					chunk_state[i][j].speed = 5;
+					chunk_state[i + width * j].mat = water;
+					chunk_state[i + width * j].speed = 5;
 					break;
 				case rock:
-					chunk_state[i][j].mat = rock;
+					chunk_state[i + width * j].mat = rock;
 				}
 			}
 		}
@@ -408,7 +404,7 @@ void ParticleSimulation::setParticle(int x, int y) {
 
 bool ParticleSimulation::isParticle(int x, int y) const {
 	if (isInside(x, y)) {
-		return  !chunk_state[x][y].mat == empty;
+		return  !chunk_state[x + width * y].mat == empty;
 	}
 	return false;
 }

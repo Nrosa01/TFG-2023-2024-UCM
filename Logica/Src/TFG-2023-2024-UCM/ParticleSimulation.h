@@ -9,8 +9,6 @@
 #include "Particle.h"
 #include "Common_utils.h"
 
-//type of particle to be used
-//this is just for testing, it will be removed in the future
 
 static const float brush_size = 5;
 static const float radius_brush = brush_size / 2;
@@ -43,7 +41,7 @@ private:
     int width;
     int height;
 
-    Particle** chunk_state;
+    Particle* chunk_state;
     bool* has_been_updated;
     GLuint textureID; // ID de la textura
     std::unique_ptr<Quad> quad;
