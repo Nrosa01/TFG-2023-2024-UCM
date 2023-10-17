@@ -16,12 +16,6 @@ ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wH
 
 	chunk_state = new Particle [width * height];
 	
-	//std::memset(chunk_state , empty, width * height);
-	for (int x = 0; x < width * height; ++x) 
-			chunk_state[x].mat = empty;
-
-	Particle::initializeMaterialPhysics();
-
 
 	has_been_updated = new bool[width * height];
 	std::memset(has_been_updated, false, width * height);
@@ -122,8 +116,8 @@ void ParticleSimulation::pushOtherParticle(position pos) {
 	for (int i = -3; i < 3; ++i) {
 		for (int j = 1; j < 10; ++j) {
 			if (isInside(pos.x + i, pos.y + j	)) {
-				uint8_t current_density = Particle::materialPhysics[chunk_state[computeIndex(pos.x, (pos.y + j))].mat].density;
-				if (current_density < Particle::materialPhysics[chunk_state[computeIndex(pos.x, pos.y)].mat].density) {
+				uint8_t current_density = Particle::material_physics[chunk_state[computeIndex(pos.x, (pos.y + j))].mat].density;
+				if (current_density < Particle::material_physics[chunk_state[computeIndex(pos.x, pos.y)].mat].density) {
 					chunk_state[computeIndex(pos.x, (pos.y + j))] = chunk_state[computeIndex(pos.x, pos.y)];
 					chunk_state[computeIndex(pos.x,  pos.y)] = Particle();
 					break;
@@ -131,6 +125,62 @@ void ParticleSimulation::pushOtherParticle(position pos) {
 			}
 		}
 	}
+}
+
+/*
+Template functions to go in x and +, since those four directions are similar
+*/
+
+bool ParticleSimulation::goFlat(const direction& dir, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
+	int i = 0;
+	uint32_t x_pos = x, y_pos = y;
+	
+	while (pixelsToMove > 0)
+	{
+		x_pos += Particle::direction_vectors[dir].x;
+		y_pos += Particle::direction_vectors[dir].y;
+		if (!isInside(x_pos, y_pos) || !isEmpty(x_pos, y_pos))
+			break;
+		else 			
+			i++;
+
+		pixelsToMove--;
+	}
+
+	if (i == 0)
+		return false;
+
+	chunk_state[computeIndex(x+ Particle::direction_vectors[dir].x * i, y + Particle::direction_vectors[dir].y * i)] = particle;
+	has_been_updated[computeIndex(x + Particle::direction_vectors[dir].x * i, y + Particle::direction_vectors[dir].y * i)] = true;
+	chunk_state[computeIndex(x, y)] = Particle();
+
+	return true;
+}
+
+bool ParticleSimulation::goDiagonal(const direction& dir, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
+	
+	uint32_t new_x = x, new_y = y;
+
+	while (pixelsToMove > 0) {
+		new_x += Particle::direction_vectors[dir].x;
+		new_y += Particle::direction_vectors[dir].y;
+		if (isInside(new_x, new_y) && isEmpty(new_x, new_y)) {
+				
+			chunk_state[computeIndex(new_x, new_y)] = particle;
+			has_been_updated[computeIndex(new_x, new_y)] = true;
+			chunk_state[computeIndex(x, y)] = Particle();
+			has_been_updated[y * width + x] = true;
+
+			pixelsToMove--;
+		}
+		else {
+			break;
+		}
+	}
+	return true;
+	
+
+	
 }
 
 bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
@@ -220,8 +270,8 @@ bool ParticleSimulation::goDownDensity(uint32_t x, uint32_t y, const Particle& p
         while (i <= y && speed > 0) {
             const uint32_t y_pos = y - i;
             if (y_pos < height) {
-                uint8_t target_density = Particle::materialPhysics[chunk_state[computeIndex(x, y_pos)].mat].density;
-                if (target_density < Particle::materialPhysics[particle.mat].density) {
+                uint8_t target_density = Particle::material_physics[chunk_state[computeIndex(x, y_pos)].mat].density;
+                if (target_density < Particle::material_physics[particle.mat].density) {
                     pushOtherParticle({ x, y_pos });
 					has_been_updated[x, y_pos] = true;
                     chunk_state[computeIndex(x, y_pos)] = particle;
@@ -247,8 +297,8 @@ bool ParticleSimulation::goDownLeftDensity(uint32_t x, uint32_t y, const Particl
 		uint32_t new_y = y;
 		
 		while (pixelsToMove > 0) {
-			uint8_t target_density = Particle::materialPhysics[chunk_state[computeIndex(new_x -1, new_y-1)].mat].density;
-			if (new_x > 0 && new_y > 0 && target_density < Particle::materialPhysics[particle.mat].density) {
+			uint8_t target_density = Particle::material_physics[chunk_state[computeIndex(new_x -1, new_y-1)].mat].density;
+			if (new_x > 0 && new_y > 0 && target_density < Particle::material_physics[particle.mat].density) {
 				
 				new_x -= 1;
 				new_y -= 1;
@@ -280,8 +330,8 @@ bool ParticleSimulation::goDownRightDensity(uint32_t x, uint32_t y, const Partic
 		uint32_t new_y = y;
 
 		while (pixelsToMove > 0) {
-			uint8_t target_density = Particle::materialPhysics[chunk_state[computeIndex(new_x + 1, new_y - 1)].mat].density;
-			if (new_y > 0 && new_x + 1 < width && target_density < Particle::materialPhysics[particle.mat].density) {
+			uint8_t target_density = Particle::material_physics[chunk_state[computeIndex(new_x + 1, new_y - 1)].mat].density;
+			if (new_y > 0 && new_x + 1 < width && target_density < Particle::material_physics[particle.mat].density) {
 
 				new_x += 1;
 				new_y -= 1;
@@ -344,12 +394,11 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 
 	// We could even get rid of the ifs as, if pixelsToMove is 0, the method would be "called" but would inmediately return
 	// Assuming the method is inlined, this won't trigger a call stack allocation
-	
 	goDown(x, y, p, pixelsToMove);
 	goDownDensity(x, y, p, p.speed);
 	goDownLeft(x, y, p, pixelsToMove);
 	goDownLeftDensity(x, y, p, pixelsToMove);
-	goDownRight(x, y, p, pixelsToMove);
+	//goDownRight(x, y, p, pixelsToMove);
 	goDownRightDensity(x, y, p, pixelsToMove);
 	
 	p.is_stagnant = pixelsToMove == 0;
@@ -373,6 +422,23 @@ void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
 }
 
 void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
+
+	Particle& p = chunk_state[computeIndex(x, y)];
+
+	//nada que comprobar, ya es suelo fijo;
+	if (has_been_updated[computeIndex(x, y)]) return;
+
+	uint32_t pixelsToMove = p.speed;
+
+	// We could even get rid of the ifs as, if pixelsToMove is 0, the method would be "called" but would inmediately return
+	// Assuming the method is inlined, this won't trigger a call stack allocation
+	goFlat(up,x, y, p, pixelsToMove);
+	goDiagonal(upleft,x, y, p, pixelsToMove);
+	goDiagonal(upright,x, y, p, pixelsToMove);
+
+
+	p.is_stagnant = pixelsToMove == 0;
+
 	//Particle& p = chunk_state[x][y];
 
 	//p.life_time = p.life_time - 1;
@@ -469,7 +535,7 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 				case gas:
 					chunk_state[computeIndex(i,j)].mat = gas;
 					chunk_state[computeIndex(i,j)].life_time = Particle::gas_life_time;
-					chunk_state[computeIndex(i,j)].speed = 10;
+					chunk_state[computeIndex(i,j)].speed = 5;
 					break;
 
 				case water:

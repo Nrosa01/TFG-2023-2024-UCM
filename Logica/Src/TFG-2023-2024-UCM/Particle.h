@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <unordered_map>
+#include "Common_utils.h"
 
 //Sand particle
 
@@ -21,11 +22,16 @@ struct physics_data {
 	uint8_t propagation_speed;
 };
 
+//I dont know where to put the direction info, so I'm just putting it in particle for the moment
+
+enum direction { up, down, left, right, upleft, upright, downleft, downright };
+
 struct Particle {
 	// TODO: Convert everything to camelCase. Const members should be ALL_CAPS
-	static std::unordered_map<material, physics_data> materialPhysics;
+	static std::unordered_map<material, physics_data> material_physics;
+	static std::unordered_map<direction, vector2D> direction_vectors;
 	static const int gas_life_time = 300;
-	static void initializeMaterialPhysics();
+
 
 	bool is_stagnant = false;
 	material mat = empty;

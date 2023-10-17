@@ -60,6 +60,10 @@ private:
 
     void pushOtherParticle(position pos);
 
+    bool goFlat(const direction& dir, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
+
+    bool goDiagonal(const direction& dir, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
+
     void updateWater(uint32_t x, uint32_t y);
 
     void updateGas(uint32_t x, uint32_t y);
