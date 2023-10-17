@@ -42,13 +42,13 @@ void ParticleSimulation::initializeTexture()
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
-	// Define parï¿½metros de la textura (puedes ajustarlos segï¿½n tus necesidades)
+	// Define parámetros de la textura (puedes ajustarlos según tus necesidades)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	// Define el tamaï¿½o y el formato de la textura (RGBA)
+	// Define el tamaño y el formato de la textura (RGBA)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
 	// Establece los datos iniciales de la textura
@@ -58,7 +58,7 @@ void ParticleSimulation::initializeTexture()
 }
 
 void ParticleSimulation::updateTexture() {
-	// Recorre los datos de la simulaciï¿½n y actualiza textureData segï¿½n el estado actual
+	// Recorre los datos de la simulación y actualiza textureData según el estado actual
 	for (int x = width * height  - 1 ; x > 0; --x) {
 			colour_t c{ 0,0,0,0 };
 			switch (chunk_state[x].mat)
@@ -117,50 +117,43 @@ void ParticleSimulation::updateParticle(position next_pos, position last_pos, co
 	chunk_state[last_pos.x + width * last_pos.y].mat = empty;
 	has_been_updated[next_pos.x + next_pos.y * width] = true;
 }
-void ParticleSimulation::pushOtherParticle(position pos) {
 
+void ParticleSimulation::pushOtherParticle(position pos) {
 	for (int i = -3; i < 3; ++i) {
 		for (int j = 1; j < 10; ++j) {
-			if (isInside(pos.x + i, pos.y + j) && isEmpty(pos.x + i, pos.y + j)) {
-				updateParticle({ pos.x + i, pos.y + j }, pos, chunk_state[pos.x + width * pos.y]);
-				break;
+			if (isInside(pos.x + i, pos.y + j)) {
+				uint8_t current_density = Particle::materialPhysics[chunk_state[computeIndex(pos.x, (pos.y + j))].mat].density;
+				if (current_density < Particle::materialPhysics[chunk_state[computeIndex(pos.x, pos.y)].mat].density) {
+					chunk_state[computeIndex(pos.x, (pos.y + j))] = chunk_state[computeIndex(pos.x, pos.y)];
+					chunk_state[computeIndex(pos.x,  pos.y)] = Particle();
+					break;
+				}
 			}
 		}
 	}
 }
 
-
 bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
 	int i = 0;
-	bool has_moved = false;
-
-	while (pixelsToMove > 0) {
+	while (pixelsToMove > 0)
+	{
 		const uint32_t y_pos = y - 1 - i;
-
-		if (y_pos >= height) {
+		if (y_pos > height || !isEmpty(x, y_pos))
 			break;
-		}
-
-		// Density of current particle
-		uint8_t current_density = Particle::materialPhysics[chunk_state[computeIndex(x, y_pos)].mat].density;
-
-		// Density check
-		if (current_density == 0 || current_density == 1 || current_density == 2) {
-			// Pushing is now swapping
-			std::swap(chunk_state[computeIndex(x, y)], chunk_state[x+ width *y_pos]);
-			has_been_updated[computeIndex(x, y_pos)] = true;
-			y -= 1;
-			has_moved = true;
-		}
-		else {
-			break;
-		}
+		else
+			i++;
 
 		pixelsToMove--;
-		i++;
 	}
 
-	return has_moved;
+	if (i == 0)
+		return false;
+
+	chunk_state[computeIndex(x, y - i)] = particle;
+	has_been_updated[computeIndex(x, (y - i))] = true;
+	chunk_state[computeIndex(x, y)] = Particle();
+
+	return true;
 }
 
 
@@ -285,9 +278,9 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 	// We could even get rid of the ifs as, if pixelsToMove is 0, the method would be "called" but would inmediately return
 	// Assuming the method is inlined, this won't trigger a call stack allocation
 	goDown(x, y, p, pixelsToMove);
+	goDownDensity(x, y, p, p.speed);
 	goDownLeft(x, y, p, pixelsToMove);
 	goDownRight(x, y, p, pixelsToMove);
-	//if (goDownDensity(x, y, p, p.speed)) return;
 	p.is_stagnant = pixelsToMove == 0;
 }
 
@@ -320,7 +313,7 @@ void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
 	//if (has_been_updated[y * width + x]) return;
 
 
-	//// Si hay una partï¿½cula en esta posiciï¿½n, mueva hacia abajo si es posible
+	//// Si hay una partícula en esta posición, mueva hacia abajo si es posible
 	//if (y < height && isEmpty(x, y + 1))
 	//	updateTemporalParticle({ x,y + 1 }, { x,y }, p);
 
@@ -332,7 +325,7 @@ void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
 	//	// Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
 	//	updateTemporalParticle({ x + 1 ,y + 1 }, { x,y }, p);
 	//	// en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
-	//	// seï¿½ala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
+	//	// señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
 	//else p.is_stagnant = true;
 }
 
@@ -372,7 +365,7 @@ void ParticleSimulation::update() {
 
 	updateTexture();
 
-	//seï¿½alo otra vez todas las particulas como no modificadas
+	//señalo otra vez todas las particulas como no modificadas
 	std::memset(has_been_updated, false, width * height);
 }
 
@@ -383,7 +376,7 @@ bool ParticleSimulation::isInside(uint32_t x, uint32_t y) const {
 
 
 void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
-	// Convierte las coordenadas de pantalla a coordenadas de la simulaciï¿½n
+	// Convierte las coordenadas de pantalla a coordenadas de la simulación
 	int simX = (x * width) / wWidth;
 	int simY = height - (y * height) / wHeight - 1;
 	int simX_aux = simX;
