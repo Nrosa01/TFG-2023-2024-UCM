@@ -277,10 +277,14 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 
 	// We could even get rid of the ifs as, if pixelsToMove is 0, the method would be "called" but would inmediately return
 	// Assuming the method is inlined, this won't trigger a call stack allocation
+	
 	goDown(x, y, p, pixelsToMove);
 	goDownDensity(x, y, p, p.speed);
 	goDownLeft(x, y, p, pixelsToMove);
+	// Here we shuold have goDownLeftDensity
 	goDownRight(x, y, p, pixelsToMove);
+	// Here we shuold have goDownRightDensity
+	
 	p.is_stagnant = pixelsToMove == 0;
 }
 

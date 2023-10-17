@@ -17,3 +17,5 @@
 
 - Added computeIndex method accounting for l and r values
 - Thought about implementation problems and scalibity and how to fix them
+- I made goDown, goDownLeft and goDownRight return how many pixels to move are left
+- Refactored goDownDensity, pushOtherParticle. Restructured updateSand and updateWater
