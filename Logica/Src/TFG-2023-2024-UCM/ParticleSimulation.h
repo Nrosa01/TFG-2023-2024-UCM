@@ -66,15 +66,15 @@ private:
 
     void updateSand(uint32_t x, uint32_t y);
     
-    inline bool goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
+    inline bool goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
-    inline bool goDownRight(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
+    inline bool goDownRight(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
     
-    inline bool goDownLeft(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
+    inline bool goDownLeft(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
-    inline bool goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
+    inline bool goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
-    inline bool goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
+    inline bool goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
     inline uint32_t computeIndex(const uint32_t& x, const uint32_t& y) const;
     

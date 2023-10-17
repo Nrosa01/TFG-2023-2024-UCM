@@ -130,11 +130,11 @@ void ParticleSimulation::pushOtherParticle(position pos) {
 }
 
 
-bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed) {
+bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
 	int i = 0;
 	bool has_moved = false;
 
-	while (speed > 0) {
+	while (pixelsToMove > 0) {
 		const uint32_t y_pos = y - 1 - i;
 
 		if (y_pos >= height) {
@@ -156,7 +156,7 @@ bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle
 			break;
 		}
 
-		speed--;
+		pixelsToMove--;
 		i++;
 	}
 
@@ -164,14 +164,14 @@ bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle
 }
 
 
-bool ParticleSimulation::goDownLeft(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed) {
+bool ParticleSimulation::goDownLeft(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
 	bool can_move_left = (x > 0) && (y > 0) && (x - 1 < width) && (y - 1 < height) && isEmpty(x - 1, y - 1);
 
 	if (can_move_left) {
 		uint32_t new_x = x;
 		uint32_t new_y = y;
 
-		while (speed > 0) {
+		while (pixelsToMove > 0) {
 			if (new_x > 0 && new_y > 0 && new_x - 1 < width && new_y - 1 < height && isEmpty(new_x - 1, new_y - 1)) {
 				chunk_state[(new_x - 1) + (width * (new_y - 1))] = particle;
 				has_been_updated[((new_y - 1) * width) + (new_x - 1)] = true;
@@ -179,7 +179,7 @@ bool ParticleSimulation::goDownLeft(uint32_t x, uint32_t y, const Particle& part
 				has_been_updated[y * width + x] = true;
 				new_x -= 1;
 				new_y -= 1;
-				speed--;
+				pixelsToMove--;
 			}
 			else {
 				break;
@@ -192,14 +192,14 @@ bool ParticleSimulation::goDownLeft(uint32_t x, uint32_t y, const Particle& part
 	return false;
 }
 
-bool ParticleSimulation::goDownRight(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed) {
+bool ParticleSimulation::goDownRight(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
 	bool can_move_right = (x < width - 1) && (y > 0) && (x + 1 < width) && (y - 1 < height) && isEmpty(x + 1, y - 1);
 
 	if (can_move_right) {
 		uint32_t new_x = x;
 		uint32_t new_y = y;
 
-		while (speed > 0) {
+		while (pixelsToMove > 0) {
 			if (new_x < width - 1 && new_y > 0 && new_x + 1 < width && new_y - 1 < height && isEmpty(new_x + 1, new_y - 1)) {
 				chunk_state[(new_x + 1) + (width * (new_y - 1))] = particle;
 				has_been_updated[((new_y - 1) * width) + (new_x + 1)] = true;
@@ -207,7 +207,7 @@ bool ParticleSimulation::goDownRight(uint32_t x, uint32_t y, const Particle& par
 				has_been_updated[y * width + x] = true;
 				new_x += 1;
 				new_y -= 1;
-				speed--;
+				pixelsToMove--;
 			}
 			else {
 				break;
@@ -221,7 +221,7 @@ bool ParticleSimulation::goDownRight(uint32_t x, uint32_t y, const Particle& par
 }
 
 
-bool ParticleSimulation::goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed) {
+bool ParticleSimulation::goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
 
 	//check if the particles below have lower density
 	if (y > 0 && Particle::materialPhysics[particle.mat].density > Particle::materialPhysics[chunk_state[x + width * (y - 1)].mat].density) {
@@ -243,7 +243,7 @@ bool ParticleSimulation::goDownDensity(uint32_t x, uint32_t y, const Particle& p
 	return false;
 }
 
-bool ParticleSimulation::goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed) {
+bool ParticleSimulation::goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
 	bool can_move_left = x > 0 && y > 0 && isEmpty(x - 1, y);
 	bool can_move_right = x < width - 1 && y > 0 && isEmpty(x + 1, y);
 
@@ -277,13 +277,17 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 	Particle& p = chunk_state[computeIndex(x, y)];
 
 	//nada que comprobar, ya es suelo fijo;
-	if (has_been_updated[y * width + x]) return;
+	if (has_been_updated[computeIndex(x, y)]) return;
 
-	if (goDown(x, y, p, p.speed)) return;
-	if (goDownLeft(x, y, p, p.speed)) return;
-	if (goDownRight(x, y, p, p.speed)) return;
+	uint32_t pixelsToMove = p.speed;
+
+	// We could even get rid of the ifs as, if pixelsToMove is 0, the method would be "called" but would inmediately return
+	// Assuming the method is inlined, this won't trigger a call stack allocation
+	goDown(x, y, p, pixelsToMove);
+	goDownLeft(x, y, p, pixelsToMove);
+	goDownRight(x, y, p, pixelsToMove);
 	//if (goDownDensity(x, y, p, p.speed)) return;
-	else p.is_stagnant = true;
+	p.is_stagnant = pixelsToMove == 0;
 }
 
 
@@ -291,14 +295,16 @@ void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
 	Particle& p = chunk_state[computeIndex(x, y)];
 
 	//nada que comprobar, ya es suelo fijo;
-	if (has_been_updated[y * width + x]) return;
+	if (has_been_updated[computeIndex(x, y)]) return;
 
-	if (goDown(x, y, p, p.speed)) return;
-	if (goDownLeft(x, y, p, p.speed)) return;
-	if (goDownRight(x, y, p, p.speed)) return;
-	if (goSides(x, y, p, p.speed)) return;
+	uint32_t pixelsToMove = p.speed;
+
+	goDown(x, y, p, pixelsToMove);
+	goDownLeft(x, y, p, pixelsToMove);
+	goDownRight(x, y, p, pixelsToMove);
+	goSides(x, y, p, pixelsToMove);
 	//if (goDownDensity(x, y, p, p.speed)) return;
-	else p.is_stagnant = true;
+	p.is_stagnant = pixelsToMove == 0;
 }
 
 void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {

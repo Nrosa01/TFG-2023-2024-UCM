@@ -12,3 +12,8 @@
 
 - Refactored goDown and goDownSide methods. 
 - Thought more about how to refactor the rest taking advantage of what we had to not loose time and keep it scalable
+
+17-10-2023
+
+- Added computeIndex method accounting for l and r values
+- Thought about implementation problems and scalibity and how to fix them
