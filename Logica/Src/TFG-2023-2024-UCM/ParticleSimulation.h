@@ -74,6 +74,12 @@ private:
 
     inline bool goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
+    //inline bool canMove(position pos, direction dir);
+
+    bool goDownLeftDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& speed);
+
+    bool goDownRightDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& speed);
+
     inline bool goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
     inline uint32_t computeIndex(const uint32_t& x, const uint32_t& y) const;

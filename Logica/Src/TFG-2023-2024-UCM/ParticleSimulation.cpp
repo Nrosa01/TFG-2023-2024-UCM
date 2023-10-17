@@ -158,27 +158,26 @@ bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle
 
 
 bool ParticleSimulation::goDownLeft(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
-	bool can_move_left = (x > 0) && (y > 0) && (x - 1 < width) && (y - 1 < height) && isEmpty(x - 1, y - 1);
+	bool can_move_left = (x > 0) && (y > 0)  && isEmpty(x - 1, y - 1);
 
 	if (can_move_left) {
 		uint32_t new_x = x;
 		uint32_t new_y = y;
-
 		while (pixelsToMove > 0) {
-			if (new_x > 0 && new_y > 0 && new_x - 1 < width && new_y - 1 < height && isEmpty(new_x - 1, new_y - 1)) {
-				chunk_state[(new_x - 1) + (width * (new_y - 1))] = particle;
-				has_been_updated[((new_y - 1) * width) + (new_x - 1)] = true;
-				chunk_state[computeIndex(x, y)] = Particle();
-				has_been_updated[y * width + x] = true;
+			if (new_x > 0 && new_y > 0 && isEmpty(new_x - 1, new_y - 1)) {
 				new_x -= 1;
 				new_y -= 1;
+				chunk_state[computeIndex(new_x,new_y)] = particle;
+				has_been_updated[computeIndex(new_x, new_y)] = true;			
+				chunk_state[computeIndex(x, y)] = Particle();
+				has_been_updated[y * width + x] = true;
+			
 				pixelsToMove--;
 			}
 			else {
 				break;
 			}
 		}
-
 		return true;
 	}
 
@@ -186,20 +185,21 @@ bool ParticleSimulation::goDownLeft(uint32_t x, uint32_t y, const Particle& part
 }
 
 bool ParticleSimulation::goDownRight(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
-	bool can_move_right = (x < width - 1) && (y > 0) && (x + 1 < width) && (y - 1 < height) && isEmpty(x + 1, y - 1);
+	bool can_move_right = (y > 0) && (x + 1 < width) && isEmpty(x + 1, y - 1);
 
 	if (can_move_right) {
 		uint32_t new_x = x;
 		uint32_t new_y = y;
 
 		while (pixelsToMove > 0) {
-			if (new_x < width - 1 && new_y > 0 && new_x + 1 < width && new_y - 1 < height && isEmpty(new_x + 1, new_y - 1)) {
-				chunk_state[(new_x + 1) + (width * (new_y - 1))] = particle;
-				has_been_updated[((new_y - 1) * width) + (new_x + 1)] = true;
-				chunk_state[computeIndex(x, y)] = Particle();
-				has_been_updated[y * width + x] = true;
+			if (new_y > 0 && new_x + 1 < width && isEmpty(new_x + 1, new_y - 1)) {
 				new_x += 1;
 				new_y -= 1;
+				chunk_state[computeIndex(new_x, new_y)] = particle;
+				has_been_updated[computeIndex(new_x, new_y)] = true;
+				chunk_state[computeIndex(x, y)] = Particle();
+				has_been_updated[computeIndex(x, y)] = true;
+				
 				pixelsToMove--;
 			}
 			else {
@@ -223,6 +223,7 @@ bool ParticleSimulation::goDownDensity(uint32_t x, uint32_t y, const Particle& p
                 uint8_t target_density = Particle::materialPhysics[chunk_state[computeIndex(x, y_pos)].mat].density;
                 if (target_density < Particle::materialPhysics[particle.mat].density) {
                     pushOtherParticle({ x, y_pos });
+					has_been_updated[x, y_pos] = true;
                     chunk_state[computeIndex(x, y_pos)] = particle;
                     chunk_state[computeIndex(x, y)] = Particle();
                     speed--;
@@ -235,6 +236,72 @@ bool ParticleSimulation::goDownDensity(uint32_t x, uint32_t y, const Particle& p
         return speed == 0;
     }
     return false;
+}
+
+bool ParticleSimulation::goDownLeftDensity(uint32_t x, uint32_t y, const Particle & particle, uint32_t & pixelsToMove) {
+	
+	bool can_move_left = (x > 0) && (y > 0) ;
+
+	if (can_move_left) {
+		uint32_t new_x = x;
+		uint32_t new_y = y;
+		
+		while (pixelsToMove > 0) {
+			uint8_t target_density = Particle::materialPhysics[chunk_state[computeIndex(new_x -1, new_y-1)].mat].density;
+			if (new_x > 0 && new_y > 0 && target_density < Particle::materialPhysics[particle.mat].density) {
+				
+				new_x -= 1;
+				new_y -= 1;
+				pushOtherParticle({ new_x,new_y });
+
+				chunk_state[computeIndex(new_x, new_y)] = particle;
+				has_been_updated[computeIndex(new_x, new_y)] = true;
+				chunk_state[computeIndex(x, y)] = Particle();
+				has_been_updated[computeIndex(x, y)] = true;
+
+				pixelsToMove--;
+			}
+			else {
+				break;
+			}
+		}
+		return true;
+	}
+
+	return false;
+}
+
+bool ParticleSimulation::goDownRightDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
+
+	bool can_move_right = (y > 0) && (x + 1 < width) ;
+
+	if (can_move_right) {
+		uint32_t new_x = x;
+		uint32_t new_y = y;
+
+		while (pixelsToMove > 0) {
+			uint8_t target_density = Particle::materialPhysics[chunk_state[computeIndex(new_x + 1, new_y - 1)].mat].density;
+			if (new_y > 0 && new_x + 1 < width && target_density < Particle::materialPhysics[particle.mat].density) {
+
+				new_x += 1;
+				new_y -= 1;
+				pushOtherParticle({ new_x,new_y });
+
+				chunk_state[computeIndex(new_x, new_y)] = particle;
+				has_been_updated[computeIndex(new_x, new_y)] = true;
+				chunk_state[computeIndex(x, y)] = Particle();
+				has_been_updated[computeIndex(x, y)] = true;
+
+				pixelsToMove--;
+			}
+			else {
+				break;
+			}
+		}
+		return true;
+	}
+
+	return false;
 }
 
 bool ParticleSimulation::goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
@@ -281,9 +348,9 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 	goDown(x, y, p, pixelsToMove);
 	goDownDensity(x, y, p, p.speed);
 	goDownLeft(x, y, p, pixelsToMove);
-	// Here we shuold have goDownLeftDensity
+	goDownLeftDensity(x, y, p, pixelsToMove);
 	goDownRight(x, y, p, pixelsToMove);
-	// Here we shuold have goDownRightDensity
+	goDownRightDensity(x, y, p, pixelsToMove);
 	
 	p.is_stagnant = pixelsToMove == 0;
 }
