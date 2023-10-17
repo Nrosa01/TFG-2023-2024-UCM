@@ -121,7 +121,7 @@ void ParticleSimulation::updateParticle(position next_pos, position last_pos, co
 void ParticleSimulation::pushOtherParticle(position pos) {
 	for (int i = -3; i < 3; ++i) {
 		for (int j = 1; j < 10; ++j) {
-			if (isInside(pos.x + i, pos.y + j)) {
+			if (isInside(pos.x + i, pos.y + j	)) {
 				uint8_t current_density = Particle::materialPhysics[chunk_state[computeIndex(pos.x, (pos.y + j))].mat].density;
 				if (current_density < Particle::materialPhysics[chunk_state[computeIndex(pos.x, pos.y)].mat].density) {
 					chunk_state[computeIndex(pos.x, (pos.y + j))] = chunk_state[computeIndex(pos.x, pos.y)];
@@ -258,8 +258,8 @@ bool ParticleSimulation::goSides(uint32_t x, uint32_t y, const Particle& particl
 }
 
 inline uint32_t ParticleSimulation::computeIndex(const uint32_t& x, const uint32_t& y) const
-{
-	return y * width + x;
+{ 
+	return y * width + x;	
 }
 
 inline uint32_t ParticleSimulation::computeIndex(const uint32_t&& x, const uint32_t&& y) const
@@ -395,22 +395,22 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 				// TODO: Create a particle factory
 				switch (type_particle) {
 				case sand:
-					chunk_state[i + width * j].mat = sand;
-					chunk_state[i + width * j].speed = 1;
+					chunk_state[computeIndex(i,j)].mat = sand;
+					chunk_state[computeIndex(i,j)].speed = 1;
 					break;
 
 				case gas:
-					chunk_state[i + width * j].mat = gas;
-					chunk_state[i + width * j].life_time = Particle::gas_life_time;
-					chunk_state[i + width * j].speed = 10;
+					chunk_state[computeIndex(i,j)].mat = gas;
+					chunk_state[computeIndex(i,j)].life_time = Particle::gas_life_time;
+					chunk_state[computeIndex(i,j)].speed = 10;
 					break;
 
 				case water:
-					chunk_state[i + width * j].mat = water;
-					chunk_state[i + width * j].speed = 5;
+					chunk_state[computeIndex(i,j)].mat = water;
+					chunk_state[computeIndex(i,j)].speed = 5;
 					break;
 				case rock:
-					chunk_state[i + width * j].mat = rock;
+					chunk_state[computeIndex(i,j)].mat = rock;
 				}
 			}
 		}
