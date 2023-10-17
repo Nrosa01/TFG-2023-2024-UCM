@@ -142,13 +142,13 @@ bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle
 		}
 
 		// Density of current particle
-		uint8_t current_density = Particle::materialPhysics[chunk_state[x + width * y_pos].mat].density;
+		uint8_t current_density = Particle::materialPhysics[chunk_state[computeIndex(x, y_pos)].mat].density;
 
 		// Density check
 		if (current_density == 0 || current_density == 1 || current_density == 2) {
 			// Pushing is now swapping
-			std::swap(chunk_state[x + width * y], chunk_state[x+ width *y_pos]);
-			has_been_updated[x + width * y_pos] = true;
+			std::swap(chunk_state[computeIndex(x, y)], chunk_state[x+ width *y_pos]);
+			has_been_updated[computeIndex(x, y_pos)] = true;
 			y -= 1;
 			has_moved = true;
 		}
@@ -175,7 +175,7 @@ bool ParticleSimulation::goDownLeft(uint32_t x, uint32_t y, const Particle& part
 			if (new_x > 0 && new_y > 0 && new_x - 1 < width && new_y - 1 < height && isEmpty(new_x - 1, new_y - 1)) {
 				chunk_state[(new_x - 1) + (width * (new_y - 1))] = particle;
 				has_been_updated[((new_y - 1) * width) + (new_x - 1)] = true;
-				chunk_state[x + width * y] = Particle();
+				chunk_state[computeIndex(x, y)] = Particle();
 				has_been_updated[y * width + x] = true;
 				new_x -= 1;
 				new_y -= 1;
@@ -203,7 +203,7 @@ bool ParticleSimulation::goDownRight(uint32_t x, uint32_t y, const Particle& par
 			if (new_x < width - 1 && new_y > 0 && new_x + 1 < width && new_y - 1 < height && isEmpty(new_x + 1, new_y - 1)) {
 				chunk_state[(new_x + 1) + (width * (new_y - 1))] = particle;
 				has_been_updated[((new_y - 1) * width) + (new_x + 1)] = true;
-				chunk_state[x + width * y] = Particle();
+				chunk_state[computeIndex(x, y)] = Particle();
 				has_been_updated[y * width + x] = true;
 				new_x += 1;
 				new_y -= 1;
@@ -263,8 +263,18 @@ bool ParticleSimulation::goSides(uint32_t x, uint32_t y, const Particle& particl
 	return can_move_left || can_move_right;
 }
 
+inline uint32_t ParticleSimulation::computeIndex(const uint32_t& x, const uint32_t& y) const
+{
+	return y * width + x;
+}
+
+inline uint32_t ParticleSimulation::computeIndex(const uint32_t&& x, const uint32_t&& y) const
+{
+	return y * width + x;
+}
+
 void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
-	Particle& p = chunk_state[x + width * y];
+	Particle& p = chunk_state[computeIndex(x, y)];
 
 	//nada que comprobar, ya es suelo fijo;
 	if (has_been_updated[y * width + x]) return;
@@ -278,7 +288,7 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 
 
 void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
-	Particle& p = chunk_state[x + width * y];
+	Particle& p = chunk_state[computeIndex(x, y)];
 
 	//nada que comprobar, ya es suelo fijo;
 	if (has_been_updated[y * width + x]) return;
@@ -359,13 +369,13 @@ void ParticleSimulation::update() {
 	std::memset(has_been_updated, false, width * height);
 }
 
-bool ParticleSimulation::isInside(int x, int y) const {
+bool ParticleSimulation::isInside(uint32_t x, uint32_t y) const {
 	return x >= 0 && x < width && y >= 0 && y < height;
 }
 
 
 
-void ParticleSimulation::setParticle(int x, int y) {
+void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 	// Convierte las coordenadas de pantalla a coordenadas de la simulación
 	int simX = (x * width) / wWidth;
 	int simY = height - (y * height) / wHeight - 1;
@@ -402,9 +412,9 @@ void ParticleSimulation::setParticle(int x, int y) {
 		}
 }
 
-bool ParticleSimulation::isParticle(int x, int y) const {
+bool ParticleSimulation::isParticle(uint32_t x, uint32_t y) const {
 	if (isInside(x, y)) {
-		return  !chunk_state[x + width * y].mat == empty;
+		return  !chunk_state[computeIndex(x, y)].mat == empty;
 	}
 	return false;
 }

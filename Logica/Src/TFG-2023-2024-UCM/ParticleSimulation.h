@@ -22,9 +22,9 @@ public:
 
 
     void update(); // Actualiza el estado de la simulación
-    void setParticle(int x, int y); // Coloca una partícula en la posición (x, y)
-    bool isParticle(int x, int y) const; // Verifica si hay una partícula en la posición (x, y)
-    bool isInside(int x, int y) const;
+    void setParticle(uint32_t x, uint32_t y); // Coloca una partícula en la posición (x, y)
+    bool isParticle(uint32_t x, uint32_t y) const; // Verifica si hay una partícula en la posición (x, y)
+    bool isInside(uint32_t x, uint32_t y) const;
     int getWidth() const; // Obtiene el ancho de la simulación
     int getHeight() const; // Obtiene la altura de la simulación
     void setMaterial(material mat); //change the material to be used
@@ -75,5 +75,9 @@ private:
     inline bool goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
 
     inline bool goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t speed);
+
+    inline uint32_t computeIndex(const uint32_t& x, const uint32_t& y) const;
+    
+    inline uint32_t computeIndex(const uint32_t &&x, const uint32_t &&y) const;
 };
 
