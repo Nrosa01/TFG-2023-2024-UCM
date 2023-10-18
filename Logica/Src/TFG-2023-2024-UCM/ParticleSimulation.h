@@ -60,9 +60,9 @@ private:
 
     void pushOtherParticle(position pos);
 
-    bool goFlat(const direction& dir, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
+    bool goFlat(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
-    bool goDiagonal(const direction& dir, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
+    bool goDiagonal(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
     void updateWater(uint32_t x, uint32_t y);
 
@@ -84,7 +84,7 @@ private:
 
     bool goDownRightDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& speed);
 
-    inline bool goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
+    //inline bool goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
     inline uint32_t computeIndex(const uint32_t& x, const uint32_t& y) const;
     

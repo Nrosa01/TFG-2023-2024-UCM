@@ -127,21 +127,18 @@ void ParticleSimulation::pushOtherParticle(position pos) {
 	}
 }
 
-/*
-Template functions to go in x and +, since those four directions are similar
-*/
-
-bool ParticleSimulation::goFlat(const direction& dir, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
+bool ParticleSimulation::goFlat(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove)
+{
 	int i = 0;
 	uint32_t x_pos = x, y_pos = y;
-	
+
 	while (pixelsToMove > 0)
 	{
-		x_pos += Particle::direction_vectors[dir].x;
-		y_pos += Particle::direction_vectors[dir].y;
+		x_pos += dir_x;
+		y_pos += dir_y;
 		if (!isInside(x_pos, y_pos) || !isEmpty(x_pos, y_pos))
 			break;
-		else 			
+		else
 			i++;
 
 		pixelsToMove--;
@@ -150,22 +147,22 @@ bool ParticleSimulation::goFlat(const direction& dir, uint32_t x, uint32_t y, co
 	if (i == 0)
 		return false;
 
-	chunk_state[computeIndex(x+ Particle::direction_vectors[dir].x * i, y + Particle::direction_vectors[dir].y * i)] = particle;
-	has_been_updated[computeIndex(x + Particle::direction_vectors[dir].x * i, y + Particle::direction_vectors[dir].y * i)] = true;
+	chunk_state[computeIndex(x + dir_x * i, y + dir_y * i)] = particle;
+	has_been_updated[computeIndex(x + dir_x * i, y + dir_y * i)] = true;
 	chunk_state[computeIndex(x, y)] = Particle();
 
 	return true;
 }
 
-bool ParticleSimulation::goDiagonal(const direction& dir, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
-	
+bool ParticleSimulation::goDiagonal(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove)
+{
 	uint32_t new_x = x, new_y = y;
 
 	while (pixelsToMove > 0) {
-		new_x += Particle::direction_vectors[dir].x;
-		new_y += Particle::direction_vectors[dir].y;
+		new_x += dir_x;
+		new_y += dir_y;
 		if (isInside(new_x, new_y) && isEmpty(new_x, new_y)) {
-				
+
 			chunk_state[computeIndex(new_x, new_y)] = particle;
 			has_been_updated[computeIndex(new_x, new_y)] = true;
 			chunk_state[computeIndex(x, y)] = Particle();
@@ -178,10 +175,10 @@ bool ParticleSimulation::goDiagonal(const direction& dir, uint32_t x, uint32_t y
 		}
 	}
 	return true;
-	
 
-	
+
 }
+
 
 bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
 	int i = 0;
@@ -354,26 +351,6 @@ bool ParticleSimulation::goDownRightDensity(uint32_t x, uint32_t y, const Partic
 	return false;
 }
 
-bool ParticleSimulation::goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove) {
-	bool can_move_left = x > 0 && y > 0 && isEmpty(x - 1, y);
-	bool can_move_right = x < width - 1 && y > 0 && isEmpty(x + 1, y);
-
-	if (can_move_left && can_move_right) {
-		int left = rand() % 2;
-		if (left)
-			updateParticle({ x - 1,y }, { x,y }, particle);
-		else
-			updateParticle({ x + 1 ,y }, { x,y }, particle);
-	}
-	// Si no puede moverse hacia abajo, intente moverse hacia la izquierda
-	else if (can_move_left)
-		updateParticle({ x - 1,y }, { x,y }, particle);
-	// Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
-	else if (can_move_right)
-		updateParticle({ x + 1 ,y }, { x,y }, particle);
-	return can_move_left || can_move_right;
-}
-
 inline uint32_t ParticleSimulation::computeIndex(const uint32_t& x, const uint32_t& y) const
 { 
 	return y * width + x;	
@@ -416,7 +393,8 @@ void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
 	goDown(x, y, p, pixelsToMove);
 	goDownLeft(x, y, p, pixelsToMove);
 	goDownRight(x, y, p, pixelsToMove);
-	goSides(x, y, p, pixelsToMove);
+	goFlat(-1,0,x,y,p,pixelsToMove);
+	goFlat(1, 0, x, y, p, pixelsToMove);
 	//if (goDownDensity(x, y, p, p.speed)) return;
 	p.is_stagnant = pixelsToMove == 0;
 }
@@ -432,38 +410,13 @@ void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
 
 	// We could even get rid of the ifs as, if pixelsToMove is 0, the method would be "called" but would inmediately return
 	// Assuming the method is inlined, this won't trigger a call stack allocation
-	goFlat(up,x, y, p, pixelsToMove);
-	goDiagonal(upleft,x, y, p, pixelsToMove);
-	goDiagonal(upright,x, y, p, pixelsToMove);
+	goFlat(0,1,x, y, p, pixelsToMove);
+	goDiagonal(-1,1,x, y, p, pixelsToMove);
+	goDiagonal(1,1,x, y, p, pixelsToMove);
 
 
 	p.is_stagnant = pixelsToMove == 0;
 
-	//Particle& p = chunk_state[x][y];
-
-	//p.life_time = p.life_time - 1;
-	//if (p.life_time <= 0) {
-	//	p.mat = empty;
-	//	return;
-	//}
-	////nada que comprobar, ya es suelo fijo;
-	//if (has_been_updated[y * width + x]) return;
-
-
-	//// Si hay una partícula en esta posición, mueva hacia abajo si es posible
-	//if (y < height && isEmpty(x, y + 1))
-	//	updateTemporalParticle({ x,y + 1 }, { x,y }, p);
-
-	//// Si no puede moverse hacia abajo, intente moverse hacia la izquierda
-	//else if (x > 0 && y < height && isEmpty(x - 1, y + 1))
-	//	updateTemporalParticle({ x - 1,y + 1 }, { x,y }, p);
-
-	//else if (x < width - 1 && y < height && isEmpty(x + 1, y + 1))
-	//	// Si no puede moverse hacia abajo ni hacia la izquierda, intente moverse hacia la derecha
-	//	updateTemporalParticle({ x + 1 ,y + 1 }, { x,y }, p);
-	//	// en verdad esto es solo util ahora, cuando haya varios chunks y todo sea destruible no va a valer de nada
-	//	// señala que un bloque de arena no se va a mover mas, ya que ya es base de otros bloques
-	//else p.is_stagnant = true;
 }
 
 
