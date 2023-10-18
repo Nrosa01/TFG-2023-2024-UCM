@@ -392,6 +392,13 @@ void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
 
 	Particle& p = chunk_state[computeIndex(x, y)];
 
+	p.life_time -= 1;
+	if (p.life_time <= 0)
+	{
+		p.mat = empty;
+		return;
+	}
+
 	//nada que comprobar, ya es suelo fijo;
 	if (has_been_updated[computeIndex(x, y)]) return;
 

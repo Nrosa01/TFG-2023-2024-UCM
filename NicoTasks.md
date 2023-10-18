@@ -19,3 +19,7 @@
 - Thought about implementation problems and scalibity and how to fix them
 - I made goDown, goDownLeft and goDownRight return how many pixels to move are left
 - Refactored goDownDensity, pushOtherParticle. Restructured updateSand and updateWater
+
+18-10-2023
+
+- Fixed last pixel not rendering due to a bug in updateTexture method.
