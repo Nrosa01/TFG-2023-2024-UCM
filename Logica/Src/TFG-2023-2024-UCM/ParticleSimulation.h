@@ -21,12 +21,12 @@ public:
     ~ParticleSimulation();
 
 
-    void update(); // Actualiza el estado de la simulación
-    void setParticle(uint32_t x, uint32_t y); // Coloca una partícula en la posición (x, y)
-    bool isParticle(uint32_t x, uint32_t y) const; // Verifica si hay una partícula en la posición (x, y)
+    void update(); // Actualiza el estado de la simulaciï¿½n
+    void setParticle(uint32_t x, uint32_t y); // Coloca una partï¿½cula en la posiciï¿½n (x, y)
+    bool isParticle(uint32_t x, uint32_t y) const; // Verifica si hay una partï¿½cula en la posiciï¿½n (x, y)
     bool isInside(uint32_t x, uint32_t y) const;
-    int getWidth() const; // Obtiene el ancho de la simulación
-    int getHeight() const; // Obtiene la altura de la simulación
+    int getWidth() const; // Obtiene el ancho de la simulaciï¿½n
+    int getHeight() const; // Obtiene la altura de la simulaciï¿½n
     void setMaterial(material mat); //change the material to be used
 
     void render();
@@ -55,8 +55,6 @@ private:
     void updateTemporalParticle(position next_pos, position last_pos, const Particle& particle);
 
     bool isGas(uint32_t x, uint32_t y);
-
-    void updateParticle(position next_pos, position last_pos, const Particle& particle);
 
     void pushOtherParticle(position pos);
 
