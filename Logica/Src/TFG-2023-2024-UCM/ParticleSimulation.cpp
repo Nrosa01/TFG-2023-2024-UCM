@@ -36,13 +36,13 @@ void ParticleSimulation::initializeTexture()
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
-	// Define parï¿½metros de la textura (puedes ajustarlos segï¿½n tus necesidades)
+	// Define parámetros de la textura (puedes ajustarlos según tus necesidades)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	// Define el tamaï¿½o y el formato de la textura (RGBA)
+	// Define el tamaño y el formato de la textura (RGBA)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
 	// Establece los datos iniciales de la textura
@@ -52,8 +52,8 @@ void ParticleSimulation::initializeTexture()
 }
 
 void ParticleSimulation::updateTexture() {
-	// Recorre los datos de la simulaciï¿½n y actualiza textureData segï¿½n el estado actual
-	for (int x = width * height  - 1 ; x > 0; --x) {
+	// Recorre los datos de la simulación y actualiza textureData según el estado actual
+	for (int x = width * height  - 1 ; x >= 0; --x) {
 			colour_t c{ 0,0,0,0 };
 			switch (chunk_state[x].mat)
 			{
@@ -74,6 +74,7 @@ void ParticleSimulation::updateTexture() {
 
 				break;
 			}
+			
 			int pos_text = (x) * 4;
 			textureData[pos_text + 0] = c.r;   // R
 			textureData[pos_text + 1] = c.g;   // G
@@ -413,6 +414,8 @@ void ParticleSimulation::setMaterial(material mat)
 	type_particle = mat;
 }
 
+// TODO: Update methods should recibe the index directly, right now
+// we are passing x and y just to use computeIndex later which doesn't make sense
 void ParticleSimulation::update() {
 
 	// se actualiza en orden de abajo a arriba
@@ -443,7 +446,7 @@ void ParticleSimulation::update() {
 
 	updateTexture();
 
-	//seï¿½alo otra vez todas las particulas como no modificadas
+	//señalo otra vez todas las particulas como no modificadas
 	std::memset(has_been_updated, false, width * height);
 }
 
@@ -454,7 +457,7 @@ bool ParticleSimulation::isInside(uint32_t x, uint32_t y) const {
 
 
 void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
-	// Convierte las coordenadas de pantalla a coordenadas de la simulaciï¿½n
+	// Convierte las coordenadas de pantalla a coordenadas de la simulación
 	int simX = (x * width) / wWidth;
 	int simY = height - (y * height) / wHeight - 1;
 	int simX_aux = simX;
