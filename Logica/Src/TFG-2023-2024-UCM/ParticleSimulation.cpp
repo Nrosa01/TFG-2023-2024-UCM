@@ -105,9 +105,9 @@ void ParticleSimulation::pushOtherParticle(position pos) {
 	for (int i = -3; i < 3; ++i) {
 		for (int j = 1; j < 10; ++j) {
 			if (isInside(pos.x + i, pos.y + j	)) {
-				uint8_t current_density = Particle::material_physics[chunk_state[computeIndex(pos.x, (pos.y + j))].mat].density;
+				uint8_t current_density = Particle::material_physics[chunk_state[computeIndex(pos.x + i, pos.y + j)].mat].density;
 				if (current_density < Particle::material_physics[chunk_state[computeIndex(pos.x, pos.y)].mat].density) {
-					chunk_state[computeIndex(pos.x, (pos.y + j))] = chunk_state[computeIndex(pos.x, pos.y)];
+					chunk_state[computeIndex(pos.x+i, pos.y + j)] = chunk_state[computeIndex(pos.x, pos.y)];
 					chunk_state[computeIndex(pos.x,  pos.y)] = Particle();
 					break;
 				}
