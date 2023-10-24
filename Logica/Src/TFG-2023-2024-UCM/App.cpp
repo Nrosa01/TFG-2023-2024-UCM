@@ -15,7 +15,7 @@
 
 App* App::currentApp = nullptr;
 
-App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr) {
+App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr), selectedMaterial(sand), accumulator(0) {
 	currentApp = this;
 }
 
@@ -140,14 +140,15 @@ void App::handleInput()
 {
 	while (!events.empty()) {
 		int key = events.front();
-		if(key == GLFW_KEY_W)
-			sandSimulation->setMaterial(water);
+		if (key == GLFW_KEY_W)
+			selectedMaterial = water;
 		else if (key == GLFW_KEY_S)
-			sandSimulation->setMaterial(sand);
+			selectedMaterial = sand;
 		else if (key == GLFW_KEY_R)
-			sandSimulation->setMaterial(rock);
+			selectedMaterial = rock;
 		else if (key == GLFW_KEY_G)
-			sandSimulation->setMaterial(gas);
+			selectedMaterial = gas;
+		
 		events.pop();
 	}
 }
@@ -167,6 +168,37 @@ void App::render()
 	// Depurar FPS desde ImGui
 	ImGui::Begin("FPS Window");
 	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+	ImGui::End();
+
+	// En tu función de renderizado de ImGui:
+	ImGui::Begin("Material Selector");
+
+	if (ImGui::Selectable("Water", selectedMaterial == water)) {
+		selectedMaterial = water;
+	}
+	ImGui::SameLine();
+	ImGui::ColorButton("WaterColor", ImVec4(0.0f, 0.0f, 1.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+
+	if (ImGui::Selectable("Sand", selectedMaterial == sand)) {
+		selectedMaterial = sand;
+	}
+	ImGui::SameLine();
+	ImGui::ColorButton("SandColor", ImVec4(0.86f, 0.66f, 0.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+
+	if (ImGui::Selectable("Rock", selectedMaterial == rock)) {
+		selectedMaterial = rock;
+	}
+	ImGui::SameLine();
+	ImGui::ColorButton("RockColor", ImVec4(0.5f, 0.5f, 0.5f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+
+	if (ImGui::Selectable("Gas", selectedMaterial == gas)) {
+		selectedMaterial = gas;
+	}
+	ImGui::SameLine();
+	ImGui::ColorButton("GasColor", ImVec4(0.8f, 0.8f, 0.8f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+
+	sandSimulation->setMaterial(selectedMaterial);
+
 	ImGui::End();
 
 	//quad->render();

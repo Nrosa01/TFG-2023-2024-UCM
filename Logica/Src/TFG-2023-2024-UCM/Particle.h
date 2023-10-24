@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <unordered_map>
+#include "Common_utils.h"
 
 //Sand particle
 
@@ -21,14 +22,16 @@ struct physics_data {
 	uint8_t propagation_speed;
 };
 
-class Particle {
+//I dont know where to put the direction info, so I'm just putting it in particle for the moment
 
+enum direction { up, down, left, right, upleft, upright, downleft, downright };
 
-	
-public:
-	static std::unordered_map<material, physics_data> materialPhysics;
+struct Particle {
+	// TODO: Convert everything to camelCase. Const members should be ALL_CAPS
+	static std::unordered_map<material, physics_data> material_physics;
+	static std::unordered_map<direction, vector2D> direction_vectors;
 	static const int gas_life_time = 300;
-	static void initializeMaterialPhysics();
+
 
 	bool is_stagnant = false;
 	material mat = empty;
@@ -37,8 +40,14 @@ public:
 	//only applicable to gas and combustionable particles
 	uint32_t life_time = 0;
 	
-
-
+	// This variable control how many pixels per frame the particle will transverse
+	// This generates dependency from the physics step, but we prefer this. We could also measeure the time
+	// in miliseconds between frame to not be depending on the number of times the physics process is called but...
+	// That brings inconsistency in the update, fixed update was implemented to avoid this, so it doesn't make sense to add it at all...
+	// Best we can do for now it's stick with this and disallow users to be able to change the physics update rate.
+	
+	// Furthermore this speed parameter doesn't make sense, is this falling speed? propagation? This is just here temporarilly to test the speed implmenetation
+	uint32_t speed = 0;
 	//colour_t colour;
 };
 
