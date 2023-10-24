@@ -8,6 +8,7 @@
 #include "Quad.h"
 #include <iostream>
 #include "Common_utils.h"
+#include "ParticleFactory.h"
 
 static const double PI = 3.1415926535;
 
@@ -108,7 +109,7 @@ void ParticleSimulation::pushOtherParticle(position pos) {
 				uint8_t current_density = Particle::material_physics[chunk_state[computeIndex(pos.x + i, pos.y + j)].mat].density;
 				if (current_density < Particle::material_physics[chunk_state[computeIndex(pos.x, pos.y)].mat].density) {
 					chunk_state[computeIndex(pos.x+i, pos.y + j)] = chunk_state[computeIndex(pos.x, pos.y)];
-					chunk_state[computeIndex(pos.x,  pos.y)] = Particle();
+					chunk_state[computeIndex(pos.x, pos.y)] = ParticleFactory::createEmptyParticle();
 					break;
 				}
 			}
@@ -138,7 +139,7 @@ bool ParticleSimulation::goFlat(const int& dir_x, const int& dir_y, uint32_t x, 
 
 	chunk_state[computeIndex(x + dir_x * i, y + dir_y * i)] = particle;
 	has_been_updated[computeIndex(x + dir_x * i, y + dir_y * i)] = true;
-	chunk_state[computeIndex(x, y)] = Particle();
+	chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
 
 	return true;
 }
@@ -154,7 +155,7 @@ bool ParticleSimulation::goDiagonal(const int& dir_x, const int& dir_y, uint32_t
 
 			chunk_state[computeIndex(new_x, new_y)] = particle;
 			has_been_updated[computeIndex(new_x, new_y)] = true;
-			chunk_state[computeIndex(x, y)] = Particle();
+			chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
 			has_been_updated[y * width + x] = true;
 
 			pixelsToMove--;
@@ -187,7 +188,7 @@ bool ParticleSimulation::goDown(uint32_t x, uint32_t y, const Particle& particle
 
 	chunk_state[computeIndex(x, y - i)] = particle;
 	has_been_updated[computeIndex(x, (y - i))] = true;
-	chunk_state[computeIndex(x, y)] = Particle();
+	chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
 
 	return true;
 }
@@ -205,7 +206,7 @@ bool ParticleSimulation::goDownLeft(uint32_t x, uint32_t y, const Particle& part
 				new_y -= 1;
 				chunk_state[computeIndex(new_x,new_y)] = particle;
 				has_been_updated[computeIndex(new_x, new_y)] = true;			
-				chunk_state[computeIndex(x, y)] = Particle();
+				chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
 				has_been_updated[y * width + x] = true;
 			
 				pixelsToMove--;
@@ -233,7 +234,7 @@ bool ParticleSimulation::goDownRight(uint32_t x, uint32_t y, const Particle& par
 				new_y -= 1;
 				chunk_state[computeIndex(new_x, new_y)] = particle;
 				has_been_updated[computeIndex(new_x, new_y)] = true;
-				chunk_state[computeIndex(x, y)] = Particle();
+				chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
 				has_been_updated[computeIndex(x, y)] = true;
 				
 				pixelsToMove--;
@@ -261,7 +262,7 @@ bool ParticleSimulation::goDownDensity(uint32_t x, uint32_t y, const Particle& p
                     pushOtherParticle({ x, y_pos });
 					has_been_updated[x, y_pos] = true;
                     chunk_state[computeIndex(x, y_pos)] = particle;
-                    chunk_state[computeIndex(x, y)] = Particle();
+                    chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
                     speed--;
                 } else {
                     break;
@@ -292,7 +293,7 @@ bool ParticleSimulation::goDownLeftDensity(uint32_t x, uint32_t y, const Particl
 
 				chunk_state[computeIndex(new_x, new_y)] = particle;
 				has_been_updated[computeIndex(new_x, new_y)] = true;
-				chunk_state[computeIndex(x, y)] = Particle();
+				chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
 				has_been_updated[computeIndex(x, y)] = true;
 
 				pixelsToMove--;
@@ -325,7 +326,7 @@ bool ParticleSimulation::goDownRightDensity(uint32_t x, uint32_t y, const Partic
 
 				chunk_state[computeIndex(new_x, new_y)] = particle;
 				has_been_updated[computeIndex(new_x, new_y)] = true;
-				chunk_state[computeIndex(x, y)] = Particle();
+				chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
 				has_been_updated[computeIndex(x, y)] = true;
 
 				pixelsToMove--;
@@ -479,22 +480,17 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 				// TODO: Create a particle factory
 				switch (type_particle) {
 				case sand:
-					chunk_state[computeIndex(i,j)].mat = sand;
-					chunk_state[computeIndex(i,j)].speed = 1;
+					chunk_state[computeIndex(i, j)] = ParticleFactory::createSandParticle();
 					break;
-
 				case gas:
-					chunk_state[computeIndex(i,j)].mat = gas;
-					chunk_state[computeIndex(i,j)].life_time = Particle::gas_life_time;
-					chunk_state[computeIndex(i,j)].speed = 5;
+					chunk_state[computeIndex(i,j)] =  ParticleFactory::createGasParticle();
 					break;
-
 				case water:
-					chunk_state[computeIndex(i,j)].mat = water;
-					chunk_state[computeIndex(i,j)].speed = 5;
+					chunk_state[computeIndex(i,j)] = ParticleFactory::createWaterParticle();
 					break;
 				case rock:
-					chunk_state[computeIndex(i,j)].mat = rock;
+					chunk_state[computeIndex(i,j)] = ParticleFactory::createRockParticle();
+					break;
 				}
 			}
 		}
