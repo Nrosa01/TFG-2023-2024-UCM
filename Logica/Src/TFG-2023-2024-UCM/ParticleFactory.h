@@ -9,10 +9,33 @@
 class ParticleFactory
 {
 public:
-	static Particle createSandParticle();
-	static Particle createGasParticle();
-	static Particle createWaterParticle();
-	static Particle createRockParticle();
-	static Particle createEmptyParticle();
+	static inline Particle createSandParticle() {
+		Particle particle = Particle();
+		particle.mat = sand;
+		particle.speed = 1;
+		return particle;
+	};
+	static inline Particle createGasParticle() {
+		Particle particle = Particle();
+		particle.mat = gas;
+		// We might need to do something about this
+		particle.life_time = Particle::gas_life_time;
+		particle.speed = 3;
+		return particle;
+	};
+	static inline Particle createWaterParticle() {
+		Particle particle = Particle();
+		particle.mat = water;
+		particle.speed = 5;
+		return particle;
+	};
+	static inline Particle createRockParticle() {
+		Particle particle = Particle();
+		particle.mat = rock;
+		return particle;
+	};
+	static inline Particle createEmptyParticle() {
+		return Particle();
+	};
 };
 
