@@ -5,7 +5,7 @@
 
 //Sand particle
 
-enum material { sand, gas, water, rock, empty };
+enum material { sand, gas, water, rock, acid, empty };
 
 /*
 * density summary:

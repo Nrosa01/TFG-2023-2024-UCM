@@ -117,7 +117,6 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Camera.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Particle.cpp" />
-    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleFactory.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Quad.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Triangle.cpp" />

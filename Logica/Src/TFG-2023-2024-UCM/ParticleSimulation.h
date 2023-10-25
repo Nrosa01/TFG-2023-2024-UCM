@@ -65,9 +65,13 @@ private:
     void updateWater(uint32_t x, uint32_t y);
 
     void updateGas(uint32_t x, uint32_t y);
+    
+    void updateAcid(uint32_t x, uint32_t y);
 
     void updateSand(uint32_t x, uint32_t y);
     
+    inline bool goDownAcid(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
+
     inline bool goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
 
     inline bool goDownRight(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);

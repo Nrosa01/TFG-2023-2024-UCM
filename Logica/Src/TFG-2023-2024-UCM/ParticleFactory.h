@@ -34,6 +34,13 @@ public:
 		particle.mat = rock;
 		return particle;
 	};
+	static inline Particle createAcidParticle()
+	{
+		Particle particle = Particle();
+		particle.speed = 1;
+		particle.mat = acid;
+		return particle;
+	};
 	static inline Particle createEmptyParticle() {
 		return Particle();
 	};

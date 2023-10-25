@@ -5,7 +5,8 @@ std::unordered_map<material, physics_data> Particle::material_physics = {
 	{sand , { 3, 1, 3 }},
 	{gas ,{ 0, 3, 4 }},
 	{water , { 1, 3, 4 }},
-	{rock , { 3, 0, 0 }}
+	{rock , { 3, 0, 0 }},
+	{acid , { 2, 2, 3 }}
 };
 
 std::unordered_map<direction, vector2D> Particle::direction_vectors = {

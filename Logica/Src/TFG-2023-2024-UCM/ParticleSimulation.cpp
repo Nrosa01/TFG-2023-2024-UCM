@@ -71,6 +71,9 @@ void ParticleSimulation::updateTexture() {
 			case rock:
 				c = dark_grey;
 				break;
+			case acid:
+				c = saturated_green;
+				break;
 			default:
 
 				break;
@@ -371,7 +374,6 @@ void ParticleSimulation::updateSand(uint32_t x, uint32_t y) {
 	p.is_stagnant = pixelsToMove == 0;
 }
 
-
 void ParticleSimulation::updateWater(uint32_t x, uint32_t y) {
 	Particle& p = chunk_state[computeIndex(x, y)];
 
@@ -416,6 +418,70 @@ void ParticleSimulation::updateGas(uint32_t x, uint32_t y) {
 
 }
 
+void ParticleSimulation::updateAcid(uint32_t x, uint32_t y)
+{
+	Particle& p = chunk_state[computeIndex(x, y)];
+
+	//nada que comprobar, ya es suelo fijo;
+	if (has_been_updated[computeIndex(x, y)]) return;
+
+	uint32_t pixelsToMove = p.speed;
+
+	// We could even get rid of the ifs as, if pixelsToMove is 0, the method would be "called" but would inmediately return
+	// Assuming the method is inlined, this won't trigger a call stack allocation
+	goDown(x, y, p, pixelsToMove);
+	goDownDensity(x, y, p, p.speed);
+	goDownAcid(x, y, p, p.speed);
+	goDownLeft(x, y, p, pixelsToMove);
+	goDownLeftDensity(x, y, p, pixelsToMove);
+	goDownRightDensity(x, y, p, pixelsToMove);
+
+	p.is_stagnant = pixelsToMove == 0;
+}
+
+inline bool ParticleSimulation::goDownAcid(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove)
+{
+	int i = 0;
+	while (pixelsToMove > 0)
+	{
+		const uint32_t y_pos = y - 1 - i;
+		if (y_pos > height)
+			break;
+		else if (!isEmpty(x, y_pos))
+		{
+			// Temp fix, 0.5% prob, chance to remove particle below
+			const bool chance_to_disolve = (rand() % 100) < 10;
+
+			if (chance_to_disolve)
+			{
+				i++;
+				chunk_state[computeIndex(x, y - i)] = particle;
+				has_been_updated[computeIndex(x, (y - i))] = true;
+				
+				// Temp fix, 1% prob, chance for acid to disapear
+				const bool chance_to_dissapear = (rand() % 100) < 3;
+				
+				if (chance_to_dissapear)
+					chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
+			}
+			
+			break;
+		}
+		else
+			i++;
+
+		pixelsToMove--;
+	}
+
+	if (i == 0)
+		return false;
+
+	chunk_state[computeIndex(x, y - i)] = particle;
+	has_been_updated[computeIndex(x, (y - i))] = true;
+	chunk_state[computeIndex(x, y)] = ParticleFactory::createEmptyParticle();
+
+	return true;
+}
 
 void ParticleSimulation::setMaterial(material mat)
 {
@@ -440,6 +506,8 @@ void ParticleSimulation::update() {
 			case water:
 				updateWater(x % width, x/width);
 				break;
+			case acid:
+				updateAcid(x % width, x / width);
 			case rock:
 				break;
 			case empty:
@@ -490,6 +558,9 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 					break;
 				case rock:
 					chunk_state[computeIndex(i,j)] = ParticleFactory::createRockParticle();
+					break;
+				case acid:
+					chunk_state[computeIndex(i,j)] = ParticleFactory::createAcidParticle();
 					break;
 				}
 			}

@@ -117,6 +117,7 @@ void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 		else if (key == GLFW_KEY_W ||
 				key == GLFW_KEY_S ||
 				key == GLFW_KEY_R ||
+				key == GLFW_KEY_A ||
 				key == GLFW_KEY_G)
 			currentApp->events.push(key);
 	
@@ -148,6 +149,8 @@ void App::handleInput()
 			selectedMaterial = rock;
 		else if (key == GLFW_KEY_G)
 			selectedMaterial = gas;
+		else if (key == GLFW_KEY_A)
+			selectedMaterial = acid;
 		
 		events.pop();
 	}
@@ -196,6 +199,12 @@ void App::render()
 	}
 	ImGui::SameLine();
 	ImGui::ColorButton("GasColor", ImVec4(0.8f, 0.8f, 0.8f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+
+	if (ImGui::Selectable("Acid", selectedMaterial == acid)) {
+		selectedMaterial = acid;
+	}
+	ImGui::SameLine();
+	ImGui::ColorButton("AcidColor", ImVec4(0.26f, 0.88f, 0.24f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
 
 	sandSimulation->setMaterial(selectedMaterial);
 
