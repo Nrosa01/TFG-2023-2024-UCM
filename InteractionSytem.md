@@ -82,11 +82,13 @@ The Particle - Particle can be avoided, we could just check in the next particle
   - Execute current pass
   - If fail, try next pass
   - If all passes fail but at least one pass was executed, retry from the first pass. If not, stop simulation for this particle
-- Check quimic interactions (this step can stop the simulation for this particle)
 - Check physical interactions (this step can stop the simulation for this particle, density, temperature, etc)
+- Check quimic interactions (this step can stop the simulation for this particle)
 - Repeat until velocity reaches 0 or a physical or quimic interaction stops the simulation for this particle
 
 * We should define a particle movement structure like this
+
+Question: What's more important, quimics or physics interactions? I think both can work but we need to think about this.
 
 ```cpp
 struct ParticleMovement {
@@ -172,4 +174,82 @@ struct TempQuimicInteractions {
     // Figure out how to define quimic interactions throu code
     // Maybe we can use an enum of kinds of interactions idk
 };
+```
+
+General Algorithm pseudo-code in C++
+
+```cpp
+// Notes: Instead of trying to move the particle all the pixels at once, we are
+// moving one by one, so if this particle emits heats or something we can account for that in each iteration
+// It might be slower than moving in each pass directly until collision but it's more accurate. I think we can go with this for now
+inline void simulateParticle(uint32_t particleIndex)
+{
+  // Get pixels to move from particle constant data
+  const uint32_t particleDataIndex = chunks[particleIndex].id;
+  const uint32_t particleMovementPassesAmount = particleData[particleDataIndex].particleMovementPassesAmount; // This is a value because using a value for this is not worthy to just store a few structs
+  uint32_t pixelsToMove = particleData[particleDataIndex].pixelsToMove;
+  bool particleIsMoving = true;
+  bool particleCollidedLastIteration = false;
+  uint32_t particleMovementPass = 0;
+
+  while(pixelsToMove > 0 && particleIsMoving)
+  {
+    // Gather particle first direction pass
+    int32_t particleMovementX = particleData[particleDataIndex].particleMovement[particleMovementPass].X;
+    int32_t particleMovementY = particleData[particleDataIndex].particleMovement[particleMovementPass].Y;
+
+    // Move particle until collision
+    // This method moves the particle only once and remains the remaining pixels to move
+    // If the remaining equals the pixels to move, it means the particle couldn't move at all (collision)
+    uint32_t remainingPixelsToMove = moveParticle(particleIndex, particleMovementX, particleMovementY, pixelsToMove); // inline this pls
+
+    // This could probably be simplified but as long as it works, it's fine for now
+    // You might think we could just check wheter particleMovementPass is greater than movementPass.length and use that to stop. But that won't be correct, as we might have reached that pass but still have pixels to move and loop again through the passes to try to move the remaining pixels in the next iteration that we couldn't before (because of a collision) but now we can because the other passes displace the particle in a way that it can move again.
+    if (remaningPixelsToMove == pixelsToMove)
+    {
+      // Increment movemnetPass looping through the passes
+      particleMovementPass++;
+
+      // If we reached the last pass, reset to the first one
+      //  I know we could creat a loop func for this but given this is simple, it's not worth it
+      if (particleMovementPass >= particleMovementPassesAmount)
+        particleMovementPass = 0;
+
+      
+      if (particleCollidedLastIteration)
+        particleIsMoving = false; // If the particle collided last iteration and this one, it means it can't move at all
+      
+      particleCollidedLastIteration = true;
+    }
+    else
+    {
+      particleCollidedLastIteration = false;
+      particleIsMoving = true;
+    }
+
+    // This boolean can be called differentely and might be changed by physics or quimic interactions, as the particle might move on these stages.
+    // But we need something like this to avoid an infinite loop
+
+    // Check if any physic interaction can occur
+    if (getPhysicInteractions(particleIndex)) // Returns true if any physic interaction can occur
+    {
+      //Handle physics
+
+      // Usually, once physics are handled, the particle process is stopped
+      // We put pixelsToMove to 0 instead of return to check for quimic interactions
+      pixelsToMove = 0;
+    }
+
+    // Check if any quimic interaction can occur
+    if (getQuimicInteractions(particleIndex)) // Returns true if any quimic interaction can occur
+    {
+      //Handle quimics
+
+      // Usually, once quimics are handled, the particle process is stopped
+      pixelsToMove = 0;
+    }
+
+    // Repeat until velocity reaches 0 or a physical or quimic interaction stops the simulation for this particle
+  }
+}
 ```
