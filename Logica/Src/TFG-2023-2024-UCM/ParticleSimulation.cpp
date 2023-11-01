@@ -97,14 +97,14 @@ const bool ParticleSimulation::isEmpty(const uint32_t& x, const uint32_t& y) con
 //	}
 //}
 
-const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle)
+const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y)
 {
 	const uint32_t new_x = x + dir_x;
 	const uint32_t new_y = y +  dir_y;
 
 	if (isInside(new_x, new_y) && isEmpty(new_x, new_y)) {
 
-		chunk_state[new_x][new_y] = particle;
+		chunk_state[new_x][new_y] = chunk_state[x][y];
 		chunk_state[x][y] = ParticleFactory::createEmptyParticle();
 
 		return true;
@@ -137,7 +137,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		const int32_t dir_x = data.movement_passes[particle_movement_passes_index].x;
 		const int32_t dir_y = data.movement_passes[particle_movement_passes_index].y;
 
-		const bool particleMoved = moveParticle(dir_x, dir_y, x, y, chunk_state[x][y]);
+		const bool particleMoved = moveParticle(dir_x, dir_y, x, y);
 
 		if (!particleMoved)
 		{

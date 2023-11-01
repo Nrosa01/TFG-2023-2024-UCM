@@ -51,7 +51,7 @@ private:
 
     //inline void pushOtherParticle(uint32_t index);
 
-    inline const bool moveParticle(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle);
+    inline const bool moveParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y);
 
     inline void updateParticle(const uint32_t& x, const uint32_t& y);
 
