@@ -38,7 +38,7 @@ struct Particle {
 	
 	// Instead of using an external boolean array, we can just use a counter to check against that changes with each iteration
 	// This counter can be used to track update of particle groups
-	uint8_t clock = 0;
+	bool clock = false;
 	uint32_t life_time = 0;
 };
 

@@ -123,7 +123,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 
 	if (chunk_state[x][y].clock != clock || particle_movement_passes_amount == 0)
 	{
-		chunk_state[x][y].clock = clock + 1;
+		chunk_state[x][y].clock = !clock;
 		return; // This particle has already been updated
 	}
 	
@@ -170,11 +170,10 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		// Here we should check physics and quimic interactions
 	}
 
-	// This has to be done anyways or else the particle won't be updated next frame
-	chunk_state[x][y].clock = clock + 1;
+	chunk_state[x][y].clock = !clock;
 	
 	// Update final position of the particle
-	chunk_state[new_pos_x][new_pos_y].clock = clock + 1;
+	chunk_state[new_pos_x][new_pos_y].clock = !clock;
 }
 
 const inline ParticleData& ParticleSimulation::getParticleData(const uint32_t& x, const uint32_t& y) const
@@ -188,14 +187,15 @@ void ParticleSimulation::setMaterial(material mat)
 }
 
 // TODO: Update methods should recibe the index directly, right now
-// we are passing x and y just to use computeIndex later which doesn't make sense
+// Update from bottom to up
+// We prefer from up to bottom but we're doing this now because it allows us to spot behaviour bugs by sight better
 void ParticleSimulation::update() {
 	for (uint32_t x = 0; x < width; ++x) {
 		for (uint32_t y = 0; y < height; ++y)
 			updateParticle(x, y);
 	}
 
-	clock++;
+	clock = !clock;
 
 	updateTexture();
 }

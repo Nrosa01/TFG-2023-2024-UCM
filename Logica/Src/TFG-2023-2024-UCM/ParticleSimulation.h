@@ -39,7 +39,7 @@ private:
     int height;
 
     Particle** chunk_state;
-    uint8_t clock; // Add 1 in every update call, check against particle clock to see whether they have been updated or not
+    bool clock; // Add 1 in every update call, check against particle clock to see whether they have been updated or not
     GLuint textureID; // ID de la textura
     std::unique_ptr<Quad> quad;
     std::vector<unsigned char> textureData; // Datos de textura RGBA
