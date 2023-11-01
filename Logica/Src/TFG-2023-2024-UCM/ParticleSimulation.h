@@ -42,7 +42,7 @@ private:
     int height;
 
     Particle* chunk_state;
-    bool* has_been_updated;
+    uint8_t clock; // Add 1 in every update call, check against particle clock to see whether they have been updated or not
     GLuint textureID; // ID de la textura
     std::unique_ptr<Quad> quad;
     std::vector<unsigned char> textureData; // Datos de textura RGBA
@@ -50,43 +50,15 @@ private:
     void initializeTexture();
     void updateTexture();
 
-    bool isEmpty(uint32_t x, uint32_t y);
+    bool isEmpty(uint32_t index);
 
-    void updateTemporalParticle(position next_pos, position last_pos, const Particle& particle);
+    //inline void pushOtherParticle(uint32_t index);
 
-    bool isGas(uint32_t x, uint32_t y);
+    inline bool moveParticle(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle);
 
-    void pushOtherParticle(position pos);
+    inline void updateParticle(uint32_t index);
 
-    bool goFlat(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
-
-    bool goDiagonal(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
-
-    void updateWater(uint32_t x, uint32_t y);
-
-    void updateGas(uint32_t x, uint32_t y);
-    
-    void updateAcid(uint32_t x, uint32_t y);
-
-    void updateSand(uint32_t x, uint32_t y);
-    
-    inline bool goDownAcid(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
-
-    inline bool goDown(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
-
-    inline bool goDownRight(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
-    
-    inline bool goDownLeft(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
-
-    inline bool goDownDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
-
-    //inline bool canMove(position pos, direction dir);
-
-    bool goDownLeftDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& speed);
-
-    bool goDownRightDensity(uint32_t x, uint32_t y, const Particle& particle, uint32_t& speed);
-
-    //inline bool goSides(uint32_t x, uint32_t y, const Particle& particle, uint32_t& pixelsToMove);
+    const inline ParticleData& getParticleData(uint32_t index) const;
 
     inline uint32_t computeIndex(const uint32_t& x, const uint32_t& y) const;
     

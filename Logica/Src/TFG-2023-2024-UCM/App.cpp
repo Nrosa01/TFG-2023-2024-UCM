@@ -12,6 +12,7 @@
 #include "Triangle.h"
 #include "ParticleSimulation.h"
 #include "Quad.h"
+#include "ParticleDataManager.h"
 
 App* App::currentApp = nullptr;
 
@@ -44,6 +45,24 @@ bool App::init() {
 
 	glfwSetKeyCallback(window.get(), keyCallback);
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
+
+	ParticleDataManager::addParticleData({
+			"Empty", // Text id
+			0, // ID (this should be computed internally but for now...)
+			{0, 0, 0, 0}, // Yellow color in rgba
+			{}
+		});
+
+	ParticleDataManager::addParticleData({
+		"YellowSand", // Text id
+		1, // ID (this should be computed internally but for now...)
+		{255, 255, 0, 255}, // Yellow color in rgba
+		{
+			{0, -1},   // Down
+			{-1, -1},  // Down-Left
+			{1, -1}    // Down-Right
+		}
+		});
 
 	triangle = std::make_unique<Triangle>();
 	sandSimulation = std::make_unique<ParticleSimulation>(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
