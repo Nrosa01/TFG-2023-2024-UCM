@@ -23,10 +23,10 @@ public:
 
     void update(); // Actualiza el estado de la simulaci�n
     void setParticle(uint32_t x, uint32_t y); // Coloca una part�cula en la posici�n (x, y)
-    bool isParticle(uint32_t x, uint32_t y) const; // Verifica si hay una part�cula en la posici�n (x, y)
-    bool isInside(uint32_t x, uint32_t y) const;
-    int getWidth() const; // Obtiene el ancho de la simulaci�n
-    int getHeight() const; // Obtiene la altura de la simulaci�n
+    const bool isParticle(uint32_t x, uint32_t y) const; // Verifica si hay una part�cula en la posici�n (x, y)
+    const bool isInside(uint32_t x, uint32_t y) const;
+    const int getWidth() const; // Obtiene el ancho de la simulaci�n
+    const int getHeight() const; // Obtiene la altura de la simulaci�n
     void setMaterial(material mat); //change the material to be used
 
     void render();
@@ -51,7 +51,7 @@ private:
 
     //inline void pushOtherParticle(uint32_t index);
 
-    inline bool moveParticle(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle);
+    inline const bool moveParticle(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle);
 
     inline void updateParticle(const uint32_t& x, const uint32_t& y);
 

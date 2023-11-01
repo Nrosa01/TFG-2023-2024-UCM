@@ -97,7 +97,7 @@ const bool ParticleSimulation::isEmpty(const uint32_t& x, const uint32_t& y) con
 //	}
 //}
 
-bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle)
+const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle)
 {
 	// I previously had x and y uint32 t, now I only have index
 	uint32_t new_x = x, new_y = y;
@@ -140,7 +140,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		const int32_t dir_x = data.movement_passes[particle_movement_passes_index].x;
 		const int32_t dir_y = data.movement_passes[particle_movement_passes_index].y;
 
-		bool particleMoved = moveParticle(dir_x, dir_y, x, y, chunk_state[x][y]);
+		const bool particleMoved = moveParticle(dir_x, dir_y, x, y, chunk_state[x][y]);
 
 		if (!particleMoved)
 		{
@@ -192,9 +192,7 @@ void ParticleSimulation::setMaterial(material mat)
 void ParticleSimulation::update() {
 	for (uint32_t x = 0; x < width; ++x) {
 		for (uint32_t y = 0; y < height; ++y)
-		{
 			updateParticle(x, y);
-		}
 	}
 
 	clock++;
@@ -202,7 +200,7 @@ void ParticleSimulation::update() {
 	updateTexture();
 }
 
-bool ParticleSimulation::isInside(uint32_t x, uint32_t y) const {
+const bool ParticleSimulation::isInside(uint32_t x, uint32_t y) const {
 	return x >= 0 && x < width && y >= 0 && y < height;
 }
 
@@ -241,18 +239,18 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 		}
 }
 
-bool ParticleSimulation::isParticle(uint32_t x, uint32_t y) const {
+const bool ParticleSimulation::isParticle(uint32_t x, uint32_t y) const {
 	if (isInside(x, y)) {
 		return  !chunk_state[x][y].type == empty;
 	}
 	return false;
 }
 
-int ParticleSimulation::getWidth() const {
+const int ParticleSimulation::getWidth() const {
 	return width;
 }
 
-int ParticleSimulation::getHeight() const {
+const int ParticleSimulation::getHeight() const {
 	return height;
 }
 

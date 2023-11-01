@@ -79,14 +79,14 @@ bool App::init() {
 }
 
 void App::run() {
-	double targetFrameTime = 1.0 / static_cast<double>(TARGET_FPS);
+	const double targetFrameTime = 1.0 / static_cast<double>(TARGET_FPS);
 	double lastFrameTime = glfwGetTime();
 	double fpsUpdateTime = 0.0;
 	int frameCount = 0;
 
 	while (!glfwWindowShouldClose(window.get()) && isRunning) {
-		double currentTime = glfwGetTime();
-		double deltaTime = currentTime - lastFrameTime;
+		const double currentTime = glfwGetTime();
+		const double deltaTime = currentTime - lastFrameTime;
 
 		// Limitar la velocidad de actualización a 60 FPS
 		if (deltaTime >= targetFrameTime) {
@@ -102,14 +102,14 @@ void App::run() {
 
 			// Calcular FPS y mostrarlos en la consola
 			if (fpsUpdateTime >= 1.0) {
-				double fps = static_cast<double>(frameCount) / fpsUpdateTime;
+				const double fps = static_cast<double>(frameCount) / fpsUpdateTime;
 				std::cout << "FPS: " << fps << std::endl;
 				frameCount = 0;
 				fpsUpdateTime = 0.0;
 			}
 
 			// Calcular el tiempo que debemos dormir para alcanzar 60 FPS
-			double sleepTime = targetFrameTime - deltaTime;
+			const double sleepTime = targetFrameTime - deltaTime;
 			if (sleepTime > 0.0) {
 				std::this_thread::sleep_for(std::chrono::duration<double>(sleepTime));
 			}
