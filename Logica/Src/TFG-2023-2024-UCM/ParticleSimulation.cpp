@@ -14,7 +14,7 @@
 static const double PI = 3.1415926535;
 
 
-ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight) {
+ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0) {
 
 	chunk_state = new Particle * [width];
 	for (int x = 0; x < width; ++x) {
@@ -108,9 +108,9 @@ bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, uint32
 	if (isInside(new_x, new_y) && isEmpty(new_x, new_y)) {
 
 		chunk_state[new_x][new_y] = particle;
-		chunk_state[new_x][new_y].clock++;
+		chunk_state[new_x][new_y].clock = clock + 1;
 		chunk_state[x][y] = ParticleFactory::createEmptyParticle();
-		chunk_state[x][y].clock++;
+		chunk_state[x][y].clock = clock + 1;
 
 		return true;
 	}
@@ -124,7 +124,10 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 	const uint32_t particle_movement_passes_amount = data.movement_passes.size();
 
 	if (chunk_state[x][y].clock != clock || particle_movement_passes_amount == 0)
+	{
+		chunk_state[x][y].clock = clock + 1;
 		return; // This particle has already been updated
+	}
 
 	uint32_t particle_movement_passes_index = 0;
 	uint32_t pixelsToMove = 1; // Temporal
@@ -139,19 +142,21 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 
 		bool particleMoved = moveParticle(dir_x, dir_y, x, y, chunk_state[x][y]);
 
-		if(!particleMoved)
+		if (!particleMoved)
 		{
 			// Increment movement pass looping through the passes
 			particle_movement_passes_index++;
 
 			// If we reached the last pass, we reset the index
 			if (particle_movement_passes_index == particle_movement_passes_amount)
+			{
 				particle_movement_passes_index = 0;
 
-			if(particleCollidedLastIteration)
-				particleIsMoving = false;
-
-			particleCollidedLastIteration = true;
+				if (particleCollidedLastIteration)
+					particleIsMoving = false;
+				
+				particleCollidedLastIteration = true;
+			}
 		}
 		else
 		{
