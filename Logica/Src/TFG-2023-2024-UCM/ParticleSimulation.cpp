@@ -125,7 +125,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 	}
 	
 	uint32_t particle_movement_passes_index = 0;
-	uint32_t pixelsToMove = 10; // Temporal
+	uint32_t pixelsToMove = 1; // Temporal
 	bool particleIsMoving = true;
 	bool particleCollidedLastIteration = false;
 	uint32_t new_pos_x = x;
@@ -212,7 +212,7 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 		for (int j = simY - radius_brush; j < simY + radius_brush; ++j) {
 			int simX_aux = i - simX; // horizontal offset
 			int simY_aux = j - simY; // vertical offset
-			if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside(i, j) && isEmpty(i, j))
+			if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside(i, j) && (isEmpty(i, j) || type_particle ==  empty))
 			{
 				// TODO: Create a particle factory
 				switch (type_particle) {
@@ -230,7 +230,10 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 					break;
 				case acid:
 					chunk_state[i][j] = ParticleFactory::createAcidParticle();
+				case empty:
+					chunk_state[i][j] = ParticleFactory::createEmptyParticle();
 					break;
+
 				}
 			}
 		}

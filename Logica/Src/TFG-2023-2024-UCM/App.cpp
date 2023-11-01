@@ -137,6 +137,7 @@ void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 				key == GLFW_KEY_S ||
 				key == GLFW_KEY_R ||
 				key == GLFW_KEY_A ||
+				key == GLFW_KEY_E ||
 				key == GLFW_KEY_G)
 			currentApp->events.push(key);
 	
@@ -168,6 +169,8 @@ void App::handleInput()
 			selectedMaterial = rock;
 		else if (key == GLFW_KEY_G)
 			selectedMaterial = gas;
+		else if (key == GLFW_KEY_E)
+			selectedMaterial = empty;
 		else if (key == GLFW_KEY_A)
 			selectedMaterial = acid;
 		
@@ -194,6 +197,12 @@ void App::render()
 
 	// En tu función de renderizado de ImGui:
 	ImGui::Begin("Material Selector");
+
+	if (ImGui::Selectable("Empty", selectedMaterial == empty)) {
+		selectedMaterial = empty;
+	}
+	ImGui::SameLine();
+	ImGui::ColorButton("EmptyColor", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
 
 	if (ImGui::Selectable("Water", selectedMaterial == water)) {
 		selectedMaterial = water;
