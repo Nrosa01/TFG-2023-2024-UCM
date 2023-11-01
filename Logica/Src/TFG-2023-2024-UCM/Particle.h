@@ -16,8 +16,6 @@ struct PhysicsProperties {
 	int explosiveness;
 	int boilingPoint;
 	int startingTemperature;
-	int fallSpeed;
-	int spreadSpeed;
 };
 
 struct ParticleData

@@ -125,7 +125,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 	}
 	
 	uint32_t particle_movement_passes_index = 0;
-	uint32_t pixelsToMove = 1; // Temporal
+	uint32_t pixelsToMove = 10; // Temporal
 	bool particleIsMoving = true;
 	bool particleCollidedLastIteration = false;
 	uint32_t new_pos_x = x;
@@ -137,7 +137,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		const int32_t dir_x = data.movement_passes[particle_movement_passes_index].x;
 		const int32_t dir_y = data.movement_passes[particle_movement_passes_index].y;
 
-		const bool particleMoved = moveParticle(dir_x, dir_y, x, y);
+		const bool particleMoved = moveParticle(dir_x, dir_y, new_pos_x, new_pos_y);
 
 		if (!particleMoved)
 		{
