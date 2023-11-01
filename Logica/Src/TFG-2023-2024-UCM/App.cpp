@@ -46,14 +46,16 @@ bool App::init() {
 	glfwSetKeyCallback(window.get(), keyCallback);
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
-	ParticleDataManager::addParticleData({
+	ParticleDataManager::Init(); // We should do error handling here or something
+
+	ParticleDataManager::Instance()->addParticleData({
 			"Empty", // Text id
 			0, // ID (this should be computed internally but for now...)
 			{0, 0, 0, 0}, // Yellow color in rgba
 			{}
 		});
 
-	ParticleDataManager::addParticleData({
+	ParticleDataManager::Instance()->addParticleData({
 		"YellowSand", // Text id
 		1, // ID (this should be computed internally but for now...)
 		{255, 255, 0, 255}, // Yellow color in rgba
@@ -62,7 +64,7 @@ bool App::init() {
 			{-1, -1},  // Down-Left
 			{1, -1}    // Down-Right
 		}
-		});
+	});
 
 	triangle = std::make_unique<Triangle>();
 	sandSimulation = std::make_unique<ParticleSimulation>(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
