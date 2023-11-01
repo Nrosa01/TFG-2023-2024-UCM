@@ -120,7 +120,7 @@ bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, uint32
 
 inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t& y)
 {
-	const ParticleData data = getParticleData(x, y);
+	const ParticleData& data = getParticleData(x, y);
 	const uint32_t particle_movement_passes_amount = data.movement_passes.size();
 
 	if (chunk_state[x][y].clock != clock || particle_movement_passes_amount == 0)
@@ -182,11 +182,11 @@ void ParticleSimulation::setMaterial(material mat)
 // TODO: Update methods should recibe the index directly, right now
 // we are passing x and y just to use computeIndex later which doesn't make sense
 void ParticleSimulation::update() {
-
-	// se actualiza en orden de abajo a arriba
 	for (uint32_t x = 0; x < width; ++x) {
 		for (uint32_t y = 0; y < height; ++y)
+		{
 			updateParticle(x, y);
+		}
 	}
 
 	clock++;
