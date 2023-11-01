@@ -114,7 +114,7 @@ inline void ParticleSimulation::updateParticle(uint32_t index)
 
 const inline ParticleData& ParticleSimulation::getParticleData(uint32_t index) const
 {
-	return ParticleDataManager::Instance()->getParticleData(chunk_state[index].type);
+	return particle_data[chunk_state[index].type];
 }
 
 inline uint32_t ParticleSimulation::computeIndex(const uint32_t& x, const uint32_t& y) const

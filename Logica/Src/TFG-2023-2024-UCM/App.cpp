@@ -46,16 +46,14 @@ bool App::init() {
 	glfwSetKeyCallback(window.get(), keyCallback);
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
-	ParticleDataManager::Init(); // We should do error handling here or something
-
-	ParticleDataManager::Instance()->addParticleData({
+	particle_data.push_back({
 			"Empty", // Text id
 			0, // ID (this should be computed internally but for now...)
 			{0, 0, 0, 0}, // Yellow color in rgba
 			{}
 		});
 
-	ParticleDataManager::Instance()->addParticleData({
+	particle_data.push_back({
 		"YellowSand", // Text id
 		1, // ID (this should be computed internally but for now...)
 		{255, 255, 0, 255}, // Yellow color in rgba
