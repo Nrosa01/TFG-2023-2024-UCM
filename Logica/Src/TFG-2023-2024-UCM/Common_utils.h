@@ -2,11 +2,7 @@
 
 #include <cstdint>
 
-struct position {
-	uint32_t x;
-	uint32_t y;
-};
-struct vector2D {
+struct Vector2D {
 	int x; 
 	int y;
 };
@@ -18,6 +14,7 @@ struct colour_t {
 	uint8_t a;
 
 };
+
 static const colour_t yellow{ 255,255,0,255 };
 static const colour_t grey{ 128,128,128,255 };
 static const colour_t blue{ 173, 216, 230,255 };

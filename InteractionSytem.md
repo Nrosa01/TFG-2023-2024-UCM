@@ -104,12 +104,8 @@ We will have this as a constant in the particle Data, so a particle might have v
 ```cpp
 struct Particle {
   int type;
-  int x;
-  int y;
   int lifetime;
   int temperature;
-  int velocityX;
-  int velocityY;
 };
 ```
 
@@ -119,11 +115,6 @@ Particles itself are defined by an string and an int, so it can be accessed both
 is a struct that contains particle type id (string, int), physics properties struct and quimic interactions struct.
 
 ```cpp
-struct ParticleData {
-  std::string name;
-  int id;
-};
-
 struct ParticleData {
   std::string name;
   int id;

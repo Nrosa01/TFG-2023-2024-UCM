@@ -1,56 +1,66 @@
 #pragma once
 #include <cstdint>
 #include <unordered_map>
+#include <string>
 #include "Common_utils.h"
+#include <vector>
+#include <vec2.hpp>
 
-//Sand particle
+enum Direction { UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT};
 
-enum material { sand, gas, water, rock, acid, empty };
-
-/*
-* density summary:
-* 0 = go-through (gas)
-* 1 = light-fluid (water)
-* 2 = heavy-fluid (oil)
-* 3 = solid (sand, rock etc)
-* the rest of the values are multipliers for velocity, 1 is normal, 2 is twice as fast, 0 is immobile
-*/
-
-struct physics_data {
-	uint8_t density;
-	uint8_t falling_speed ;
-	uint8_t propagation_speed;
+struct PhysicsProperties {
+	int density;
+	int color;
+	int flammability;
+	int explosiveness;
+	int boilingPoint;
+	int startingTemperature;
+	int fallSpeed;
+	int spreadSpeed;
 };
 
-//I dont know where to put the direction info, so I'm just putting it in particle for the moment
-
-enum direction { up, down, left, right, upleft, upright, downleft, downright };
+struct ParticleData
+{
+	std::string text_id; // We might want to change this to char text_id[16] for performance reasons
+	uint8_t id; // We are not using 256 particles right?
+	ParticleProject::colour_t particle_color; // Should this be a physics property?
+	std::vector<ParticleProject::Vector2D> movement_passes; // We could just use Direction2D*, a vector has many stuff we don't really want that might be slow
+	PhysicsProperties physics_properties;
+};
 
 struct Particle {
-	// TODO: Convert everything to camelCase. Const members should be ALL_CAPS
-	static std::unordered_map<material, physics_data> material_physics;
-	static std::unordered_map<direction, vector2D> direction_vectors;
-	static const int gas_life_time = 300;
-
-
+	// Type is an integer that index the ParticleData structure array
+	uint32_t type;
+	
+	int temperature;
 	bool is_stagnant = false;
-	material mat = empty;
-
-	//time in which the particles dissapear
-	//only applicable to gas and combustionable particles
+	
+	// Instead of using an external boolean array, we can just use a counter to check against that changes with each iteration
+	// This counter can be used to track update of particle groups
+	uint8_t clock;
 	uint32_t life_time = 0;
-	
-	// This variable control how many pixels per frame the particle will transverse
-	// This generates dependency from the physics step, but we prefer this. We could also measeure the time
-	// in miliseconds between frame to not be depending on the number of times the physics process is called but...
-	// That brings inconsistency in the update, fixed update was implemented to avoid this, so it doesn't make sense to add it at all...
-	// Best we can do for now it's stick with this and disallow users to be able to change the physics update rate.
-	
-	// Furthermore this speed parameter doesn't make sense, is this falling speed? propagation? This is just here temporarilly to test the speed implmenetation
-	uint32_t speed = 0;
-	//colour_t colour;
 };
 
+// This should be a singleton, I think. Kinda ugly but should work for testing
+class ParticleDataManager
+{
+public:
+	inline static const ParticleData& getParticleData(int index) noexcept
+	{
+		// TODO: Make sure we correctly handle stuff here. This function should not raise exception for performance reasons
+		// User should provide a correct index
+		return particle_data[index];
+	};
+
+	inline static void addParticleData(const ParticleData data)
+	{
+		particle_data.push_back(data);
+		particle_data_size++;
+	};
+private:
+	static std::vector<const ParticleData> particle_data;
+	static uint16_t particle_data_size; // This will be useful in the future
+};
 
 
 
