@@ -108,9 +108,7 @@ bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, uint32
 	if (isInside(new_x, new_y) && isEmpty(new_x, new_y)) {
 
 		chunk_state[new_x][new_y] = particle;
-		chunk_state[new_x][new_y].clock = clock + 1;
 		chunk_state[x][y] = ParticleFactory::createEmptyParticle();
-		chunk_state[x][y].clock = clock + 1;
 
 		return true;
 	}
@@ -128,17 +126,19 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		chunk_state[x][y].clock = clock + 1;
 		return; // This particle has already been updated
 	}
-
+	
 	uint32_t particle_movement_passes_index = 0;
 	uint32_t pixelsToMove = 1; // Temporal
 	bool particleIsMoving = true;
 	bool particleCollidedLastIteration = false;
+	uint32_t new_pos_x = x;
+	uint32_t new_pos_y = x;
 
 	while (pixelsToMove > 0 && particleIsMoving)
 	{
 		// Gather particle direction
-		int32_t dir_x = data.movement_passes[particle_movement_passes_index].x;
-		int32_t dir_y = data.movement_passes[particle_movement_passes_index].y;
+		const int32_t dir_x = data.movement_passes[particle_movement_passes_index].x;
+		const int32_t dir_y = data.movement_passes[particle_movement_passes_index].y;
 
 		bool particleMoved = moveParticle(dir_x, dir_y, x, y, chunk_state[x][y]);
 
@@ -163,10 +163,18 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 			particleCollidedLastIteration = false;
 			particleIsMoving = true;
 			pixelsToMove--;
+			new_pos_x += dir_x;
+			new_pos_y += dir_y;
 		}
 
 		// Here we should check physics and quimic interactions
 	}
+
+	// This has to be done anyways or else the particle won't be updated next frame
+	chunk_state[x][y].clock = clock + 1;
+	
+	// Update final position of the particle
+	chunk_state[new_pos_x][new_pos_y].clock = clock + 1;
 }
 
 const inline ParticleData& ParticleSimulation::getParticleData(const uint32_t& x, const uint32_t& y) const
