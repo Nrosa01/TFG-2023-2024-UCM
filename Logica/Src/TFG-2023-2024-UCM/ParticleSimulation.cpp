@@ -99,11 +99,8 @@ const bool ParticleSimulation::isEmpty(const uint32_t& x, const uint32_t& y) con
 
 const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, uint32_t x, uint32_t y, const Particle& particle)
 {
-	// I previously had x and y uint32 t, now I only have index
-	uint32_t new_x = x, new_y = y;
-
-	new_x += dir_x;
-	new_y += dir_y;
+	const uint32_t new_x = x + dir_x;
+	const uint32_t new_y = y +  dir_y;
 
 	if (isInside(new_x, new_y) && isEmpty(new_x, new_y)) {
 
@@ -132,7 +129,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 	bool particleIsMoving = true;
 	bool particleCollidedLastIteration = false;
 	uint32_t new_pos_x = x;
-	uint32_t new_pos_y = x;
+	uint32_t new_pos_y = y;
 
 	while (pixelsToMove > 0 && particleIsMoving)
 	{
