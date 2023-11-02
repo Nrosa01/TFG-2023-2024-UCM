@@ -16,7 +16,7 @@
 
 App* App::currentApp = nullptr;
 
-App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr), selectedMaterial(sand), accumulator(0) {
+App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr), selectedParticleIndex(0), accumulator(0) {
 	currentApp = this;
 }
 
@@ -48,21 +48,29 @@ bool App::init() {
 
 	ParticleRegistry::getInstance().addParticleData({
 			"Empty", // Text id
-			0, // ID (this should be computed internally but for now...)
 			{0, 0, 0, 0}, // Yellow color in rgba
 			{}
 		});
 
 	ParticleRegistry::getInstance().addParticleData({
 		"Sand", // Text id
-		1, // ID (this should be computed internally but for now...)
 		{255, 255, 0, 255}, // Yellow color in rgba
 		{
 			{0, -1},   // Down
 			{-1, -1},  // Down-Left
 			{1, -1}    // Down-Right
 		}
-	});
+		});
+
+	ParticleRegistry::getInstance().addParticleData({
+	"Sonnd", // Text id
+	{255, 255, 0, 255}, // Yellow color in rgba
+	{
+		{0, -1},   // Down
+		{-1, -1},  // Down-Left
+		{1, -1}    // Down-Right
+	}
+		});
 
 	triangle = std::make_unique<Triangle>();
 	sandSimulation = std::make_unique<ParticleSimulation>(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -133,16 +141,8 @@ void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 		if (key == GLFW_KEY_ESCAPE)
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 		//provisional Input
-		else if (key == GLFW_KEY_W ||
-				key == GLFW_KEY_S ||
-				key == GLFW_KEY_R ||
-				key == GLFW_KEY_A ||
-				key == GLFW_KEY_E ||
-				key == GLFW_KEY_G)
+		else
 			currentApp->events.push(key);
-	
-
-		
 	}
 }
 
@@ -161,19 +161,27 @@ void App::handleInput()
 {
 	while (!events.empty()) {
 		int key = events.front();
-		if (key == GLFW_KEY_W)
-			selectedMaterial = water;
-		else if (key == GLFW_KEY_S)
-			selectedMaterial = sand;
-		else if (key == GLFW_KEY_R)
-			selectedMaterial = rock;
-		else if (key == GLFW_KEY_G)
-			selectedMaterial = gas;
-		else if (key == GLFW_KEY_E)
-			selectedMaterial = empty;
-		else if (key == GLFW_KEY_A)
-			selectedMaterial = acid;
-		
+
+		char pressedChar = static_cast<char>(std::tolower(key));
+		int startIdx = selectedParticleIndex; // Índice de inicio de búsqueda
+		bool found = false;
+
+		do {
+			startIdx = (startIdx + 1) % ParticleRegistry::getInstance().getRegisteredParticlesCount();
+			auto data = ParticleRegistry::getInstance().getParticleData(startIdx);
+			char dataChar = static_cast<char>(std::tolower(data.text_id[0]));
+
+			if (dataChar == pressedChar) {
+				selectedParticleIndex = startIdx;
+				found = true;
+				break;
+			}
+		} while (startIdx != selectedParticleIndex);
+
+		if (!found) {
+			// No particle found, we could play a sound or something here idk
+		}
+
 		events.pop();
 	}
 }
@@ -204,14 +212,14 @@ void App::render()
 	{
 		auto data = ParticleRegistry::getInstance().getParticleData(i);
 
-		if (ImGui::Selectable(data.text_id.c_str(), selectedMaterial == i)) {
-			selectedMaterial = (material)i;
+		if (ImGui::Selectable(data.text_id.c_str(), selectedParticleIndex == i)) {
+			selectedParticleIndex = i;
 		}
 		ImGui::SameLine();
 		ImGui::ColorButton((data.text_id + "Color").c_str(), ImVec4(data.particle_color.r / 255.0, data.particle_color.g / 255.0, data.particle_color.b / 255.0, data.particle_color.a / 255.0), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
 	}
 
-	sandSimulation->setMaterial(selectedMaterial);
+	sandSimulation->setMaterial(selectedParticleIndex);
 
 	ImGui::End();
 

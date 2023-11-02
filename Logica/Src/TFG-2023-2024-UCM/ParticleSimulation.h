@@ -27,11 +27,11 @@ public:
     const bool isInside(uint32_t x, uint32_t y) const;
     const int getWidth() const; // Obtiene el ancho de la simulaci�n
     const int getHeight() const; // Obtiene la altura de la simulaci�n
-    void setMaterial(material mat); //change the material to be used
+    void setMaterial(int mat); //change the material to be used
 
     void render();
 private:
-    material type_particle = sand;
+    int type_particle = sand;
 
     ParticleRegistry& registry;
     int wWidth;

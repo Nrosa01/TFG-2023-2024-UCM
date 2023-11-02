@@ -48,6 +48,6 @@ private:
     std::unique_ptr<Triangle> triangle;
     std::unique_ptr<ParticleSimulation> sandSimulation;
 
-    material selectedMaterial;
+    int selectedParticleIndex;
     bool showMaterialNames = true;
 };

@@ -179,7 +179,7 @@ const inline ParticleData& ParticleSimulation::getParticleData(const uint32_t& x
 	//return ParticleRegistry::getInstance().getParticleData(chunk_state[x][y].type);
 }
 
-void ParticleSimulation::setMaterial(material mat)
+void ParticleSimulation::setMaterial(int mat)
 {
 	type_particle = mat;
 }
