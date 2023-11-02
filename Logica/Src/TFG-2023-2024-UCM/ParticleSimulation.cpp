@@ -175,7 +175,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 
 const inline ParticleData& ParticleSimulation::getParticleData(const uint32_t& x, const uint32_t& y) const
 {
-	return particle_data[chunk_state[x][y].type];
+	return ParticleRegistry::getInstance().getParticleData(chunk_state[x][y].type);
 }
 
 void ParticleSimulation::setMaterial(material mat)
