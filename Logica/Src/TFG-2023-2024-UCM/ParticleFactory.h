@@ -9,34 +9,14 @@
 class ParticleFactory
 {
 public:
-	static inline Particle createSandParticle() {
+	static inline Particle createParticle(uint32_t particle_type) {
 		Particle particle = Particle();
-		particle.type = sand;
+		particle.type = particle_type;
+
+		// We should also init here lifetime, temperature and whateve more data the particle have but for testing basic stuff now 
+		// we I don't need that
+
 		return particle;
-	};
-	static inline Particle createGasParticle() {
-		Particle particle = Particle();
-		particle.type = gas;
-		return particle;
-	};
-	static inline Particle createWaterParticle() {
-		Particle particle = Particle();
-		particle.type = water;
-		return particle;
-	};
-	static inline Particle createRockParticle() {
-		Particle particle = Particle();
-		particle.type = rock;
-		return particle;
-	};
-	static inline Particle createAcidParticle()
-	{
-		Particle particle = Particle();
-		particle.type = acid;
-		return particle;
-	};
-	static inline Particle createEmptyParticle() {
-		return Particle();
 	};
 };
 

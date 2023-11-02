@@ -4,8 +4,6 @@
 
 enum Direction { UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT};
 
-enum material { empty, sand, gas, water, rock, acid };
-
 struct Particle {
 	// Type is an integer that index the ParticleData structure array
 	uint32_t type = 0;

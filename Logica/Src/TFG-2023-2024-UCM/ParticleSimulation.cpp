@@ -20,7 +20,7 @@ ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wH
 		chunk_state[x] = new Particle[height];
 
 		for (int y = 0; y < height; ++y)
-			chunk_state[x][y].type = empty;
+			chunk_state[x][y].type = 0;
 	}
 
 
@@ -78,7 +78,7 @@ void ParticleSimulation::updateTexture() {
 
 const bool ParticleSimulation::isEmpty(const uint32_t& x, const uint32_t& y) const
 {
-	return chunk_state[x][y].type == empty;
+	return chunk_state[x][y].type == 0;
 }
 
 //void ParticleSimulation::pushOtherParticle(position pos) {
@@ -104,7 +104,7 @@ const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, 
 	if (isInside(new_x, new_y) && isEmpty(new_x, new_y)) {
 
 		chunk_state[new_x][new_y] = chunk_state[x][y];
-		chunk_state[x][y] = ParticleFactory::createEmptyParticle();
+		chunk_state[x][y] = ParticleFactory::createParticle(0);
 
 		return true;
 	}
@@ -213,36 +213,17 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 		for (int j = simY - radius_brush; j < simY + radius_brush; ++j) {
 			int simX_aux = i - simX; // horizontal offset
 			int simY_aux = j - simY; // vertical offset
-			if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside(i, j) && (isEmpty(i, j) || type_particle ==  empty))
+			// Id 0 is an special harcoded case now that represents the empty particle. We should do something about that at some point
+			if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside(i, j) && (isEmpty(i, j) || type_particle ==  0))
 			{
-				// TODO: Create a particle factory
-				switch (type_particle) {
-				case sand:
-					chunk_state[i][j] = ParticleFactory::createSandParticle();
-					break;
-				case gas:
-					chunk_state[i][j] = ParticleFactory::createGasParticle();
-					break;
-				case water:
-					chunk_state[i][j] = ParticleFactory::createWaterParticle();
-					break;
-				case rock:
-					chunk_state[i][j] = ParticleFactory::createRockParticle();
-					break;
-				case acid:
-					chunk_state[i][j] = ParticleFactory::createAcidParticle();
-				case empty:
-					chunk_state[i][j] = ParticleFactory::createEmptyParticle();
-					break;
-
-				}
+				chunk_state[i][j] = ParticleFactory::createParticle(type_particle);
 			}
 		}
 }
 
 const bool ParticleSimulation::isParticle(uint32_t x, uint32_t y) const {
 	if (isInside(x, y)) {
-		return  !chunk_state[x][y].type == empty;
+		return  !chunk_state[x][y].type == 0;
 	}
 	return false;
 }

@@ -31,7 +31,7 @@ public:
 
     void render();
 private:
-    int type_particle = sand;
+    int type_particle = 0;
 
     ParticleRegistry& registry;
     int wWidth;
