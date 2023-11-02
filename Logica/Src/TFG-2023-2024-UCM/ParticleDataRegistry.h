@@ -24,7 +24,7 @@ public:
 		particle_data.push_back(data);
 	}
 
-	ParticleData& getParticleData(const uint32_t& index) {
+	const ParticleData& getParticleData(const uint32_t& index) const {
 // We want performance, and this should never happen in the system, so we only test this in debug
 #ifdef _DEBUG
 		if (index >= particle_data.size()) {
@@ -45,4 +45,5 @@ private:
 	ParticleRegistry& operator=(const ParticleRegistry&) = delete;
 
 	std::vector<ParticleData> particle_data;
+	std::unordered_map < std::string, uint32_t> text_to_id_map;
 };

@@ -13,7 +13,7 @@
 static const double PI = 3.1415926535;
 
 
-ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), particle_data(ParticleRegistry::getInstance().getParticleDataVector()) {
+ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), registry(ParticleRegistry::getInstance()) {
 
 	chunk_state = new Particle * [width];
 	for (int x = 0; x < width; ++x) {
@@ -174,7 +174,9 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 
 const inline ParticleData& ParticleSimulation::getParticleData(const uint32_t& x, const uint32_t& y) const
 {
-	return particle_data[chunk_state[x][y].type];
+	return registry.getParticleData(chunk_state[x][y].type);
+	// This makes the simulation run 7 times slower, just leavint it as a note
+	//return ParticleRegistry::getInstance().getParticleData(chunk_state[x][y].type);
 }
 
 void ParticleSimulation::setMaterial(material mat)
