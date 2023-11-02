@@ -8,7 +8,7 @@
 #include <vector>
 #include "Particle.h"
 #include "Common_utils.h"
-
+#include "ParticleDataRegistry.h"
 
 static const float brush_size = 5;
 static const float radius_brush = brush_size / 2;

@@ -12,7 +12,7 @@
 #include "Triangle.h"
 #include "ParticleSimulation.h"
 #include "Quad.h"
-#include "ParticleDataManager.h"
+#include "ParticleDataRegistry.h"
 
 App* App::currentApp = nullptr;
 

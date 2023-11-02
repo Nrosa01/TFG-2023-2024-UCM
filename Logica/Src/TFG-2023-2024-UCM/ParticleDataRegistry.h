@@ -1,6 +1,17 @@
 #pragma once
 #include <vector>
 #include "Particle.h"
+#include <unordered_map>
+#include "ParticleData.h"
+
+struct PhysicsProperties {
+	const int density;
+	const int color;
+	const int flammability;
+	const int explosiveness;
+	const int boilingPoint;
+	const int startingTemperature;
+};
 
 class ParticleRegistry {
 public:

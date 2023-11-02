@@ -28,6 +28,12 @@
     <Filter Include="Archivos de origen\glad">
       <UniqueIdentifier>{45e8cda9-6842-4256-ada8-8f7dca6036a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\particle_data_structures">
+      <UniqueIdentifier>{0da3bfbe-6e7d-422c-99da-7a3b88acf3ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\structures">
+      <UniqueIdentifier>{655be767-2576-40ac-9008-fa9f33fcb604}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp">
@@ -78,7 +84,7 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Particle.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataManager.cpp">
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,17 +131,26 @@
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Quad.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Particle.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Common_utils.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleFactory.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataManager.h">
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Particle.h">
+      <Filter>Archivos de encabezado\particle_data_structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Colour.h">
+      <Filter>Archivos de encabezado\structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Vector2D.h">
+      <Filter>Archivos de encabezado\structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleData.h">
+      <Filter>Archivos de encabezado\particle_data_structures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
