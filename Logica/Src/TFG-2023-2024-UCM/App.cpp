@@ -63,12 +63,14 @@ bool App::init() {
 		});
 
 	ParticleRegistry::getInstance().addParticleData({
-	"Sonnd", // Text id
-	{255, 255, 0, 255}, // Yellow color in rgba
+	"Water", // Text id
+	{173, 216, 230,255 }, // Yellow color in rgba
 	{
 		{0, -1},   // Down
 		{-1, -1},  // Down-Left
-		{1, -1}    // Down-Right
+		{1, -1},    // Down-Right
+		{-1, 0},    // Left
+		{1, 0}    // Right
 	}
 		});
 
