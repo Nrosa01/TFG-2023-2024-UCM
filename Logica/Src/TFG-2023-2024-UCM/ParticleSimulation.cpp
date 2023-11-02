@@ -187,8 +187,8 @@ void ParticleSimulation::setMaterial(material mat)
 // Update from bottom to up
 // We prefer from up to bottom but we're doing this now because it allows us to spot behaviour bugs by sight better
 void ParticleSimulation::update() {
-	for (uint32_t x = 0; x < width; ++x) {
-		for (uint32_t y = 0; y < height; ++y)
+	for (uint32_t y = 0; y < width; ++y) {
+		for (uint32_t x = 0; x < height; ++x)
 			updateParticle(x, y);
 	}
 
