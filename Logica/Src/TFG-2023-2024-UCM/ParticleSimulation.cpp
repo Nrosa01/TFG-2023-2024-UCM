@@ -14,7 +14,7 @@
 static const double PI = 3.1415926535;
 
 
-ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0) {
+ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), particle_data(ParticleRegistry::getInstance().getParticleDataVector()) {
 
 	chunk_state = new Particle * [width];
 	for (int x = 0; x < width; ++x) {
@@ -175,7 +175,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 
 const inline ParticleData& ParticleSimulation::getParticleData(const uint32_t& x, const uint32_t& y) const
 {
-	return ParticleRegistry::getInstance().getParticleData(chunk_state[x][y].type);
+	return particle_data[chunk_state[x][y].type];
 }
 
 void ParticleSimulation::setMaterial(material mat)

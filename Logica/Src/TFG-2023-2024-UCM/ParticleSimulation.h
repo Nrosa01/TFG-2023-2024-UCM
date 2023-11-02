@@ -33,6 +33,7 @@ public:
 private:
     material type_particle = sand;
 
+    const std::vector<ParticleData> particle_data;
     int wWidth;
     int wHeight;
     int width;

@@ -23,6 +23,11 @@ public:
 		return particle_data[index];
 	}
 
+	const std::vector<ParticleData>& getParticleDataVector() const
+	{
+		return particle_data;
+	}
+
 private:
 	ParticleRegistry() {}
 	ParticleRegistry(const ParticleRegistry&) = delete;
