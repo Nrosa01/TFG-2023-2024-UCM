@@ -54,7 +54,7 @@ bool App::init() {
 		});
 
 	ParticleRegistry::getInstance().addParticleData({
-		"YellowSand", // Text id
+		"Sand", // Text id
 		1, // ID (this should be computed internally but for now...)
 		{255, 255, 0, 255}, // Yellow color in rgba
 		{
@@ -198,41 +198,18 @@ void App::render()
 	// En tu función de renderizado de ImGui:
 	ImGui::Begin("Material Selector");
 
-	if (ImGui::Selectable("Empty", selectedMaterial == empty)) {
-		selectedMaterial = empty;
-	}
-	ImGui::SameLine();
-	ImGui::ColorButton("EmptyColor", ImVec4(0.0f, 0.0f, 0.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+	const auto count = ParticleRegistry::getInstance().getRegisteredParticlesCount();
 
-	if (ImGui::Selectable("Water", selectedMaterial == water)) {
-		selectedMaterial = water;
-	}
-	ImGui::SameLine();
-	ImGui::ColorButton("WaterColor", ImVec4(0.0f, 0.0f, 1.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+	for (uint8_t i = 0; i < count; i++)
+	{
+		auto data = ParticleRegistry::getInstance().getParticleData(i);
 
-	if (ImGui::Selectable("Sand", selectedMaterial == sand)) {
-		selectedMaterial = sand;
+		if (ImGui::Selectable(data.text_id.c_str(), selectedMaterial == i)) {
+			selectedMaterial = (material)i;
+		}
+		ImGui::SameLine();
+		ImGui::ColorButton((data.text_id + "Color").c_str(), ImVec4(data.particle_color.r / 255.0, data.particle_color.g / 255.0, data.particle_color.b / 255.0, data.particle_color.a / 255.0), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
 	}
-	ImGui::SameLine();
-	ImGui::ColorButton("SandColor", ImVec4(0.86f, 0.66f, 0.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
-
-	if (ImGui::Selectable("Rock", selectedMaterial == rock)) {
-		selectedMaterial = rock;
-	}
-	ImGui::SameLine();
-	ImGui::ColorButton("RockColor", ImVec4(0.5f, 0.5f, 0.5f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
-
-	if (ImGui::Selectable("Gas", selectedMaterial == gas)) {
-		selectedMaterial = gas;
-	}
-	ImGui::SameLine();
-	ImGui::ColorButton("GasColor", ImVec4(0.8f, 0.8f, 0.8f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
-
-	if (ImGui::Selectable("Acid", selectedMaterial == acid)) {
-		selectedMaterial = acid;
-	}
-	ImGui::SameLine();
-	ImGui::ColorButton("AcidColor", ImVec4(0.26f, 0.88f, 0.24f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
 
 	sandSimulation->setMaterial(selectedMaterial);
 

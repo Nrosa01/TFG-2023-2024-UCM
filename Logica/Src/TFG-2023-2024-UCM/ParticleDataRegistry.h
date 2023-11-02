@@ -61,6 +61,10 @@ public:
 		return text_to_id_map[particle_text_id];
 	}
 
+	const int32_t getRegisteredParticlesCount() const
+	{
+		return particle_data.size();
+	}
 
 	const ParticleData& getParticleData(const uint32_t& index) const {
 // We want performance, and this should never happen in the system, so we only test this in debug
