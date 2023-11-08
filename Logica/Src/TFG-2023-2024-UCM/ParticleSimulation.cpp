@@ -12,7 +12,6 @@
 
 static const double PI = 3.1415926535;
 
-
 ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), registry(ParticleRegistry::getInstance()) {
 
 	chunk_state = new Particle * [width];
@@ -60,7 +59,8 @@ void ParticleSimulation::updateTexture() {
 	for (int x = 0; x < width; ++x) {
 		for (int y = 0; y < height; y++)
 		{
-			ParticleProject::colour_t c = getParticleData(x, y).particle_color;
+			ParticleProject::colour_t c = addGranularity(getParticleData(x, y).particle_color,
+														chunk_state[x][y].random_granularity);
 
 			int pos_text = (y * width + x) * 4;
 			textureData[pos_text + 0] = c.r;   // R

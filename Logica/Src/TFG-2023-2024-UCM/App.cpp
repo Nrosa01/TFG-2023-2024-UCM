@@ -13,6 +13,9 @@
 #include "ParticleSimulation.h"
 #include "Quad.h"
 #include "ParticleDataRegistry.h"
+#include "Colour.h"
+
+using namespace ParticleProject;
 
 App* App::currentApp = nullptr;
 
@@ -47,32 +50,34 @@ bool App::init() {
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
 	ParticleRegistry::getInstance().addParticleData({
-			"Empty", // Text id
-			{0, 0, 0, 0}, // Yellow color in rgba
-			{}
-		});
+		"Empty", // Text id
+		empty, // Yellow color in rgba
+		{}
+	});
 
 	ParticleRegistry::getInstance().addParticleData({
 		"Sand", // Text id
-		{255, 255, 0, 255}, // Yellow color in rgba
+		yellow, // Yellow color in rgba
 		{
-			{0, -1},   // Down
-			{-1, -1},  // Down-Left
-			{1, -1}    // Down-Right
+			down,down_left, down_right 
 		}
-		});
+	});
 
 	ParticleRegistry::getInstance().addParticleData({
-	"Water", // Text id
-	{173, 216, 230,255 }, // Yellow color in rgba
-	{
-		{0, -1},   // Down
-		{-1, -1},  // Down-Left
-		{1, -1},    // Down-Right
-		{-1, 0},    // Left
-		{1, 0}    // Right
-	}
-		});
+		"Water", // Text id
+		blue, // Yellow color in rgba
+		{
+			down,down_left,down_right,left,right   
+		}
+	});
+	ParticleRegistry::getInstance().addParticleData({
+		"Gas", // Text id
+		dark_grey, // Yellow color in rgba
+		{
+			up,up_left, up_right
+		}
+	});
+
 
 	triangle = std::make_unique<Triangle>();
 	sandSimulation = std::make_unique<ParticleSimulation>(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);

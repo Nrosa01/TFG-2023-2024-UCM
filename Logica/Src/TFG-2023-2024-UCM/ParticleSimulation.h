@@ -57,5 +57,17 @@ private:
     inline void updateParticle(const uint32_t& x, const uint32_t& y);
 
     const inline ParticleData& getParticleData(const uint32_t& x, const uint32_t& y) const;
+
+
+    inline ParticleProject::colour_t addGranularity(const ParticleProject::colour_t& original, const uint8_t granularity) {
+
+        ParticleProject::colour_t result;
+        result.r = std::min(original.r + granularity, 255);
+        result.g = std::min(original.g + granularity, 255);
+        result.b = std::min(original.b + granularity, 255);
+        result.a = original.a;
+
+        return result;
+    }
 };
 
