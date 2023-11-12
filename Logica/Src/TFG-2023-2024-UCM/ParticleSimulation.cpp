@@ -115,7 +115,7 @@ const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, 
 inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t& y)
 {
 	const ParticleDefinition& data = getParticleData(x, y);
-	const std::vector<Interaction> interactions = data.interactions;
+	const std::vector<Interaction>& interactions = data.interactions;
 	const uint32_t particle_movement_passes_amount = data.movement_passes.size();
 
 	if (chunk_state[x][y].clock != clock || particle_movement_passes_amount == 0)
