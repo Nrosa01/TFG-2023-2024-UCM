@@ -115,6 +115,7 @@
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_widgets.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\App.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Camera.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\InteractionDefinition.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Particle.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.cpp" />

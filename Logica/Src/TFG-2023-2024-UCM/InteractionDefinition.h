@@ -9,17 +9,8 @@ struct InteractionDefinition
 	std::string condition;
 	std::string definition;
 
-	static Interaction BuildFromDefinition(const InteractionDefinition& definition)
-	{
-		// WHY THIS NOT COMPILE :(
-		const InteractionMap& map = ParticleDefinitionsHandler::getInstance().getInteractionMap();
-
-		return Interaction(nullptr, nullptr);
-		
-		/*	map.get_function(definition.condition),
-			map.get_function(definition.definition)*/
-
-	}
+	static Interaction BuildFromDefinition(const InteractionDefinition& definition);
+	
 
 	static std::vector<Interaction> BuildFromDefinitions(const std::vector<InteractionDefinition>& definitions)
 	{
