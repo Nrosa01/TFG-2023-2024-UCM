@@ -4,15 +4,6 @@
 #include <unordered_map>
 #include "ParticleData.h"
 
-struct PhysicsProperties {
-	const int density;
-	const int color;
-	const int flammability;
-	const int explosiveness;
-	const int boilingPoint;
-	const int startingTemperature;
-};
-
 class ParticleDataRegistry {
 public:
 	static ParticleDataRegistry& getInstance() {
@@ -20,7 +11,7 @@ public:
 		return instance;
 	}
 
-	void addParticleData(const ParticleData& data)
+	void addParticleData(const ParticleDefinition& data)
 	{
 		// Check if the text_id is already in the map
 		// It's possible that a interaction was defined with a particle that doesn't exist
@@ -66,7 +57,7 @@ public:
 		return particle_data.size();
 	}
 
-	const ParticleData& getParticleData(const uint32_t& index) const {
+	const ParticleDefinition& getParticleData(const uint32_t& index) const {
 // We want performance, and this should never happen in the system, so we only test this in debug
 #ifdef _DEBUG
 		if (index >= particle_data.size()) {
@@ -76,7 +67,7 @@ public:
 		return particle_data[index];
 	}
 
-	const std::vector<ParticleData>& getParticleDataVector() const
+	const std::vector<ParticleDefinition>& getParticleDataVector() const
 	{
 		return particle_data;
 	}
@@ -86,6 +77,6 @@ private:
 	ParticleDataRegistry(const ParticleDataRegistry&) = delete;
 	ParticleDataRegistry& operator=(const ParticleDataRegistry&) = delete;
 
-	std::vector<ParticleData> particle_data;
+	std::vector<ParticleDefinition> particle_data;
 	std::unordered_map < std::string, uint32_t> text_to_id_map;
 };

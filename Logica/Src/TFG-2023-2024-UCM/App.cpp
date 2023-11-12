@@ -49,34 +49,51 @@ bool App::init() {
 	glfwSetKeyCallback(window.get(), keyCallback);
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
-	ParticleDataRegistry::getInstance().addParticleData({
+	ParticleDataRegistry::getInstance().addParticleData(ParticleDefinition(
 		"Empty", // Text id
 		empty, // Yellow color in rgba
-		{}
-	});
+		{}, // Movement passes
+		{}, // Properties
+		{} // Interactions
+	));
 
-	ParticleDataRegistry::getInstance().addParticleData({
+	ParticleDataRegistry::getInstance().addParticleData(ParticleDefinition(
 		"Sand", // Text id
 		yellow, // Yellow color in rgba
 		{
-			down,down_left, down_right 
-		}
-	});
+			down,
+			down_left,
+			down_right
+		},
+		{}, // Properties
+		{} // Interactions
+		));
 
-	ParticleDataRegistry::getInstance().addParticleData({
+	ParticleDataRegistry::getInstance().addParticleData(ParticleDefinition(
 		"Water", // Text id
 		blue, // Yellow color in rgba
 		{
-			down,down_left,down_right,left,right   
-		}
-	});
-	ParticleDataRegistry::getInstance().addParticleData({
+			down,
+			down_left,
+			down_right,
+			left,
+			right
+		},
+		{}, // Properties
+		{} // Interactions
+		));
+
+	ParticleDataRegistry::getInstance().addParticleData(ParticleDefinition(
 		"Gas", // Text id
 		dark_grey, // Yellow color in rgba
 		{
-			up,up_left, up_right
-		}
-	});
+			up,
+			up_left,
+			up_right
+		},
+		{}, // Properties
+		{} // Interactions
+		));
 
 
 	triangle = std::make_unique<Triangle>();

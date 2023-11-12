@@ -114,7 +114,7 @@ const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, 
 
 inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t& y)
 {
-	const ParticleData& data = getParticleData(x, y);
+	const ParticleDefinition& data = getParticleData(x, y);
 	const uint32_t particle_movement_passes_amount = data.movement_passes.size();
 
 	if (chunk_state[x][y].clock != clock || particle_movement_passes_amount == 0)
@@ -172,7 +172,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 	chunk_state[new_pos_x][new_pos_y].clock = !clock;
 }
 
-const inline ParticleData& ParticleSimulation::getParticleData(const uint32_t& x, const uint32_t& y) const
+const inline ParticleDefinition& ParticleSimulation::getParticleData(const uint32_t& x, const uint32_t& y) const
 {
 	return registry.getParticleData(chunk_state[x][y].type);
 	// This makes the simulation run 7 times slower, just leavint it as a note

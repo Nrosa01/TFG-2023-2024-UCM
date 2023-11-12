@@ -56,7 +56,7 @@ private:
 
     inline void updateParticle(const uint32_t& x, const uint32_t& y);
 
-    const inline ParticleData& getParticleData(const uint32_t& x, const uint32_t& y) const;
+    const inline ParticleDefinition& getParticleData(const uint32_t& x, const uint32_t& y) const;
 
 
     inline ParticleProject::colour_t addGranularity(const ParticleProject::colour_t& original, const uint8_t granularity) {
