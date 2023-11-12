@@ -151,12 +151,16 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 				{
 					// Break so the clock is updated at the end
 					should_break = true;
+					
+					// This is goto is actually useful but is a goto so idk if pepa would kill me
+					// goto clock_handler;
 					break;
 				}
 
 				// Otherwise, other interactions can occur IN THE SAME UPDATE
 			}
 		}
+
 
 		if (should_break)
 			break;
@@ -186,6 +190,9 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 			new_pos_y += dir_y;
 		}
 	}
+
+	// clock_handler:
+
 
 	chunk_state[x][y].clock = !clock;
 	
