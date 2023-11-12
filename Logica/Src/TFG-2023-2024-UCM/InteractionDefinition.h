@@ -14,11 +14,11 @@ struct InteractionDefinition
 		// WHY THIS NOT COMPILE :(
 		const InteractionMap& map = ParticleDefinitionsHandler::getInstance().getInteractionMap();
 
-		return
-		{
+		return Interaction(nullptr, nullptr);
+		
 		/*	map.get_function(definition.condition),
 			map.get_function(definition.definition)*/
-		};
+
 	}
 
 	static std::vector<Interaction> BuildFromDefinitions(const std::vector<InteractionDefinition>& definitions)
