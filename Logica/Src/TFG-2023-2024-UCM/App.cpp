@@ -54,7 +54,7 @@ bool App::init() {
 		empty, // Yellow color in rgba
 		{}, // Movement passes
 		{}, // Properties
-		InteractionDefinition::BuildFromDefinitions({}) // Interactions 
+		InteractionDefinition::BuildFromDefinitions({ {"Always", "Always"}, }) // Interactions 
 	));
 
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
@@ -66,7 +66,7 @@ bool App::init() {
 			down_right
 		},
 		{}, // Properties
-		InteractionDefinition::BuildFromDefinitions({}) // Interactions 
+		InteractionDefinition::BuildFromDefinitions({ {"Always", "Always"}, }) // Interactions 
 	));
 
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
@@ -80,7 +80,7 @@ bool App::init() {
 			right
 		},
 		{}, // Properties
-		InteractionDefinition::BuildFromDefinitions({}) // Interactions 
+		InteractionDefinition::BuildFromDefinitions({ {"Always", "Always"}, }) // Interactions 
 	));
 
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
@@ -92,7 +92,7 @@ bool App::init() {
 			up_right
 		},
 		{}, // Properties
-		InteractionDefinition::BuildFromDefinitions({}) // Interactions 
+		InteractionDefinition::BuildFromDefinitions({ {"Always", "Always"}, }) // Interactions 
 	));
 
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
@@ -106,7 +106,7 @@ bool App::init() {
 		{}, // Properties
 		InteractionDefinition::BuildFromDefinitions( // Interactions
 			{
-			{"Always", "Corrode"},
+			{"Always", "Always"},
 			})
 		));
 

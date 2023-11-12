@@ -7,7 +7,7 @@
 struct InteractionDefinition
 {
 	std::string condition;
-	std::string definition;
+	std::string interaction;
 
 	static Interaction BuildFromDefinition(const InteractionDefinition& definition);
 	

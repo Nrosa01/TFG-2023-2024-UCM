@@ -97,7 +97,10 @@ public:
 		return interaction_map;
 	}
 private:
-	ParticleDefinitionsHandler() {}
+	ParticleDefinitionsHandler() 
+	{
+		interaction_map.add_function("Always", [](uint32_t, uint32_t, uint32_t, Particle**) { return true; });
+	}
 	ParticleDefinitionsHandler(const ParticleDefinitionsHandler&) = delete;
 	ParticleDefinitionsHandler& operator=(const ParticleDefinitionsHandler&) = delete;
 
