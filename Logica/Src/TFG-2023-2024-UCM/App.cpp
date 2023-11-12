@@ -49,13 +49,13 @@ bool App::init() {
 	glfwSetKeyCallback(window.get(), keyCallback);
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
-	ParticleRegistry::getInstance().addParticleData({
+	ParticleDataRegistry::getInstance().addParticleData({
 		"Empty", // Text id
 		empty, // Yellow color in rgba
 		{}
 	});
 
-	ParticleRegistry::getInstance().addParticleData({
+	ParticleDataRegistry::getInstance().addParticleData({
 		"Sand", // Text id
 		yellow, // Yellow color in rgba
 		{
@@ -63,14 +63,14 @@ bool App::init() {
 		}
 	});
 
-	ParticleRegistry::getInstance().addParticleData({
+	ParticleDataRegistry::getInstance().addParticleData({
 		"Water", // Text id
 		blue, // Yellow color in rgba
 		{
 			down,down_left,down_right,left,right   
 		}
 	});
-	ParticleRegistry::getInstance().addParticleData({
+	ParticleDataRegistry::getInstance().addParticleData({
 		"Gas", // Text id
 		dark_grey, // Yellow color in rgba
 		{
@@ -174,8 +174,8 @@ void App::handleInput()
 		bool found = false;
 
 		do {
-			startIdx = (startIdx + 1) % ParticleRegistry::getInstance().getRegisteredParticlesCount();
-			auto data = ParticleRegistry::getInstance().getParticleData(startIdx);
+			startIdx = (startIdx + 1) % ParticleDataRegistry::getInstance().getRegisteredParticlesCount();
+			auto data = ParticleDataRegistry::getInstance().getParticleData(startIdx);
 			char dataChar = static_cast<char>(std::tolower(data.text_id[0]));
 
 			if (dataChar == pressedChar) {
@@ -213,11 +213,11 @@ void App::render()
 	// En tu función de renderizado de ImGui:
 	ImGui::Begin("Material Selector");
 
-	const auto count = ParticleRegistry::getInstance().getRegisteredParticlesCount();
+	const auto count = ParticleDataRegistry::getInstance().getRegisteredParticlesCount();
 
 	for (uint8_t i = 0; i < count; i++)
 	{
-		auto data = ParticleRegistry::getInstance().getParticleData(i);
+		auto data = ParticleDataRegistry::getInstance().getParticleData(i);
 
 		if (ImGui::Selectable(data.text_id.c_str(), selectedParticleIndex == i)) {
 			selectedParticleIndex = i;

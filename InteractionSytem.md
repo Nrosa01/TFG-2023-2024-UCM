@@ -165,6 +165,8 @@ struct TempQuimicInteractions {
     // Figure out how to define quimic interactions throu code
     // Maybe we can use an enum of kinds of interactions idk
 };
+
+
 ```
 
 General Algorithm pseudo-code in C++
@@ -221,24 +223,12 @@ inline void simulateParticle(uint32_t particleIndex)
     // This boolean can be called differentely and might be changed by physics or quimic interactions, as the particle might move on these stages.
     // But we need something like this to avoid an infinite loop
 
-    // Check if any physic interaction can occur
-    if (getPhysicInteractions(particleIndex)) // Returns true if any physic interaction can occur
+    // Process interactions
+    if(InteractionSystemSingleton()->getInstance()->processInteractions(particleIndex, particleMovementPass, particleArray))
     {
-      //Handle physics
-
-      // Usually, once physics are handled, the particle process is stopped
-      // We put pixelsToMove to 0 instead of return to check for quimic interactions
-      pixelsToMove = 0;
+      break;
     }
-
-    // Check if any quimic interaction can occur
-    if (getQuimicInteractions(particleIndex)) // Returns true if any quimic interaction can occur
-    {
-      //Handle quimics
-
-      // Usually, once quimics are handled, the particle process is stopped
-      pixelsToMove = 0;
-    }
+    
 
     // Repeat until velocity reaches 0 or a physical or quimic interaction stops the simulation for this particle
   }

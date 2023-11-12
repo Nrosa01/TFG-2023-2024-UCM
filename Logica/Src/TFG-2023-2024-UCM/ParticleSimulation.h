@@ -33,7 +33,7 @@ public:
 private:
     int type_particle = 0;
 
-    ParticleRegistry& registry;
+    ParticleDataRegistry& registry;
     int wWidth;
     int wHeight;
     int width;

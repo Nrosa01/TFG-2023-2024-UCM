@@ -13,10 +13,10 @@ struct PhysicsProperties {
 	const int startingTemperature;
 };
 
-class ParticleRegistry {
+class ParticleDataRegistry {
 public:
-	static ParticleRegistry& getInstance() {
-		static ParticleRegistry instance;
+	static ParticleDataRegistry& getInstance() {
+		static ParticleDataRegistry instance;
 		return instance;
 	}
 
@@ -82,9 +82,9 @@ public:
 	}
 
 private:
-	ParticleRegistry() {}
-	ParticleRegistry(const ParticleRegistry&) = delete;
-	ParticleRegistry& operator=(const ParticleRegistry&) = delete;
+	ParticleDataRegistry() {}
+	ParticleDataRegistry(const ParticleDataRegistry&) = delete;
+	ParticleDataRegistry& operator=(const ParticleDataRegistry&) = delete;
 
 	std::vector<ParticleData> particle_data;
 	std::unordered_map < std::string, uint32_t> text_to_id_map;

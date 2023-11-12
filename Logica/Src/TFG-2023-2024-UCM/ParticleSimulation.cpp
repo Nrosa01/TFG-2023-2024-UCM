@@ -12,7 +12,7 @@
 
 static const double PI = 3.1415926535;
 
-ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), registry(ParticleRegistry::getInstance()) {
+ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), registry(ParticleDataRegistry::getInstance()) {
 
 	chunk_state = new Particle * [width];
 	for (int x = 0; x < width; ++x) {
@@ -138,6 +138,8 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 
 		const bool particleMoved = moveParticle(dir_x, dir_y, new_pos_x, new_pos_y);
 
+		// If particle cant move we HAVE to process interactions
+
 		if (!particleMoved)
 		{
 			// Increment movement pass looping through the passes
@@ -162,8 +164,6 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 			new_pos_x += dir_x;
 			new_pos_y += dir_y;
 		}
-
-		// Here we should check physics and quimic interactions
 	}
 
 	chunk_state[x][y].clock = !clock;
