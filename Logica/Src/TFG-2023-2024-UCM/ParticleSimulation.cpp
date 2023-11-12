@@ -115,6 +115,7 @@ const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, 
 inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t& y)
 {
 	const ParticleDefinition& data = getParticleData(x, y);
+	const std::vector<Interaction> interactions = data.interactions;
 	const uint32_t particle_movement_passes_amount = data.movement_passes.size();
 
 	if (chunk_state[x][y].clock != clock || particle_movement_passes_amount == 0)
@@ -139,6 +140,26 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		const bool particleMoved = moveParticle(dir_x, dir_y, new_pos_x, new_pos_y);
 
 		// If particle cant move we HAVE to process interactions
+		bool should_break = false;
+		for (const Interaction& interaction : interactions)
+		{
+			// If condition applies, execute
+			if (interaction.interaction_condition(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state))
+			{
+				// True means simulation can continue, false stops the simulation for the current particle
+				if (!interaction.interaction_function(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state))
+				{
+					// Break so the clock is updated at the end
+					should_break = true;
+					break;
+				}
+
+				// Otherwise, other interactions can occur IN THE SAME UPDATE
+			}
+		}
+
+		if (should_break)
+			break;
 
 		if (!particleMoved)
 		{
