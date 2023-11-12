@@ -49,15 +49,15 @@ bool App::init() {
 	glfwSetKeyCallback(window.get(), keyCallback);
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
-	ParticleDataRegistry::getInstance().addParticleData(ParticleDefinition(
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
 		"Empty", // Text id
 		empty, // Yellow color in rgba
 		{}, // Movement passes
 		{}, // Properties
-		{} // Interactions
+		InteractionDefinition::BuildFromDefinitions({}) // Interactions 
 	));
 
-	ParticleDataRegistry::getInstance().addParticleData(ParticleDefinition(
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
 		"Sand", // Text id
 		yellow, // Yellow color in rgba
 		{
@@ -66,10 +66,10 @@ bool App::init() {
 			down_right
 		},
 		{}, // Properties
-		{} // Interactions
-		));
+		InteractionDefinition::BuildFromDefinitions({}) // Interactions 
+	));
 
-	ParticleDataRegistry::getInstance().addParticleData(ParticleDefinition(
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
 		"Water", // Text id
 		blue, // Yellow color in rgba
 		{
@@ -80,10 +80,10 @@ bool App::init() {
 			right
 		},
 		{}, // Properties
-		{} // Interactions
-		));
+		InteractionDefinition::BuildFromDefinitions({}) // Interactions 
+	));
 
-	ParticleDataRegistry::getInstance().addParticleData(ParticleDefinition(
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
 		"Gas", // Text id
 		dark_grey, // Yellow color in rgba
 		{
@@ -92,7 +92,22 @@ bool App::init() {
 			up_right
 		},
 		{}, // Properties
-		{} // Interactions
+		InteractionDefinition::BuildFromDefinitions({}) // Interactions 
+	));
+
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
+		"Acid", // Text id
+		saturated_green, // Yellow color in rgba
+		{
+			down,
+			down_left,
+			down_right
+		},
+		{}, // Properties
+		InteractionDefinition::BuildFromDefinitions( // Interactions
+			{
+			{"Corrode"},
+			})
 		));
 
 
@@ -191,8 +206,8 @@ void App::handleInput()
 		bool found = false;
 
 		do {
-			startIdx = (startIdx + 1) % ParticleDataRegistry::getInstance().getRegisteredParticlesCount();
-			auto data = ParticleDataRegistry::getInstance().getParticleData(startIdx);
+			startIdx = (startIdx + 1) % ParticleDefinitionsHandler::getInstance().getRegisteredParticlesCount();
+			auto data = ParticleDefinitionsHandler::getInstance().getParticleData(startIdx);
 			char dataChar = static_cast<char>(std::tolower(data.text_id[0]));
 
 			if (dataChar == pressedChar) {
@@ -230,11 +245,11 @@ void App::render()
 	// En tu función de renderizado de ImGui:
 	ImGui::Begin("Material Selector");
 
-	const auto count = ParticleDataRegistry::getInstance().getRegisteredParticlesCount();
+	const auto count = ParticleDefinitionsHandler::getInstance().getRegisteredParticlesCount();
 
 	for (uint8_t i = 0; i < count; i++)
 	{
-		auto data = ParticleDataRegistry::getInstance().getParticleData(i);
+		auto data = ParticleDefinitionsHandler::getInstance().getParticleData(i);
 
 		if (ImGui::Selectable(data.text_id.c_str(), selectedParticleIndex == i)) {
 			selectedParticleIndex = i;

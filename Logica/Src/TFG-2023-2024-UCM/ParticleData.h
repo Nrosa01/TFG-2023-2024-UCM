@@ -3,6 +3,7 @@
 #include <vector>
 #include "Colour.h"
 #include "Vector2D.h"
+#include <functional>
 
 struct Properties {
 	int density;
@@ -14,12 +15,27 @@ struct Properties {
 
 struct Interaction
 {
-
+	// Function that takes a uint32_t posX, uint32_t posY, uint32_t movement_pass and Particle** and returns a bool
+	std::function<bool(uint32_t, uint32_t, uint32_t, Particle**)> interaction_function;
 };
 
 struct InteractionDefinition
 {
+	std::string definition;
 
+	static Interaction BuildFromDefinition(const InteractionDefinition& definition)
+	{
+		return {}; // TODO
+	}
+
+	static std::vector<Interaction> BuildFromDefinitions(const std::vector<InteractionDefinition>& definitions)
+	{
+		std::vector<Interaction> interactions;
+		for (const InteractionDefinition& definition : definitions)
+			interactions.push_back(BuildFromDefinition(definition));
+
+		return interactions;
+	}
 };
 
 

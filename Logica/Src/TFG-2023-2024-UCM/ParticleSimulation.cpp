@@ -12,7 +12,7 @@
 
 static const double PI = 3.1415926535;
 
-ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), registry(ParticleDataRegistry::getInstance()) {
+ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), registry(ParticleDefinitionsHandler::getInstance()) {
 
 	chunk_state = new Particle * [width];
 	for (int x = 0; x < width; ++x) {

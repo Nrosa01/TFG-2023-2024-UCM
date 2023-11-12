@@ -4,10 +4,10 @@
 #include <unordered_map>
 #include "ParticleData.h"
 
-class ParticleDataRegistry {
+class ParticleDefinitionsHandler {
 public:
-	static ParticleDataRegistry& getInstance() {
-		static ParticleDataRegistry instance;
+	static ParticleDefinitionsHandler& getInstance() {
+		static ParticleDefinitionsHandler instance;
 		return instance;
 	}
 
@@ -73,9 +73,9 @@ public:
 	}
 
 private:
-	ParticleDataRegistry() {}
-	ParticleDataRegistry(const ParticleDataRegistry&) = delete;
-	ParticleDataRegistry& operator=(const ParticleDataRegistry&) = delete;
+	ParticleDefinitionsHandler() {}
+	ParticleDefinitionsHandler(const ParticleDefinitionsHandler&) = delete;
+	ParticleDefinitionsHandler& operator=(const ParticleDefinitionsHandler&) = delete;
 
 	std::vector<ParticleDefinition> particle_data;
 	std::unordered_map < std::string, uint32_t> text_to_id_map;
