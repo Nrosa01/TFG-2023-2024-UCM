@@ -152,5 +152,20 @@
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleData.h">
       <Filter>Archivos de encabezado\particle_data_structures</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\TypedefInteractionFunction.h">
+      <Filter>Archivos de encabezado\particle_data_structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\TypedefInteractionCondition.h">
+      <Filter>Archivos de encabezado\particle_data_structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\InteractionDefinition.h">
+      <Filter>Archivos de encabezado\particle_data_structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Properties.h">
+      <Filter>Archivos de encabezado\particle_data_structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Interaction.h">
+      <Filter>Archivos de encabezado\particle_data_structures</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

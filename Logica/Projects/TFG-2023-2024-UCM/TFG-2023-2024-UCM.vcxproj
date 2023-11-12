@@ -136,13 +136,18 @@
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Camera.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Colour.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Common_utils.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Interaction.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\InteractionDefinition.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Particle.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleData.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleFactory.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Properties.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Quad.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Triangle.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\TypedefInteractionCondition.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\TypedefInteractionFunction.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Vector2D.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Viewport.h" />
   </ItemGroup>

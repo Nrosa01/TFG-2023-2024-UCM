@@ -106,7 +106,7 @@ bool App::init() {
 		{}, // Properties
 		InteractionDefinition::BuildFromDefinitions( // Interactions
 			{
-			{"Corrode"},
+			{"Always", "Corrode"},
 			})
 		));
 

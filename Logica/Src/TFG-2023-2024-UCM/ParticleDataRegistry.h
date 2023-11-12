@@ -3,6 +3,26 @@
 #include "Particle.h"
 #include <unordered_map>
 #include "ParticleData.h"
+#include "TypedefInteractionFunction.h"
+
+struct InteractionMap
+{
+	std::unordered_map<std::string, InteractionFunction> functions;
+
+
+public:
+	const InteractionFunction get_function(const std::string& key) const
+	{
+		// No checking, a particle can't define a function that doesn't exist by design
+		return functions.at(key);
+	}
+
+	void add_function(const std::string& key, const InteractionFunction& function)
+	{
+		functions.insert({ key, function });
+	}
+
+};
 
 class ParticleDefinitionsHandler {
 public:
@@ -58,7 +78,7 @@ public:
 	}
 
 	const ParticleDefinition& getParticleData(const uint32_t& index) const {
-// We want performance, and this should never happen in the system, so we only test this in debug
+		// We want performance, and this should never happen in the system, so we only test this in debug
 #ifdef _DEBUG
 		if (index >= particle_data.size()) {
 			throw std::exception("Index was out of range on getParticleData");
@@ -72,6 +92,10 @@ public:
 		return particle_data;
 	}
 
+	InteractionMap& getInteractionMap()
+	{
+		return interaction_map;
+	}
 private:
 	ParticleDefinitionsHandler() {}
 	ParticleDefinitionsHandler(const ParticleDefinitionsHandler&) = delete;
@@ -79,4 +103,6 @@ private:
 
 	std::vector<ParticleDefinition> particle_data;
 	std::unordered_map < std::string, uint32_t> text_to_id_map;
+	InteractionMap interaction_map;
+	//std::unordered_map<std
 };
