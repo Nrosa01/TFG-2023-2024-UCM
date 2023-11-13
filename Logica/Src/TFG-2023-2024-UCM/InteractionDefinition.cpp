@@ -6,5 +6,5 @@ Interaction InteractionDefinition::BuildFromDefinition(const InteractionDefiniti
 	// WHY THIS NOT COMPILE :(
 	const InteractionMap& map = ParticleDefinitionsHandler::getInstance().getInteractionMap();
 
-	return Interaction(map.get_function(definition.condition), map.get_function(definition.interaction));
+	return Interaction(map.get_function(definition.interaction));
 }

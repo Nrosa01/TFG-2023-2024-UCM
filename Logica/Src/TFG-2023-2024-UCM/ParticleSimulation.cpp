@@ -60,7 +60,7 @@ void ParticleSimulation::updateTexture() {
 		for (int y = 0; y < height; y++)
 		{
 			ParticleProject::colour_t c = addGranularity(getParticleData(x, y).particle_color,
-														chunk_state[x][y].random_granularity);
+				chunk_state[x][y].random_granularity);
 
 			int pos_text = (y * width + x) * 4;
 			textureData[pos_text + 0] = c.r;   // R
@@ -99,7 +99,7 @@ const bool ParticleSimulation::isEmpty(const uint32_t& x, const uint32_t& y) con
 const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y)
 {
 	const uint32_t new_x = x + dir_x;
-	const uint32_t new_y = y +  dir_y;
+	const uint32_t new_y = y + dir_y;
 
 	if (isInside(new_x, new_y) && isEmpty(new_x, new_y)) {
 
@@ -123,7 +123,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		chunk_state[x][y].clock = !clock;
 		return; // This particle has already been updated
 	}
-	
+
 	uint32_t particle_movement_passes_index = 0;
 	uint32_t pixelsToMove = 1; // Temporal
 	bool particleIsMoving = true;
@@ -143,22 +143,11 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		bool should_break = false;
 		for (const Interaction& interaction : interactions)
 		{
-			// If condition applies, execute
-			if (interaction.interaction_condition(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state))
-			{
-				// True means simulation can continue, false stops the simulation for the current particle
-				if (!interaction.interaction_function(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state))
-				{
-					// Break so the clock is updated at the end
-					should_break = true;
-					
-					// This is goto is actually useful but is a goto so idk if pepa would kill me
-					// goto clock_handler;
-					break;
-				}
-
-				// Otherwise, other interactions can occur IN THE SAME UPDATE
-			}
+			// True means simulation can continue, false stops the simulation for the current particle
+			should_break = !interaction.interaction_function(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state);
+			
+			if (should_break)
+				break;
 		}
 
 
@@ -177,7 +166,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 
 				if (particleCollidedLastIteration)
 					particleIsMoving = false;
-				
+
 				particleCollidedLastIteration = true;
 			}
 		}
@@ -195,7 +184,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 
 
 	chunk_state[x][y].clock = !clock;
-	
+
 	// Update final position of the particle
 	chunk_state[new_pos_x][new_pos_y].clock = !clock;
 }
@@ -242,7 +231,7 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 			int simX_aux = i - simX; // horizontal offset
 			int simY_aux = j - simY; // vertical offset
 			// Id 0 is an special harcoded case now that represents the empty particle. We should do something about that at some point
-			if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside(i, j) && (isEmpty(i, j) || type_particle ==  0))
+			if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside(i, j) && (isEmpty(i, j) || type_particle == 0))
 			{
 				chunk_state[i][j] = ParticleFactory::createParticle(type_particle);
 			}

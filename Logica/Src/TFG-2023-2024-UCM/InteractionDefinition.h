@@ -6,7 +6,6 @@
 
 struct InteractionDefinition
 {
-	std::string condition;
 	std::string interaction;
 
 	static Interaction BuildFromDefinition(const InteractionDefinition& definition);
