@@ -81,21 +81,6 @@ const bool ParticleSimulation::isEmpty(const uint32_t& x, const uint32_t& y) con
 	return chunk_state[x][y].type == 0;
 }
 
-//void ParticleSimulation::pushOtherParticle(position pos) {
-//	for (int i = -3; i < 3; ++i) {
-//		for (int j = 1; j < 10; ++j) {
-//			if (isInside(pos.x + i, pos.y + j)) {
-//				uint8_t current_density = Particle::material_physics[chunk_state[computeIndex(pos.x + i, pos.y + j)].mat].density;
-//				if (current_density < Particle::material_physics[chunk_state[computeIndex(pos.x, pos.y)].mat].density) {
-//					chunk_state[computeIndex(pos.x + i, pos.y + j)] = chunk_state[computeIndex(pos.x, pos.y)];
-//					chunk_state[computeIndex(pos.x, pos.y)] = ParticleFactory::createEmptyParticle();
-//					break;
-//				}
-//			}
-//		}
-//	}
-//}
-
 const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y)
 {
 	const uint32_t new_x = x + dir_x;
@@ -144,7 +129,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		for (const Interaction& interaction : interactions)
 		{
 			// True means simulation can continue, false stops the simulation for the current particle
-			should_break = !interaction.interaction_function(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state);
+			should_break = !interaction.interaction_function(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state, width, height);
 			
 			if (should_break)
 				break;

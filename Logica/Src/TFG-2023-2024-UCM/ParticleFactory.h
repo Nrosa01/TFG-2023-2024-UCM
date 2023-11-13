@@ -5,7 +5,7 @@
 class ParticleFactory
 {
 public:
-	static inline Particle createParticle(uint32_t particle_type) {
+	static inline Particle createParticle(uint32_t particle_type = 0) {
 		Particle particle = Particle();
 		particle.type = particle_type;
 

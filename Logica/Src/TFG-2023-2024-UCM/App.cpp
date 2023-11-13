@@ -54,7 +54,7 @@ bool App::init() {
 		empty, // Yellow color in rgba
 		{}, // Movement passes
 		{}, // Properties
-		InteractionDefinition::BuildFromDefinitions({ {"Always"}, }) // Interactions 
+		InteractionDefinition::BuildFromDefinitions({  }) // Interactions 
 	));
 
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
@@ -65,8 +65,14 @@ bool App::init() {
 			down_left,
 			down_right
 		},
-		{}, // Properties
-		InteractionDefinition::BuildFromDefinitions({ {"Always"}, }) // Interactions 
+		{
+			1, //  density;
+			0, //  flammability;
+			0, //  explosiveness;
+			0, //  boilingPoint;
+			0 //  startingTemperature;
+		}, // Properties
+		InteractionDefinition::BuildFromDefinitions({ {"Push"}, }) // Interactions 
 	));
 
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
@@ -80,7 +86,7 @@ bool App::init() {
 			right
 		},
 		{}, // Properties
-		InteractionDefinition::BuildFromDefinitions({ {"Always"}, }) // Interactions 
+		InteractionDefinition::BuildFromDefinitions({ }) // Interactions 
 	));
 
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
@@ -92,7 +98,7 @@ bool App::init() {
 			up_right
 		},
 		{}, // Properties
-		InteractionDefinition::BuildFromDefinitions({ {"Always"}, }) // Interactions 
+		InteractionDefinition::BuildFromDefinitions({ }) // Interactions 
 	));
 
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
@@ -104,10 +110,7 @@ bool App::init() {
 			down_right
 		},
 		{}, // Properties
-		InteractionDefinition::BuildFromDefinitions( // Interactions
-			{
-			{"Always"},
-			})
+		InteractionDefinition::BuildFromDefinitions({ }) // Interactions
 		));
 
 
