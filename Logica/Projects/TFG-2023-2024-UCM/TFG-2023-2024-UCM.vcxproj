@@ -115,8 +115,10 @@
     <ClCompile Include="..\..\Dependencies\imgui-1.89.8\imgui_widgets.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\App.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Camera.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\InteractionDefinition.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Particle.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Quad.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Triangle.cpp" />
@@ -133,12 +135,21 @@
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_truetype.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\App.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Camera.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Colour.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Common_utils.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Interaction.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\InteractionDefinition.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Particle.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleData.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleFactory.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Properties.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Quad.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Triangle.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\TypedefInteractionCondition.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\TypedefInteractionFunction.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Vector2D.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Viewport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

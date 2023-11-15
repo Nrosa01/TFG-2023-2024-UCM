@@ -12,10 +12,14 @@
 #include "Triangle.h"
 #include "ParticleSimulation.h"
 #include "Quad.h"
+#include "ParticleDataRegistry.h"
+#include "Colour.h"
+
+using namespace ParticleProject;
 
 App* App::currentApp = nullptr;
 
-App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr), selectedMaterial(sand), accumulator(0) {
+App::App() : window(nullptr, glfwDestroyWindow), isRunning(true), viewport(nullptr), camera(nullptr), io(nullptr), selectedParticleIndex(0), accumulator(0) {
 	currentApp = this;
 }
 
@@ -45,6 +49,71 @@ bool App::init() {
 	glfwSetKeyCallback(window.get(), keyCallback);
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
+		"Empty", // Text id
+		empty, // Yellow color in rgba
+		{}, // Movement passes
+		{}, // Properties
+		InteractionDefinition::BuildFromDefinitions({  }) // Interactions 
+	));
+
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
+		"Sand", // Text id
+		yellow, // Yellow color in rgba
+		{
+			down,
+			down_left,
+			down_right
+		},
+		{
+			1, //  density;
+			0, //  flammability;
+			0, //  explosiveness;
+			0, //  boilingPoint;
+			0 //  startingTemperature;
+		}, // Properties
+		InteractionDefinition::BuildFromDefinitions({ {"Push"}, }) // Interactions 
+	));
+
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
+		"Water", // Text id
+		blue, // Yellow color in rgba
+		{
+			down,
+			down_left,
+			down_right,
+			left,
+			right
+		},
+		{}, // Properties
+		InteractionDefinition::BuildFromDefinitions({ }) // Interactions 
+	));
+
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
+		"Gas", // Text id
+		dark_grey, // Yellow color in rgba
+		{
+			up,
+			up_left,
+			up_right
+		},
+		{}, // Properties
+		InteractionDefinition::BuildFromDefinitions({ }) // Interactions 
+	));
+
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
+		"Acid", // Text id
+		saturated_green, // Yellow color in rgba
+		{
+			down,
+			down_left,
+			down_right
+		},
+		{}, // Properties
+		InteractionDefinition::BuildFromDefinitions({ }) // Interactions
+		));
+
+
 	triangle = std::make_unique<Triangle>();
 	sandSimulation = std::make_unique<ParticleSimulation>(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -60,14 +129,14 @@ bool App::init() {
 }
 
 void App::run() {
-	double targetFrameTime = 1.0 / static_cast<double>(TARGET_FPS);
+	const double targetFrameTime = 1.0 / static_cast<double>(TARGET_FPS);
 	double lastFrameTime = glfwGetTime();
 	double fpsUpdateTime = 0.0;
 	int frameCount = 0;
 
 	while (!glfwWindowShouldClose(window.get()) && isRunning) {
-		double currentTime = glfwGetTime();
-		double deltaTime = currentTime - lastFrameTime;
+		const double currentTime = glfwGetTime();
+		const double deltaTime = currentTime - lastFrameTime;
 
 		// Limitar la velocidad de actualización a 60 FPS
 		if (deltaTime >= targetFrameTime) {
@@ -83,14 +152,14 @@ void App::run() {
 
 			// Calcular FPS y mostrarlos en la consola
 			if (fpsUpdateTime >= 1.0) {
-				double fps = static_cast<double>(frameCount) / fpsUpdateTime;
+				const double fps = static_cast<double>(frameCount) / fpsUpdateTime;
 				std::cout << "FPS: " << fps << std::endl;
 				frameCount = 0;
 				fpsUpdateTime = 0.0;
 			}
 
 			// Calcular el tiempo que debemos dormir para alcanzar 60 FPS
-			double sleepTime = targetFrameTime - deltaTime;
+			const double sleepTime = targetFrameTime - deltaTime;
 			if (sleepTime > 0.0) {
 				std::this_thread::sleep_for(std::chrono::duration<double>(sleepTime));
 			}
@@ -114,15 +183,8 @@ void App::keyCallback(GLFWwindow* window, int key, int scancode, int action, int
 		if (key == GLFW_KEY_ESCAPE)
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
 		//provisional Input
-		else if (key == GLFW_KEY_W ||
-				key == GLFW_KEY_S ||
-				key == GLFW_KEY_R ||
-				key == GLFW_KEY_A ||
-				key == GLFW_KEY_G)
+		else
 			currentApp->events.push(key);
-	
-
-		
 	}
 }
 
@@ -141,17 +203,27 @@ void App::handleInput()
 {
 	while (!events.empty()) {
 		int key = events.front();
-		if (key == GLFW_KEY_W)
-			selectedMaterial = water;
-		else if (key == GLFW_KEY_S)
-			selectedMaterial = sand;
-		else if (key == GLFW_KEY_R)
-			selectedMaterial = rock;
-		else if (key == GLFW_KEY_G)
-			selectedMaterial = gas;
-		else if (key == GLFW_KEY_A)
-			selectedMaterial = acid;
-		
+
+		char pressedChar = static_cast<char>(std::tolower(key));
+		int startIdx = selectedParticleIndex; // Índice de inicio de búsqueda
+		bool found = false;
+
+		do {
+			startIdx = (startIdx + 1) % ParticleDefinitionsHandler::getInstance().getRegisteredParticlesCount();
+			auto data = ParticleDefinitionsHandler::getInstance().getParticleData(startIdx);
+			char dataChar = static_cast<char>(std::tolower(data.text_id[0]));
+
+			if (dataChar == pressedChar) {
+				selectedParticleIndex = startIdx;
+				found = true;
+				break;
+			}
+		} while (startIdx != selectedParticleIndex);
+
+		if (!found) {
+			// No particle found, we could play a sound or something here idk
+		}
+
 		events.pop();
 	}
 }
@@ -176,37 +248,20 @@ void App::render()
 	// En tu función de renderizado de ImGui:
 	ImGui::Begin("Material Selector");
 
-	if (ImGui::Selectable("Water", selectedMaterial == water)) {
-		selectedMaterial = water;
-	}
-	ImGui::SameLine();
-	ImGui::ColorButton("WaterColor", ImVec4(0.0f, 0.0f, 1.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+	const auto count = ParticleDefinitionsHandler::getInstance().getRegisteredParticlesCount();
 
-	if (ImGui::Selectable("Sand", selectedMaterial == sand)) {
-		selectedMaterial = sand;
-	}
-	ImGui::SameLine();
-	ImGui::ColorButton("SandColor", ImVec4(0.86f, 0.66f, 0.0f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
+	for (uint8_t i = 0; i < count; i++)
+	{
+		auto data = ParticleDefinitionsHandler::getInstance().getParticleData(i);
 
-	if (ImGui::Selectable("Rock", selectedMaterial == rock)) {
-		selectedMaterial = rock;
+		if (ImGui::Selectable(data.text_id.c_str(), selectedParticleIndex == i)) {
+			selectedParticleIndex = i;
+		}
+		ImGui::SameLine();
+		ImGui::ColorButton((data.text_id + "Color").c_str(), ImVec4(data.particle_color.r / 255.0, data.particle_color.g / 255.0, data.particle_color.b / 255.0, data.particle_color.a / 255.0), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
 	}
-	ImGui::SameLine();
-	ImGui::ColorButton("RockColor", ImVec4(0.5f, 0.5f, 0.5f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
 
-	if (ImGui::Selectable("Gas", selectedMaterial == gas)) {
-		selectedMaterial = gas;
-	}
-	ImGui::SameLine();
-	ImGui::ColorButton("GasColor", ImVec4(0.8f, 0.8f, 0.8f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
-
-	if (ImGui::Selectable("Acid", selectedMaterial == acid)) {
-		selectedMaterial = acid;
-	}
-	ImGui::SameLine();
-	ImGui::ColorButton("AcidColor", ImVec4(0.26f, 0.88f, 0.24f, 1.0f), ImGuiColorEditFlags_NoTooltip, ImVec2(20, 20));
-
-	sandSimulation->setMaterial(selectedMaterial);
+	sandSimulation->setMaterial(selectedParticleIndex);
 
 	ImGui::End();
 
