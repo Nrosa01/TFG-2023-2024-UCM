@@ -93,6 +93,9 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleChunk.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleChunkIterator.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_truetype.h">
@@ -174,6 +177,9 @@
       <Filter>Archivos de encabezado\particle_data_structures</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleChunk.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleChunkIterator.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
