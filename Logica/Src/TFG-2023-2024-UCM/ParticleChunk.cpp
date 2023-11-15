@@ -1,7 +1,6 @@
 #include "ParticleChunk.h"
 #include "Particle.h"
 #include "ParticleData.h"
-#include "ParticleDataRegistry.h"
 #include "ParticleFactory.h"
 
 ParticleChunk::ParticleChunk(int width, int height) : width(width), height(height), clock(0)

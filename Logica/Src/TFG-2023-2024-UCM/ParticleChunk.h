@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <iterator>
 #include "ParticleChunkIterator.h"
+#include "ParticleDataRegistry.h"
 
 struct Particle;
 struct ParticleDefinitionsHandler;

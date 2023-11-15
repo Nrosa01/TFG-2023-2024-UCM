@@ -1,7 +1,6 @@
 #pragma once
 #include <iterator>
-
-struct Particle;
+#include "Particle.h"
 
 class ParticleChunkIterator : public std::iterator<std::forward_iterator_tag, Particle>
 {

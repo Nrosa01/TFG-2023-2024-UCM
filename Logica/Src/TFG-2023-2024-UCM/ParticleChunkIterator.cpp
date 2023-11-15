@@ -1,5 +1,4 @@
 #include "ParticleChunkIterator.h"
-#include "Particle.h"
 
 inline ParticleChunkIterator& ParticleChunkIterator::operator++()
 {
