@@ -55,26 +55,23 @@ void ParticleSimulation::updateTexture() {
 	// Recorre los datos de la simulaci�n y actualiza textureData seg�n el estado actual
 	const int width = chunk->getWidth();
 	const int height = chunk->getHeight();
-	
+
 	ParticleDefinitionsHandler& handler = ParticleDefinitionsHandler::getInstance();
 
-	for (auto it = chunk->begin(); it != chunk->end(); ++it)
+	for (int x = 0; x < width; x++)
 	{
-		Particle& particle = *it;
-		
-		// Obtener las coordenadas x e y desde el iterador
-		int x = std::distance(chunk->begin(), it) % width;
-		int y = std::distance(chunk->begin(), it) / width;
+		for (int y = 0; y < height; y++)
+		{
+			const Particle& particle = chunk->getParticle(x, y);
 
-		ParticleProject::colour_t c = addGranularity(handler.getParticleData(particle.type).particle_color, particle.random_granularity);
+			ParticleProject::colour_t c = addGranularity(handler.getParticleData(particle.type).particle_color, particle.random_granularity);
 
-		std::cout << "x: " << x << " y: " << y << "\n";
-
-		int pos_text = (y * width + x) * 4;
-		textureData[pos_text + 0] = c.r;   // R
-		textureData[pos_text + 1] = c.g;   // G
-		textureData[pos_text + 2] = c.b;   // B
-		textureData[pos_text + 3] = c.a;   // A
+			const const int pos_text = (y * width + x) * 4;
+			textureData[pos_text + 0] = c.r;   // R
+			textureData[pos_text + 1] = c.g;   // G
+			textureData[pos_text + 2] = c.b;   // B
+			textureData[pos_text + 3] = c.a;   // A
+		}
 	}
 
 	// Luego, actualiza la textura con los nuevos datos

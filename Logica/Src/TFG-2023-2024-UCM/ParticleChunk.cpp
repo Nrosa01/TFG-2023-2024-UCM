@@ -3,7 +3,7 @@
 #include "ParticleData.h"
 #include "ParticleFactory.h"
 
-ParticleChunk::ParticleChunk(int width, int height) : width(width), height(height), clock(0)
+ParticleChunk::ParticleChunk(int width, int height) : width(width), height(height), clock(0), chunk_state(nullptr)
 {
 	chunk_state = new Particle * [width];
 	for (int x = 0; x < width; ++x) {
@@ -14,10 +14,7 @@ ParticleChunk::ParticleChunk(int width, int height) : width(width), height(heigh
 	}
 }
 
-ParticleChunk::~ParticleChunk()
-{
-	delete[] chunk_state;
-}
+ParticleChunk::~ParticleChunk() {}
 
 inline void ParticleChunk::updateParticle(const uint32_t& x, const uint32_t& y, const ParticleDefinitionsHandler& registry)
 {
@@ -47,15 +44,15 @@ inline void ParticleChunk::updateParticle(const uint32_t& x, const uint32_t& y, 
 		bool particleMoved = moveParticle(new_pos_x, new_pos_y, dir_x, dir_y);
 
 		// If particle cant move we HAVE to process interactions
-		bool should_break = false;
-		for (const Interaction& interaction : interactions)
-		{
-			// True means simulation can continue, false stops the simulation for the current particle
-			should_break = !interaction.interaction_function(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state, width, height);
+		//bool should_break = false;
+		//for (const Interaction& interaction : interactions)
+		//{
+		//	// True means simulation can continue, false stops the simulation for the current particle
+		//	should_break = !interaction.interaction_function(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state.d, width, height);
 
-			if (should_break)
-				goto clock_handler;
-		}
+		//	if (should_break)
+		//		goto clock_handler;
+		//}
 
 		// If interaction didn't cut the update, see if particle didn't move, if so, try pushing
 		// This way we don't have to loop
@@ -107,7 +104,7 @@ const int ParticleChunk::getHeight() const
 	return height;
 }
 
-inline const Particle& ParticleChunk::getParticle(int x, int y) const
+const Particle& ParticleChunk::getParticle(int x, int y) const
 {
 	return chunk_state[x][y];
 }
