@@ -68,6 +68,8 @@ void ParticleSimulation::updateTexture() {
 
 		ParticleProject::colour_t c = addGranularity(handler.getParticleData(particle.type).particle_color, particle.random_granularity);
 
+		std::cout << "x: " << x << " y: " << y << "\n";
+
 		int pos_text = (y * width + x) * 4;
 		textureData[pos_text + 0] = c.r;   // R
 		textureData[pos_text + 1] = c.g;   // G

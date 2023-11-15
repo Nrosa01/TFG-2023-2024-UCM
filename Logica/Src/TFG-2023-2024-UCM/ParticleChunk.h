@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include <cstdint>
 #include <iterator>
-#include "ParticleChunkIterator.h"
 #include "ParticleDataRegistry.h"
 
 struct Particle;
@@ -10,6 +9,68 @@ struct ParticleDefinitionsHandler;
 class ParticleChunk
 {
 public:
+    struct ParticleChunkIterator
+    {
+        using iterator_category = std::forward_iterator_tag;
+        using difference_type = std::ptrdiff_t;
+        using value_type = Particle;
+        using pointer = Particle*;
+        using data = Particle**;
+        using reference = Particle&;
+
+    private:
+        data collection;
+        pointer m_ptr;
+        int m_width;
+        int m_currentX;
+        int m_currentY;
+
+    public:
+        ParticleChunkIterator(data collection, int width) : 
+            m_ptr(&collection[0][0]), 
+            collection(collection), 
+            m_width(width), 
+            m_currentX(0), 
+            m_currentY(0) { }
+
+        reference operator*() const { return *m_ptr; }
+
+        pointer operator->() const { return m_ptr; }
+
+        ParticleChunkIterator& operator++()
+        {
+            ++m_currentX;
+
+            if (m_currentX >= m_width)
+            {
+                m_currentX = 0;
+                ++m_currentY;
+            }
+
+            m_ptr = &collection[m_currentX][m_currentY];
+
+            return *this;
+        }
+
+        ParticleChunkIterator operator++(int)
+        {
+            ParticleChunkIterator tmp = *this;
+            ++(*this);
+            return tmp;
+        }
+
+        friend bool operator== (const ParticleChunkIterator& a, const ParticleChunkIterator& b)
+        {
+            return a.m_ptr == b.m_ptr;
+        };
+
+        friend bool operator!= (const ParticleChunkIterator& a, const ParticleChunkIterator& b)
+        {
+            return a.m_ptr != b.m_ptr;
+        };
+    };
+
+
 	// Constructor
 	ParticleChunk(int width, int height);
 	~ParticleChunk();
@@ -46,11 +107,11 @@ public:
 
     ParticleChunkIterator begin() const
     {
-        return ParticleChunkIterator(chunk_state, chunk_state + width * height);
+        return ParticleChunkIterator(chunk_state, width);
     }
 
     ParticleChunkIterator end() const
     {
-        return ParticleChunkIterator(chunk_state + width * height, chunk_state + width * height);
+        return ParticleChunkIterator(chunk_state + width * height, width);
     }
 };

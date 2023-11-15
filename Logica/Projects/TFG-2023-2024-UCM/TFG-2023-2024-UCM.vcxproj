@@ -119,7 +119,6 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Particle.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleChunk.cpp" />
-    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleChunkIterator.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Quad.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.cpp" />
@@ -143,7 +142,6 @@
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\InteractionDefinition.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Particle.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleChunk.h" />
-    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleChunkIterator.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleData.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleFactory.h" />
