@@ -2,6 +2,8 @@
 #include <cstdint>
 #include "Common_utils.h"	
 
+
+
 struct Particle {
 	// Type is an integer that index the ParticleData structure array
 	uint32_t type = 0;

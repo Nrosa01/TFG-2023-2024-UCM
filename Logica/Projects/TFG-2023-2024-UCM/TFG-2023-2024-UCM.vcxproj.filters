@@ -87,6 +87,9 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleInteractionsHandler.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Dependencies\imgui-1.89.8\imstb_truetype.h">
@@ -151,6 +154,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleData.h">
       <Filter>Archivos de encabezado\particle_data_structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleInteractionsHandler.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\typedef_interaction.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -118,6 +118,7 @@
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\main.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Particle.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.cpp" />
+    <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleInteractionsHandler.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Quad.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.cpp" />
     <ClCompile Include="..\..\Src\TFG-2023-2024-UCM\Triangle.cpp" />
@@ -140,9 +141,11 @@
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleData.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleDataRegistry.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleFactory.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleInteractionsHandler.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Quad.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\ParticleSimulation.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Triangle.h" />
+    <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\typedef_interaction.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Vector2D.h" />
     <ClInclude Include="..\..\Src\TFG-2023-2024-UCM\Viewport.h" />
   </ItemGroup>

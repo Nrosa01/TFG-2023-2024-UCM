@@ -9,15 +9,15 @@
 #include "Particle.h"
 #include "Common_utils.h"
 #include "ParticleDataRegistry.h"
-
-static const float brush_size = 5;
-static const float radius_brush = brush_size / 2;
-
+#include "ParticleInteractionsHandler.h"
 class Quad;
 
 class ParticleSimulation {
+
 public:
     ParticleSimulation(int width, int height, int wWidth, int wHeight);
+    void particleInitialization();
+    void interactionsInitialization();
     ~ParticleSimulation();
 
 
@@ -34,10 +34,14 @@ private:
     int type_particle = 0;
 
     ParticleRegistry& registry;
+    ParticleInteractionsHandler interactions_handler;
     int wWidth;
     int wHeight;
     int width;
     int height;
+
+    float brush_size;
+    float radius_brush;
 
     Particle** chunk_state;
     bool clock; // Add 1 in every update call, check against particle clock to see whether they have been updated or not
@@ -50,13 +54,20 @@ private:
 
     const bool isEmpty(const uint32_t& x, const uint32_t& y) const;
 
+    const bool canPush(const uint32_t& other_x, const uint32_t& other_y, const uint32_t& x, const uint32_t& y);
+
+    bool movePushingOtherParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y);
+
     //inline void pushOtherParticle(uint32_t index);
 
     inline const bool moveParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y);
 
+    void InteractionsUpdate(const uint32_t& x, const uint32_t& y, const ParticleData& data);
+
     inline void updateParticle(const uint32_t& x, const uint32_t& y);
 
     const inline ParticleData& getParticleData(const uint32_t& x, const uint32_t& y) const;
+
 
 
     inline ParticleProject::colour_t addGranularity(const ParticleProject::colour_t& original, const uint8_t granularity) {
@@ -69,5 +80,12 @@ private:
 
         return result;
     }
+    bool loseLife() {
+        return false;
+    }
+   /* struct InteractionFunctionality {
+      
+        
+    };*/
 };
 

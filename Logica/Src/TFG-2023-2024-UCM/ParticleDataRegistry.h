@@ -3,15 +3,7 @@
 #include "Particle.h"
 #include <unordered_map>
 #include "ParticleData.h"
-
-struct PhysicsProperties {
-	const int density;
-	const int color;
-	const int flammability;
-	const int explosiveness;
-	const int boilingPoint;
-	const int startingTemperature;
-};
+#include "typedef_interaction.h"
 
 class ParticleRegistry {
 public:
@@ -19,6 +11,8 @@ public:
 		static ParticleRegistry instance;
 		return instance;
 	}
+
+	
 
 	void addParticleData(const ParticleData& data)
 	{
@@ -81,6 +75,18 @@ public:
 		return particle_data;
 	}
 
+	bool addInteractionToParticle(const std::string particle_text_id, Interaction interaction) {
+		int32_t n;
+		if ((n = getParticleId(particle_text_id)) != -1) {
+			particle_data[n].interactions.push_back(interaction);
+			return true;
+		}
+		return false;
+	}
+
+
+	
+
 private:
 	ParticleRegistry() {}
 	ParticleRegistry(const ParticleRegistry&) = delete;
@@ -88,4 +94,6 @@ private:
 
 	std::vector<ParticleData> particle_data;
 	std::unordered_map < std::string, uint32_t> text_to_id_map;
+
+
 };

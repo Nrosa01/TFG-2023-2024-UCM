@@ -9,10 +9,17 @@
 #include <iostream>
 #include "Common_utils.h"
 #include "ParticleFactory.h"
+#include "typedef_interaction.h"
+
+using namespace ParticleProject;
 
 static const double PI = 3.1415926535;
 
-ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) : width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), registry(ParticleRegistry::getInstance()) {
+ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wHeight) 
+	: width(width), height(height), wWidth(wWidth), wHeight(wHeight), clock(0), registry(ParticleRegistry::getInstance()), interactions_handler(registry) {
+	
+	particleInitialization();
+	interactionsInitialization();
 
 	chunk_state = new Particle * [width];
 	for (int x = 0; x < width; ++x) {
@@ -22,10 +29,82 @@ ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wH
 			chunk_state[x][y].type = 0;
 	}
 
+	brush_size = width/20;
+	radius_brush = brush_size / 2;
 
 	textureData.resize(width * height * 4, 0);
 	initializeTexture();
 	quad = std::make_unique<Quad>(wWidth, wHeight, textureID);
+
+}
+
+void ParticleSimulation::particleInitialization() {
+	registry.addParticleData({
+		"Empty", // Text id
+		empty, // Yellow color in rgba
+		0,
+		{}
+	});
+
+	registry.addParticleData({
+		"Sand", // Text id
+		yellow, // Yellow color in rgba
+		30,
+		{
+			down,down_left, down_right
+		},
+		{
+			3, //  density;
+			0, //  flammability;
+			0, //  explosiveness;
+			0, //  boilingPoint;
+			0 //  startingTemperature;
+		}, // Properties
+	});
+
+	registry.addParticleData({
+		"Water", // Text id
+		blue, // Yellow color in rgba
+		0,
+		{
+			down,down_left,down_right,left,right
+		},
+		{
+			2, //  density;
+			0, //  flammability;
+			0, //  explosiveness;
+			0, //  boilingPoint;
+			0 //  startingTemperature;
+		}, // Properties
+	});
+	registry.addParticleData({
+		"Gas", // Text id
+		dark_grey, // Yellow color in rgba
+		50,
+		{
+			up,up_left, up_right
+		},
+		{
+			1, //  density;
+			0, //  flammability;
+			0, //  explosiveness;
+			0, //  boilingPoint;
+			0 //  startingTemperature;
+		}, // Properties
+	});
+}
+
+void ParticleSimulation::interactionsInitialization() {
+
+	interactions_handler.addInteractionToMap( "lose_life", &ParticleSimulation::loseLife);
+
+	interactions_handler.addInteractionsToParticle({ {"Gas", "lose_life",{} } });
+	/*std::bind(&ParticleSimulation::loseLife, this);
+	registry.addInteractionsToMap({ 
+		{"Gas", std::bind(&ParticleSimulation::loseLife, shared_from_this()) &ParticleSimulation::loseLife }
+	});*/
+	//registry.addInteractionsToMap({ {"Gas", InteractionFunctions::loseLife } });
+	//registry.addInteraction("Gas", InteractionFunctions::loseLife);
 }
 
 ParticleSimulation::~ParticleSimulation() {
@@ -81,27 +160,59 @@ const bool ParticleSimulation::isEmpty(const uint32_t& x, const uint32_t& y) con
 	return chunk_state[x][y].type == 0;
 }
 
-//void ParticleSimulation::pushOtherParticle(position pos) {
-//	for (int i = -3; i < 3; ++i) {
-//		for (int j = 1; j < 10; ++j) {
-//			if (isInside(pos.x + i, pos.y + j)) {
-//				uint8_t current_density = Particle::material_physics[chunk_state[computeIndex(pos.x + i, pos.y + j)].mat].density;
-//				if (current_density < Particle::material_physics[chunk_state[computeIndex(pos.x, pos.y)].mat].density) {
-//					chunk_state[computeIndex(pos.x + i, pos.y + j)] = chunk_state[computeIndex(pos.x, pos.y)];
-//					chunk_state[computeIndex(pos.x, pos.y)] = ParticleFactory::createEmptyParticle();
-//					break;
-//				}
-//			}
-//		}
-//	}
-//}
+inline const bool ParticleSimulation::canPush(const uint32_t& other_x, const uint32_t& other_y, const uint32_t& x, const uint32_t& y) {
+	return getParticleData(other_x, other_y).physics_properties.density <
+		   getParticleData(x, y).physics_properties.density;
+}
+
+
+bool ParticleSimulation::movePushingOtherParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y) {
+	
+	const uint32_t new_x = x + dir_x;
+	const uint32_t new_y = y + dir_y;
+
+	//this is going to glu glu the performance hehehehe
+	if (isInside(new_x, new_y) && canPush(new_x, new_y, x, y)) {
+		Particle aux = chunk_state[new_x][new_y];
+		chunk_state[new_x][new_y] = chunk_state[x][y];
+		chunk_state[x][y] = ParticleFactory::createParticle(0);
+		//search for an empty space to move
+		for (int i = -5; i < 5; ++i) {
+			for (int j = 1; j < 20; ++j) {
+				if (isInside(new_x + i, new_y + j) && isEmpty(new_x + i, new_y + j)) {
+					chunk_state[new_x + i][new_y + j] = aux;
+					return true;
+				}
+			}
+		}
+		//std::cout << "yokese tio"<<"\n";
+		return true;
+	}
+	else
+		return false;
+
+
+	/*for (int i = -3; i < 3; ++i) {
+		for (int j = 1; j < 10; ++j) {
+			if (isInside(pos.x + i, pos.y + j)) {
+				uint8_t current_density = Particle::material_physics[chunk_state[computeIndex(pos.x + i, pos.y + j)].mat].density;
+				if (current_density < Particle::material_physics[chunk_state[computeIndex(pos.x, pos.y)].mat].density) {
+					chunk_state[computeIndex(pos.x + i, pos.y + j)] = chunk_state[computeIndex(pos.x, pos.y)];
+					chunk_state[computeIndex(pos.x, pos.y)] = ParticleFactory::createEmptyParticle();
+					break;
+				}
+			}
+		}
+	}*/
+}
+
 
 const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y)
 {
 	const uint32_t new_x = x + dir_x;
 	const uint32_t new_y = y +  dir_y;
 
-	if (isInside(new_x, new_y) && isEmpty(new_x, new_y)) {
+	if (isInside(new_x, new_y) && isEmpty(new_x, new_y) ) {
 
 		chunk_state[new_x][new_y] = chunk_state[x][y];
 		chunk_state[x][y] = ParticleFactory::createParticle(0);
@@ -110,6 +221,15 @@ const bool ParticleSimulation::moveParticle(const int& dir_x, const int& dir_y, 
 	}
 	else
 		return false;
+}
+
+void ParticleSimulation::InteractionsUpdate(const uint32_t& x, const uint32_t& y, const ParticleData& data) {
+	
+	for (auto& interaction : data.interactions) {
+		int x = 0;
+		bool res = interaction;
+		x = 1;
+	}
 }
 
 inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t& y)
@@ -129,6 +249,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 	bool particleCollidedLastIteration = false;
 	uint32_t new_pos_x = x;
 	uint32_t new_pos_y = y;
+	bool try_pushing = false;
 
 	while (pixelsToMove > 0 && particleIsMoving)
 	{
@@ -136,7 +257,13 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		const int32_t dir_x = data.movement_passes[particle_movement_passes_index].x;
 		const int32_t dir_y = data.movement_passes[particle_movement_passes_index].y;
 
-		const bool particleMoved = moveParticle(dir_x, dir_y, new_pos_x, new_pos_y);
+		const bool particleMoved = try_pushing ? movePushingOtherParticle(dir_x, dir_y, new_pos_x, new_pos_y)
+											   : moveParticle(dir_x, dir_y, new_pos_x, new_pos_y);
+
+		//self_interactions, like losing life time or transmiting heat, you should be able to do it
+		//regardless of your movement
+		
+		InteractionsUpdate(x,y, data);
 
 		if (!particleMoved)
 		{
@@ -148,14 +275,17 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 			{
 				particle_movement_passes_index = 0;
 
-				if (particleCollidedLastIteration)
-					particleIsMoving = false;
-				
+				if (particleCollidedLastIteration) {
+					if (try_pushing) particleIsMoving = false;
+					else try_pushing = true;
+				}
+
 				particleCollidedLastIteration = true;
 			}
 		}
 		else
 		{
+			try_pushing = false;
 			particleCollidedLastIteration = false;
 			particleIsMoving = true;
 			pixelsToMove--;
@@ -175,7 +305,8 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 const inline ParticleData& ParticleSimulation::getParticleData(const uint32_t& x, const uint32_t& y) const
 {
 	return registry.getParticleData(chunk_state[x][y].type);
-	// This makes the simulation run 7 times slower, just leavint it as a note
+	// This makes the simulation run 7 times slower, just leaving it as a note
+	// ahh, indirection is an amazing thing isn't it
 	//return ParticleRegistry::getInstance().getParticleData(chunk_state[x][y].type);
 }
 
@@ -190,7 +321,8 @@ void ParticleSimulation::setMaterial(int mat)
 void ParticleSimulation::update() {
 	for (uint32_t y = 0; y < width; ++y) {
 		for (uint32_t x = 0; x < height; ++x)
-			updateParticle(x, y);
+			if(!isEmpty(x,y))
+				updateParticle(x, y);
 	}
 
 	clock = !clock;

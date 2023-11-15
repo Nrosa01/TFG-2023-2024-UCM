@@ -1,6 +1,3 @@
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 800
-
 #include "App.h"
 #include <iostream>
 #include <imgui_impl_glfw.h>
@@ -15,7 +12,17 @@
 #include "ParticleDataRegistry.h"
 #include "Colour.h"
 
-using namespace ParticleProject;
+const float ASPECT_RATIO = 1;
+
+const int WINDOW_HEIGHT = 800;
+const int WINDOW_WIDTH = WINDOW_HEIGHT * ASPECT_RATIO;
+
+const float LOGIC_RATIO = 1./8.;
+
+const uint32_t LOGIC_HEIGHT = WINDOW_HEIGHT * LOGIC_RATIO;
+
+const uint32_t LOGIC_WIDTH = LOGIC_HEIGHT * ASPECT_RATIO;
+
 
 App* App::currentApp = nullptr;
 
@@ -49,38 +56,10 @@ bool App::init() {
 	glfwSetKeyCallback(window.get(), keyCallback);
 	glfwSetMouseButtonCallback(window.get(), mouseCallback);
 
-	ParticleRegistry::getInstance().addParticleData({
-		"Empty", // Text id
-		empty, // Yellow color in rgba
-		{}
-	});
-
-	ParticleRegistry::getInstance().addParticleData({
-		"Sand", // Text id
-		yellow, // Yellow color in rgba
-		{
-			down,down_left, down_right 
-		}
-	});
-
-	ParticleRegistry::getInstance().addParticleData({
-		"Water", // Text id
-		blue, // Yellow color in rgba
-		{
-			down,down_left,down_right,left,right   
-		}
-	});
-	ParticleRegistry::getInstance().addParticleData({
-		"Gas", // Text id
-		dark_grey, // Yellow color in rgba
-		{
-			up,up_left, up_right
-		}
-	});
-
+	
 
 	triangle = std::make_unique<Triangle>();
-	sandSimulation = std::make_unique<ParticleSimulation>(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
+	sandSimulation = std::make_unique<ParticleSimulation>(LOGIC_WIDTH, LOGIC_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// Init ImGui
 	IMGUI_CHECKVERSION();
@@ -264,13 +243,18 @@ void App::fixedUpdate(float deltaTime)
 	accumulator += deltaTime;
 	uint16_t physics_step_this_frame = 0;
 
+	// Here we should call scene.fixedUpdate or something like that
+	sandSimulation->update();
 
-	while (accumulator >= PHYSICS_STEP && physics_step_this_frame < MAX_PHYSICS_STEP_PER_FRAME)
-	{
-		// Here we should call scene.fixedUpdate or something like that
-		sandSimulation->update();
+	accumulator -= PHYSICS_STEP;
+	physics_step_this_frame++;
 
-		accumulator -= PHYSICS_STEP;
-		physics_step_this_frame++;
-	}
+	//while (accumulator >= PHYSICS_STEP && physics_step_this_frame < MAX_PHYSICS_STEP_PER_FRAME)
+	//{
+	//	// Here we should call scene.fixedUpdate or something like that
+	//	sandSimulation->update();
+
+	//	accumulator -= PHYSICS_STEP;
+	//	physics_step_this_frame++;
+	//}
 }
