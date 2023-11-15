@@ -106,7 +106,7 @@ void ParticleSimulation::setParticle(uint32_t x, uint32_t y) {
 			int simX_aux = i - simX; // horizontal offset
 			int simY_aux = j - simY; // vertical offset
 			// Id 0 is an special harcoded case now that represents the empty particle. We should do something about that at some point
-			if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && isInside(i, j) && (isEmpty(i, j) || type_particle == 0))
+			if ((simX_aux * simX_aux + simY_aux * simY_aux) <= (radius_brush * radius_brush) && chunk->isInside(i, j) && (chunk->isEmpty(i, j) || type_particle == 0))
 			{
 				chunk->setParticle(i, j, ParticleFactory::createParticle(type_particle));
 			}
