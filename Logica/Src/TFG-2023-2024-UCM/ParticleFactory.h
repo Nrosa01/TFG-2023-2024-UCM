@@ -15,7 +15,8 @@ public:
 		//particle.temperature = 0;
 		//particle.life_time = 0;
 		//magic number, ik
-		particle.random_granularity = rand() % 30;
+		particle.random_granularity =
+			rand() % (ParticleDefinitionsHandler::getInstance().getParticleData(particle_type).random_granularity + 1);
 		
 		return particle;
 	};

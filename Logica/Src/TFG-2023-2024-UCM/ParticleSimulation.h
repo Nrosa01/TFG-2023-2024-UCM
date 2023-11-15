@@ -10,9 +10,6 @@
 #include "Common_utils.h"
 #include "ParticleDataRegistry.h"
 
-static const float brush_size = 5;
-static const float radius_brush = brush_size / 2;
-
 class Quad;
 
 class ParticleSimulation {
@@ -32,6 +29,9 @@ public:
     void render();
 private:
     int type_particle = 0;
+
+    float brush_size;
+    float radius_brush;
 
     ParticleDefinitionsHandler& registry;
     int wWidth;
@@ -58,6 +58,9 @@ private:
 
     const inline ParticleDefinition& getParticleData(const uint32_t& x, const uint32_t& y) const;
 
+    inline const bool canPush(const uint32_t& other_x, const uint32_t& other_y, const uint32_t& x, const uint32_t& y);
+
+    inline bool movePushingOtherParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y);
 
     inline ParticleProject::colour_t addGranularity(const ParticleProject::colour_t& original, const uint8_t granularity) {
 

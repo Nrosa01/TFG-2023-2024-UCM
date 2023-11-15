@@ -22,6 +22,8 @@ ParticleSimulation::ParticleSimulation(int width, int height, int wWidth, int wH
 			chunk_state[x][y].type = 0;
 	}
 
+	brush_size = width / 20;
+	radius_brush = brush_size / 2;
 
 	textureData.resize(width * height * 4, 0);
 	initializeTexture();
@@ -122,7 +124,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		const int32_t dir_x = data.movement_passes[particle_movement_passes_index].x;
 		const int32_t dir_y = data.movement_passes[particle_movement_passes_index].y;
 
-		const bool particleMoved = moveParticle(dir_x, dir_y, new_pos_x, new_pos_y);
+		bool particleMoved = moveParticle(dir_x, dir_y, new_pos_x, new_pos_y);
 
 		// If particle cant move we HAVE to process interactions
 		bool should_break = false;
@@ -130,14 +132,15 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		{
 			// True means simulation can continue, false stops the simulation for the current particle
 			should_break = !interaction.interaction_function(new_pos_x, new_pos_y, particle_movement_passes_index, chunk_state, width, height);
-			
+
 			if (should_break)
-				break;
+				goto clock_handler;
 		}
 
-
-		if (should_break)
-			break;
+		// If interaction didn't cut the update, see if particle didn't move, if so, try pushing
+		// This way we don't have to loop
+		if (!particleMoved)
+			particleMoved = movePushingOtherParticle(dir_x, dir_y, new_pos_x, new_pos_y);
 
 		if (!particleMoved)
 		{
@@ -165,7 +168,7 @@ inline void ParticleSimulation::updateParticle(const uint32_t& x, const uint32_t
 		}
 	}
 
-	// clock_handler:
+clock_handler:
 
 
 	chunk_state[x][y].clock = !clock;
@@ -198,6 +201,35 @@ void ParticleSimulation::update() {
 	clock = !clock;
 
 	updateTexture();
+}
+
+inline const bool ParticleSimulation::canPush(const uint32_t& other_x, const uint32_t& other_y, const uint32_t& x, const uint32_t& y) {
+	return getParticleData(other_x, other_y).properties.density < getParticleData(x, y).properties.density;
+}
+
+bool ParticleSimulation::movePushingOtherParticle(const int& dir_x, const int& dir_y, const uint32_t& x, const uint32_t& y) {
+
+	const uint32_t new_x = x + dir_x;
+	const uint32_t new_y = y + dir_y;
+
+	//this is going to glu glu the performance hehehehe
+	if (isInside(new_x, new_y) && canPush(new_x, new_y, x, y)) {
+		Particle aux = chunk_state[new_x][new_y];
+		chunk_state[new_x][new_y] = chunk_state[x][y];
+		chunk_state[x][y] = ParticleFactory::createParticle(0);
+		//search for an empty space to move
+		for (int i = -5; i < 5; ++i) {
+			for (int j = 1; j < 20; ++j) {
+				if (isInside(new_x + i, new_y + j) && isEmpty(new_x + i, new_y + j)) {
+					chunk_state[new_x + i][new_y + j] = aux;
+					return true;
+				}
+			}
+		}
+		return true;
+	}
+	else
+		return false;
 }
 
 const bool ParticleSimulation::isInside(uint32_t x, uint32_t y) const {

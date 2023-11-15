@@ -1,6 +1,3 @@
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 800
-
 #include "App.h"
 #include <iostream>
 #include <imgui_impl_glfw.h>
@@ -16,6 +13,17 @@
 #include "Colour.h"
 
 using namespace ParticleProject;
+
+const float ASPECT_RATIO = 1;
+
+const int WINDOW_HEIGHT = 800;
+const int WINDOW_WIDTH = WINDOW_HEIGHT * ASPECT_RATIO;
+
+const float LOGIC_RATIO = 1. / 8.;
+
+const uint32_t LOGIC_HEIGHT = WINDOW_HEIGHT * LOGIC_RATIO;
+
+const uint32_t LOGIC_WIDTH = LOGIC_HEIGHT * ASPECT_RATIO;
 
 App* App::currentApp = nullptr;
 
@@ -52,6 +60,7 @@ bool App::init() {
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
 		"Empty", // Text id
 		empty, // Yellow color in rgba
+		0,
 		{}, // Movement passes
 		{}, // Properties
 		InteractionDefinition::BuildFromDefinitions({  }) // Interactions 
@@ -60,6 +69,7 @@ bool App::init() {
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
 		"Sand", // Text id
 		yellow, // Yellow color in rgba
+		30,
 		{
 			down,
 			down_left,
@@ -72,12 +82,13 @@ bool App::init() {
 			0, //  boilingPoint;
 			0 //  startingTemperature;
 		}, // Properties
-		InteractionDefinition::BuildFromDefinitions({ {"Push"}, }) // Interactions 
+		InteractionDefinition::BuildFromDefinitions({ }) // Interactions 
 	));
 
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
 		"Water", // Text id
 		blue, // Yellow color in rgba
+		0,
 		{
 			down,
 			down_left,
@@ -92,6 +103,7 @@ bool App::init() {
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
 		"Gas", // Text id
 		dark_grey, // Yellow color in rgba
+		50,
 		{
 			up,
 			up_left,
@@ -104,6 +116,7 @@ bool App::init() {
 	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
 		"Acid", // Text id
 		saturated_green, // Yellow color in rgba
+		0,
 		{
 			down,
 			down_left,
@@ -113,9 +126,24 @@ bool App::init() {
 		InteractionDefinition::BuildFromDefinitions({ }) // Interactions
 		));
 
+	ParticleDefinitionsHandler::getInstance().addParticleData(ParticleDefinition(
+		"Rock", // Text id
+		dark_grey, // Yellow color in rgba
+		0,
+		{},
+		{
+			10, //  density;
+			0, //  flammability;
+			0, //  explosiveness;
+			0, //  boilingPoint;
+			0 //  startingTemperature;
+		}, // Properties
+		{} // Interactions
+	));
+
 
 	triangle = std::make_unique<Triangle>();
-	sandSimulation = std::make_unique<ParticleSimulation>(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
+	sandSimulation = std::make_unique<ParticleSimulation>(LOGIC_WIDTH, LOGIC_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// Init ImGui
 	IMGUI_CHECKVERSION();
