@@ -97,12 +97,12 @@ clock_handler:
 	chunk_state[new_pos_x][new_pos_y].clock = !clock;
 }
 
-inline const int ParticleChunk::getWidth() const
+const int ParticleChunk::getWidth() const
 {
 	return width;
 }
 
-inline const int ParticleChunk::getHeight() const
+const int ParticleChunk::getHeight() const
 {
 	return height;
 }
@@ -144,8 +144,9 @@ void ParticleChunk::update()
 	clock = !clock;
 }
 
-inline void ParticleChunk::setParticle(uint32_t x, uint32_t y, const Particle& particle)
+void ParticleChunk::setParticle(uint32_t x, uint32_t y, const Particle& particle)
 {
+	chunk_state[x][y] = particle;
 }
 
 inline bool ParticleChunk::tryPushParticle(const uint32_t& x, const uint32_t& y, const int& dir_x, const int& dir_y)

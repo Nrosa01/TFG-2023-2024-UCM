@@ -25,8 +25,8 @@ private:
 	inline void updateParticle(const uint32_t& x, const uint32_t& y, const  ParticleDefinitionsHandler& registry);
 public:
 	// Getteres
-	inline const int getWidth() const; // Obtiene el ancho de la simulaci�n
-	inline const int getHeight() const; // Obtiene la altura de la simulaci�n
+	const int getWidth() const; // Obtiene el ancho de la simulaci�n
+	const int getHeight() const; // Obtiene la altura de la simulaci�n
 	inline const Particle& getParticle(int x, int y) const;
 
 	// Const methods
@@ -38,7 +38,7 @@ public:
 	// Side effects methods
 	void update(); // Actualiza el estado de la simulaci�n
 
-	inline void setParticle(uint32_t x, uint32_t y, const Particle& particle); // Coloca una part�cula en la posici�n (x, y)
+	void setParticle(uint32_t x, uint32_t y, const Particle& particle); // Coloca una part�cula en la posici�n (x, y)
 	inline bool tryPushParticle(const uint32_t& x, const uint32_t& y, const int& dir_x, const int& dir_y);
 	inline const bool moveParticle(const uint32_t& x, const uint32_t& y, const int& dir_x, const int& dir_y);
 
