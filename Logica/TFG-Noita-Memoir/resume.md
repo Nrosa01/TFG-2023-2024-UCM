@@ -149,6 +149,7 @@ Prototipo estructura 2
     - Powder Toy
     - Sandspiel
     - Sandspiel Club
+    - (Introdocir algún sistema de partícula en GPU)
 
 5. **Desarrollo de la simulación de partículas**
     - Arquitectura del sistema
@@ -158,10 +159,18 @@ Prototipo estructura 2
     - Comparación con otros sistemas (GPU)
 
 6. **Desafíos y complejidades**
+   1. CPU
     - Diseño de un sistema de partículas
     - Multithreading
     - Extensiones y sistemas de plugins
+    - Persistencia del estado de la simulación
     - Consideraciones teóricas y matemáticas
+    - Intentos fallidos
+   2. GPU
+    - Implementación en la GPU
+    - Diferencias con la CPU
+    - Ventajas y desventajas
+    - Comparación con la CPU
 
 7. **Trabajo a futuro**
     - Mejoras propuestas
@@ -171,7 +180,7 @@ Prototipo estructura 2
     - Resumen de los hallazgos
     - Impacto de la investigación (en otras memorias tienen este apartado, pero en nuestro caso...)
 
-9. **Bibliografía**
+9.  **Bibliografía**
     - Referencias
 
 10. **Apéndices** (no sé si es necesario por como vamos a usar latex)
