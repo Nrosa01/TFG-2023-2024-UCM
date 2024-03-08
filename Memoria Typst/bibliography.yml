@@ -1,0 +1,47 @@
+neumann:
+    type: Web
+    title: John von Neumann
+    author: Wikipedia
+    url: https://es.wikipedia.org/wiki/John_von_Neumann
+
+ca_wiki:
+    type: Web
+    title: Autómata Celular
+    author: Wikipedia
+    url: https://es.wikipedia.org/wiki/Autómata_celular
+
+ca_andrew:
+    type: Book
+    title: Game of Life Cellular Automata
+    author: Andrew Adamatzky
+    volume: 1
+    page-total: 576
+    date: 2010-07-05
+
+ca_karl_johannes:
+    type: Book
+    title: Cellular Automata':' Analysis and Applications
+    author:
+        - Karl-Peter Hadeler
+        - Johannes Müller
+    volume: 1
+    page-total: 467
+    date: 2017-06-15
+
+moore_neighborhood:
+    type: Web
+    title: Moore Neighborhood
+    author: Wikipedia
+    url: https://en.wikipedia.org/wiki/Moore_neighborhood
+
+conway:
+    type: Web
+    title: John Conway
+    author: Wikipedia
+    url: https://en.wikipedia.org/wiki/John_Horton_Conway
+
+neumann_neighborhood:
+    type: Web
+    title: Von Neumann Neighborhood
+    author: Wikipedia
+    url: https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
