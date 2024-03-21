@@ -45,3 +45,61 @@ neumann_neighborhood:
     title: Von Neumann Neighborhood
     author: Wikipedia
     url: https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
+
+fluid_simulation:
+    type: Web
+    title: Computational fluid dynamics
+    author: Wikipedia
+    url: https://en.wikipedia.org/wiki/Computational_fluid_dynamics
+
+particle_simulation:
+    type: Web
+    title: Particle System
+    author: Wikipedia
+    url: https://en.wikipedia.org/wiki/Particle_system
+
+sand_simulation:
+    type: Web
+    title: Sand Simulator
+    author: Wikipedia
+    url: https://en.wikipedia.org/wiki/Falling-sand_game
+
+noita:
+    type: Web
+    title: Noita
+    author: Wikipedia
+    url: https://en.wikipedia.org/wiki/Noita_(video_game)
+
+falling_sand_game:
+    type: Web
+    title: Falling Sand Game
+    author: Web Archive
+    url: https://web.archive.org/web/20090423105358/http://fallingsandgame.com/overview/index.html
+
+powder_toy:
+    type: Web
+    title: Powder Toy
+    author: Wikipedia
+    url: https://en.wikipedia.org/wiki/The_Powder_Toy
+
+sandspiel:
+    type: Web
+    title: Sandspiel
+    author: Max Bittker
+    url: https://maxbittker.com/making-sandspiel
+
+sandspiel_club:
+    type: Web
+    title: Sandspiel Club
+    author: Wikipedia
+    url: https://en.wikipedia.org/wiki/Noita_(video_game)
+
+blockly:
+    type: Web
+    title: Blockly
+    author: Google
+    url: https://developers.google.com/blockly
+
+gardner_article:
+    type: Web
+    title: MATHEMATICAL GAMES. The fantastic combinations of John Conway\'s new solitaire game 'life'

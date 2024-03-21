@@ -11,7 +11,7 @@
   // Set the document's basic properties.
   set document(author: authors, title: title)
   set page(numbering: "1", number-align: center)
-  set text(font: "New Computer Modern", lang: "es")
+  set text(font: "New Computer Modern", lang: "es", hyphenate: false)
   show math.equation: set text(weight: 400)
 
   // Set paragraph spacing.
