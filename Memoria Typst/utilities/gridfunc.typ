@@ -1,7 +1,7 @@
 #let draw_grid(state) = {
   [
     #let stroke_map = state.at("stroke_map", default: ())
-    #let color_map = state.color_map
+    #let color_map = state.at("color_map", default: (white, black, blue, red, green, yellow))
 
     #let count = 0;
     #stack(
@@ -10,13 +10,13 @@
             text(8pt)[#state.caption],
     grid(
                 columns: state.columns, 
-                row-gutter: state.at("gutter-row", default:  state.at("gutter", default: 5pt)),
-                column-gutter: state.at("gutter-column", default: state.at("gutter", default: 5pt)),
+                row-gutter: state.at("gutter-row", default:  state.at("gutter", default: 0pt)),
+                column-gutter: state.at("gutter-column", default: state.at("gutter", default: 0pt)),
                 ..state.data.map(str => 
                     rect(
-                      stroke: stroke_map.at(str, default: black),
-                      width: state.at("cellsize", default: 10pt),
-                      height: state.at("cellsize", default: 10pt),
+                      stroke: stroke_map.at(str, default: black+0.3pt),
+                      width: state.at("cellsize", default: 15pt),
+                      height: state.at("cellsize", default: 15pt),
                       fill: color_map.at(str, default: white)))))
   ]
 }
@@ -33,18 +33,17 @@
   ]
 }
 
-#let grid_example(caption_text, states, vinit: 10pt, vend: 10pt) = {
-
+#let grid_example(caption_text, states, vinit: 0pt, vend: 10pt) = {
 v(vinit)
 align(center + horizon)[
   #stack(
     dir: ltr,
-    spacing: 20pt,
+    spacing: states.at(0).at("hspace", default: 20pt),
 
     ..states.slice(0, -1).map(state => 
        stack(
           dir: ltr,
-          spacing: state.hspace,          
+          spacing: state.at("hspace", default: 20pt),          
           draw_grid(state),
           draw_transition(state)
       )),

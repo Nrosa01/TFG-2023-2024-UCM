@@ -1,5 +1,5 @@
 #let state_01_ex1 =  (
-                      caption: " ",
+                      caption: "1ª Generación",
                       caption_alignment: ttb,
                       hspace: 20pt,
                       transition: " ",
@@ -13,7 +13,7 @@
 )
 
 #let state_02_ex1 = (
-                   caption: " ",
+                   caption: "2ª Generación",
                    caption_alignment: ttb,
                    hspace: 20pt,
                    transition: "",
@@ -33,7 +33,6 @@
                       hspace: 20pt,
                       transition: " ",
                       columns: 6,
-                      color_map: (white, black),
                       data:  (0, 0, 0, 0, 0, 0,
                               0, 0, 0, 0, 0, 0,
                               0, 0, 0, 1, 0, 0,
@@ -47,7 +46,6 @@
                    hspace: 20pt,
                    transition: " ",
                    columns: 6,
-                   color_map: (white, black),
                    data:     (0, 0, 0, 0, 0, 0,
                               0, 0, 0, 0, 1, 0,
                               0, 0, 1, 1, 0, 0,
@@ -61,7 +59,6 @@
                    hspace: 20pt,
                    transition: " ",
                    columns: 6,
-                   color_map: (white, black),
                    data:     (0, 0, 1, 1, 0, 0,
                               0, 1, 0, 0, 1, 0,
                               0, 0, 1, 1, 0, 0,
@@ -70,7 +67,7 @@
 )
 
 
-#let hspacewolfram = -5pt
+#let hspacewolfram = 7.5pt
 #let cellsizewolfram = 8pt
 #let gutterwolfram = 3.5pt
 #let guttercolorwolfram = 2pt
@@ -86,7 +83,7 @@
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
   gutter-column: guttercolorwolfram,
-  stroke_map: (black, black, white),
+  stroke_map: (black+0.75pt, black+0.75pt, white+0.75pt),
   color_map: (white, black)
 )
 
@@ -101,7 +98,7 @@
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
   gutter-column: guttercolorwolfram,
-  stroke_map: (black, black, white),
+  stroke_map: (black+0.75pt, black+0.75pt, white+0.75pt),
   color_map: (white, black)
 )
 
@@ -116,7 +113,7 @@
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
   gutter-column: guttercolorwolfram,
-  stroke_map: (black, black, white),
+  stroke_map: (black+0.75pt, black+0.75pt, white+0.75pt),
   color_map: (white, black)
 )
 
@@ -131,7 +128,7 @@
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
   gutter-column: guttercolorwolfram,
-  stroke_map: (black, black, white),
+  stroke_map: (black+0.75pt, black+0.75pt, white+0.75pt),
   color_map: (white, black)
 )
 
@@ -146,7 +143,7 @@
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
   gutter-column: guttercolorwolfram,
-  stroke_map: (black, black, white),
+  stroke_map: (black+0.75pt, black+0.75pt, white+0.75pt),
   color_map: (white, black)
 )
 
@@ -161,7 +158,7 @@
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
   gutter-column: guttercolorwolfram,
-  stroke_map: (black, black, white),
+  stroke_map: (black+0.75pt, black+0.75pt, white+0.75pt),
   color_map: (white, black)
 )
 
@@ -176,7 +173,7 @@
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
   gutter-column: guttercolorwolfram,
-  stroke_map: (black, black, white),
+  stroke_map: (black+0.75pt, black+0.75pt, white+0.75pt),
   color_map: (white, black)
 )
 
@@ -191,14 +188,13 @@
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
   gutter-column: guttercolorwolfram,
-  stroke_map: (black, black, white),
+  stroke_map: (black+0.75pt, black+0.75pt, white+0.75pt),
   color_map: (white, black)
 )
 
 #let rule30_15gens = (
   caption: "",
   caption_alignment: ttb,
-  hspace: hspacewolfram,
   transition: " ",
   transition_icon: "",
   columns: 33,
@@ -217,7 +213,44 @@
         0,0,0,0,1,1,0,0,1,0,0,0,1,1,1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,0,0,0,0,
         0,0,0,1,1,0,1,1,1,1,0,1,1,0,0,1,1,1,0,1,1,1,0,0,1,1,0,1,1,1,0,0,0,),
   cellsize: 10pt,
-  gutter: 0pt,
-  color_map: (white, black),
   stroke_map: (0.2pt + black, 0.2pt +  black)
+)
+
+#let game_of_life_01 = (
+  caption: "Estado inicial",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 6,
+  data: (0, 0, 0, 0, 0, 0,
+          0, 0, 0, 1, 0, 0,
+          0, 1, 0, 1, 0, 0,
+          0, 0, 1, 1, 0, 0,
+          0, 0, 0, 0, 0, 0),
+)
+
+#let game_of_life_02 = (
+  caption: "1ª Generación",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 6,
+  data: (0, 0, 0, 0, 0, 0,
+          0, 0, 1, 1, 0, 0,
+          0, 1, 0, 1, 0, 0,
+          0, 0, 1, 1, 0, 0,
+          0, 0, 0, 0, 0, 0),
+)
+
+#let game_of_life_03 = (
+  caption: "2ª Generación",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 6,
+  data: (0, 0, 0, 0, 0, 0,
+          0, 0, 0, 1, 0, 0,
+          0, 1, 1, 1, 0, 0,
+          0, 0, 1, 0, 0, 0,
+          0, 0, 0, 0, 0, 0),
 )
