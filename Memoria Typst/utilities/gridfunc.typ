@@ -10,7 +10,8 @@
             text(8pt)[#state.caption],
     grid(
                 columns: state.columns, 
-                gutter: state.at("gutter", default: 5pt),
+                row-gutter: state.at("gutter-row", default:  state.at("gutter", default: 5pt)),
+                column-gutter: state.at("gutter-column", default: state.at("gutter", default: 5pt)),
                 ..state.data.map(str => 
                     rect(
                       stroke: stroke_map.at(str, default: black),

@@ -2,7 +2,7 @@
                       caption: " ",
                       caption_alignment: ttb,
                       hspace: 20pt,
-                      transition: "",
+                      transition: " ",
                       columns: 6,
                       color_map: (white, blue, red, black),
                       data:  (0, 0, 0, 0, 2, 0,
@@ -73,6 +73,7 @@
 #let hspacewolfram = -5pt
 #let cellsizewolfram = 8pt
 #let gutterwolfram = 3.5pt
+#let guttercolorwolfram = 2pt
 
 #let rule30_01 = (
   caption: "0",
@@ -84,6 +85,7 @@
   data:(1,1,1,2,0,2),  
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
+  gutter-column: guttercolorwolfram,
   stroke_map: (black, black, white),
   color_map: (white, black)
 )
@@ -98,6 +100,7 @@
   data:(1,1,0,2,0,2),  
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
+  gutter-column: guttercolorwolfram,
   stroke_map: (black, black, white),
   color_map: (white, black)
 )
@@ -112,6 +115,7 @@
   data:(1,0,1,2,0,2),  
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
+  gutter-column: guttercolorwolfram,
   stroke_map: (black, black, white),
   color_map: (white, black)
 )
@@ -126,6 +130,7 @@
   data:(1,0,0,2,1,2),  
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
+  gutter-column: guttercolorwolfram,
   stroke_map: (black, black, white),
   color_map: (white, black)
 )
@@ -140,6 +145,7 @@
   data:(0,1,1,2,1,2),
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
+  gutter-column: guttercolorwolfram,
   stroke_map: (black, black, white),
   color_map: (white, black)
 )
@@ -154,6 +160,7 @@
   data:(0,1,0,2,1,2),
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
+  gutter-column: guttercolorwolfram,
   stroke_map: (black, black, white),
   color_map: (white, black)
 )
@@ -168,6 +175,7 @@
   data:(0,0,1,2,1,2),
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
+  gutter-column: guttercolorwolfram,
   stroke_map: (black, black, white),
   color_map: (white, black)
 )
@@ -182,6 +190,7 @@
   data:(0,0,0,2,0,2),
   cellsize: cellsizewolfram,
   gutter: gutterwolfram,
+  gutter-column: guttercolorwolfram,
   stroke_map: (black, black, white),
   color_map: (white, black)
 )
