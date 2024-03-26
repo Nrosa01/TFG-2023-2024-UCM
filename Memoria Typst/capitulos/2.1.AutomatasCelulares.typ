@@ -23,7 +23,7 @@ A continuación se mostrará un ejemplo de automáta celular para comprender mej
 */
 
 /* Function from utilities/gridfunc, data from data/gridexamples */
-#grid_example("Ejemplo de autómata celular", color_map_ex1, (state_01_ex1, state_02_ex1))
+#grid_example("Ejemplo de autómata celular", (state_01_ex1, state_02_ex1))
 
 Los automátas celulares han interesado a la comunidad científica y matemática desde su establecimiento por von Neumann. Debido a esto existen diversos autómatas celulares desarrolladores por distintos investigadores. A continuación se muestran una serie de autómatas celulares relevantes.
 
@@ -31,9 +31,21 @@ Los automátas celulares han interesado a la comunidad científica y matemática
 
 Un autómata de contacto puede considerarse como uno de los modelos más simples para la propagación de una enfermedad infecciosa. Imagina una cuadrícula cuadrada de celdas. Supongamos que todas las celdas son "blancas" (o "no infectadas") excepto un número finito de celdas "negras" (o "infectadas"). Para una celda dada, definimos los vecinos como las ocho celdas inmediatamente adyacentes y la celda misma. Una versión determinista de un proceso de contacto funciona en pasos discretos de tiempo de la siguiente manera: una celda negra permanece negra, una celda blanca que es vecina de una celda negra se vuelve negra. Este sistema puede denominarse un proceso de contacto determinista. Si comenzamos con una sola celda negra, entonces el número de celdas negras aumenta en 1, 9, 25, etc. La forma general sigue siendo cuadrática. Se usa en la investigación de propagación de fenómenos epidemiológicos.
 
+#grid_example("Ejemplo de autómata de contacto", (state_01_ex2, state_02_ex2, state_03_ex2))
+
 - Autómatas de Wolfram @ca_karl_johannes
 
-Los Autómatas de Wolfram, propuestos por el físico y matemático Stephen Wolfram, son un conjunto de reglas para autómatas celulares unidimensionales. Cada regla define cómo evolucionan las células en función de su estado y el estado de sus vecinos. Numeradas del 0 al 255, estas reglas proporcionan un marco teórico para explorar la complejidad emergente y la computación universal en sistemas celulares simples.
+Los Autómatas de Wolfram, propuestos por el físico y matemático Stephen Wolfram, son un conjunto de reglas para autómatas celulares unidimensionales de estados binarios. Cada regla define cómo evolucionan las células en función de su estado y el estado de sus vecinos. Cada generación en un automáta de wolfram es una fila más qu ese añade a las anteriores. Numeradas del 0 al 255, estas reglas proporcionan un marco teórico para explorar la complejidad emergente y la computación universal en sistemas celulares simples.
+
+#pagebreak()
+
+A continuación se muestra la regla 30 @wolfram_30 de Wolfram así como el autómata derivado de ejecutar 15 iteraciones de este:
+
+#align(center + horizon)[Regla 30 de Wolfram]
+
+#grid_example("", (rule30_01, rule30_02, rule30_03, rule30_04, rule30_05, rule30_06, rule30_07, rule30_08), vinit: 0pt)
+
+#grid_example("Ejemplo autómata de Wolfram", (rule30_15gens,), vinit: 0pt)
 
 - Autómata de Greenberg-Hastings @ca_karl_johannes
 

@@ -103,3 +103,9 @@ blockly:
 gardner_article:
     type: Web
     title: MATHEMATICAL GAMES. The fantastic combinations of John Conway\'s new solitaire game 'life'
+    url: https://www.ibiblio.org/lifepatterns/october1970.html
+
+wolfram_30:
+    type: Web
+    title: Rule 30 of Wolfram Automata
+    url: https://mathworld.wolfram.com/Rule30.html

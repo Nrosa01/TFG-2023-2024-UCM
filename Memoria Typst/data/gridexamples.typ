@@ -1,10 +1,11 @@
-#let color_map_ex1 = (white, blue, red, black)
-
 #let state_01_ex1 =  (
-                      caption: "",
+                      caption: " ",
+                      caption_alignment: ttb,
+                      hspace: 20pt,
                       transition: "",
                       columns: 6,
-                      data: (0, 0, 0, 0, 2, 0,
+                      color_map: (white, blue, red, black),
+                      data:  (0, 0, 0, 0, 2, 0,
                               1, 2, 1, 0, 0, 0,
                               1, 0, 2, 0, 1, 3,
                               0, 0, 3, 0, 2, 3,
@@ -12,23 +13,202 @@
 )
 
 #let state_02_ex1 = (
-                   caption: "",
-                   transition: "Gwet",
+                   caption: " ",
+                   caption_alignment: ttb,
+                   hspace: 20pt,
+                   transition: "",
                    columns: 6,
-                   data: (0, 0, 0, 0, 0, 0,
+                   color_map: (white, blue, red, black),
+                   data:  (0, 0, 0, 0, 0, 0,
                            1, 0, 0, 0, 2, 0,
                            0, 2, 3, 0, 0, 3,
                            1, 0, 3, 0, 3, 3,
                            3, 3, 3, 3, 3, 3)
 )
 
-#let state_03_ex1 = (
-                   caption: "Example 2",
-                   transition: "A",
+
+#let state_01_ex2 =  (
+                      caption: "1ª Generación",
+                      caption_alignment: ttb,
+                      hspace: 20pt,
+                      transition: " ",
+                      columns: 6,
+                      color_map: (white, black),
+                      data:  (0, 0, 0, 0, 0, 0,
+                              0, 0, 0, 0, 0, 0,
+                              0, 0, 0, 1, 0, 0,
+                              0, 0, 0, 0, 0, 0,
+                              0, 0, 0, 0, 0, 0)
+)
+
+#let state_02_ex2 = (
+                   caption: "10ª Generación",
+                   caption_alignment: ttb,
+                   hspace: 20pt,
+                   transition: " ",
                    columns: 6,
-                   data: (0, 0, 0, 0, 0, 0,
-                           1, 0, 0, 0, 2, 0,
-                           0, 2, 3, 0, 0, 3,
-                           1, 0, 3, 0, 3, 3,
-                           2, 2, 2, 2, 2, 2)
+                   color_map: (white, black),
+                   data:     (0, 0, 0, 0, 0, 0,
+                              0, 0, 0, 0, 1, 0,
+                              0, 0, 1, 1, 0, 0,
+                              0, 0, 1, 0, 0, 0,
+                              0, 0, 0, 0, 0, 0)
+)
+
+#let state_03_ex2 = (
+                   caption: "100ª Generación",
+                   caption_alignment: ttb,
+                   hspace: 20pt,
+                   transition: " ",
+                   columns: 6,
+                   color_map: (white, black),
+                   data:     (0, 0, 1, 1, 0, 0,
+                              0, 1, 0, 0, 1, 0,
+                              0, 0, 1, 1, 0, 0,
+                              0, 1, 1, 0, 1, 0,
+                              0, 0, 0, 1, 1, 0)
+)
+
+
+#let hspacewolfram = -5pt
+#let cellsizewolfram = 8pt
+#let gutterwolfram = 3.5pt
+
+#let rule30_01 = (
+  caption: "0",
+  caption_alignment: btt,
+  hspace: hspacewolfram,
+  transition: " ",
+  transition_icon: "",
+  columns: 3,
+  data:(1,1,1,2,0,2),  
+  cellsize: cellsizewolfram,
+  gutter: gutterwolfram,
+  stroke_map: (black, black, white),
+  color_map: (white, black)
+)
+
+#let rule30_02 = (
+  caption: "0",
+  caption_alignment: btt,
+  hspace: hspacewolfram,
+  transition: " ",
+  transition_icon: "",
+  columns: 3,
+  data:(1,1,0,2,0,2),  
+  cellsize: cellsizewolfram,
+  gutter: gutterwolfram,
+  stroke_map: (black, black, white),
+  color_map: (white, black)
+)
+
+#let rule30_03 = (
+  caption: "0",
+  caption_alignment: btt,
+  hspace: hspacewolfram,
+  transition: " ",
+  transition_icon: "",
+  columns: 3,
+  data:(1,0,1,2,0,2),  
+  cellsize: cellsizewolfram,
+  gutter: gutterwolfram,
+  stroke_map: (black, black, white),
+  color_map: (white, black)
+)
+
+#let rule30_04 = (
+  caption: "1",
+  caption_alignment: btt,
+  hspace: hspacewolfram,
+  transition: " ",
+  transition_icon: "",
+  columns: 3,
+  data:(1,0,0,2,1,2),  
+  cellsize: cellsizewolfram,
+  gutter: gutterwolfram,
+  stroke_map: (black, black, white),
+  color_map: (white, black)
+)
+
+#let rule30_05 = (
+  caption: "1",
+  caption_alignment: btt,
+  hspace: hspacewolfram,
+  transition: " ",
+  transition_icon: "",
+  columns: 3,
+  data:(0,1,1,2,1,2),
+  cellsize: cellsizewolfram,
+  gutter: gutterwolfram,
+  stroke_map: (black, black, white),
+  color_map: (white, black)
+)
+
+#let rule30_06 = (
+  caption: "1",
+  caption_alignment: btt,
+  hspace: hspacewolfram,
+  transition: " ",
+  transition_icon: "",
+  columns: 3,
+  data:(0,1,0,2,1,2),
+  cellsize: cellsizewolfram,
+  gutter: gutterwolfram,
+  stroke_map: (black, black, white),
+  color_map: (white, black)
+)
+
+#let rule30_07 = (
+  caption: "1",
+  caption_alignment: btt,
+  hspace: hspacewolfram,
+  transition: " ",
+  transition_icon: "",
+  columns: 3,
+  data:(0,0,1,2,1,2),
+  cellsize: cellsizewolfram,
+  gutter: gutterwolfram,
+  stroke_map: (black, black, white),
+  color_map: (white, black)
+)
+
+#let rule30_08 = (
+  caption: "0",
+  caption_alignment: btt,
+  hspace: hspacewolfram,
+  transition: " ",
+  transition_icon: "",
+  columns: 3,
+  data:(0,0,0,2,0,2),
+  cellsize: cellsizewolfram,
+  gutter: gutterwolfram,
+  stroke_map: (black, black, white),
+  color_map: (white, black)
+)
+
+#let rule30_15gens = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: hspacewolfram,
+  transition: " ",
+  transition_icon: "",
+  columns: 33,
+  data:(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,1,1,0,1,1,1,1,0,1,1,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,1,0,1,1,1,1,0,1,1,0,0,1,0,0,0,0,0,0,
+        0,0,0,0,0,1,1,0,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,0,1,1,1,1,0,0,0,0,0,
+        0,0,0,0,1,1,0,0,1,0,0,0,1,1,1,0,0,1,1,0,0,1,1,0,1,0,0,0,1,0,0,0,0,
+        0,0,0,1,1,0,1,1,1,1,0,1,1,0,0,1,1,1,0,1,1,1,0,0,1,1,0,1,1,1,0,0,0,),
+  cellsize: 10pt,
+  gutter: 0pt,
+  color_map: (white, black),
+  stroke_map: (0.2pt + black, 0.2pt +  black)
 )

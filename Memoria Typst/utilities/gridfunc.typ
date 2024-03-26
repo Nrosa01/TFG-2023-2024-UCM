@@ -1,80 +1,59 @@
-#let grid_example(caption_text, color_map, states) = {
+#let draw_grid(state) = {
+  [
+    #let stroke_map = state.at("stroke_map", default: ())
+    #let color_map = state.color_map
 
-let slice = states.slice(0, -1)
+    #let count = 0;
+    #stack(
+            dir: state.caption_alignment,
+            spacing: 10pt,
+            text(8pt)[#state.caption],
+    grid(
+                columns: state.columns, 
+                gutter: state.at("gutter", default: 5pt),
+                ..state.data.map(str => 
+                    rect(
+                      stroke: stroke_map.at(str, default: black),
+                      width: state.at("cellsize", default: 10pt),
+                      height: state.at("cellsize", default: 10pt),
+                      fill: color_map.at(str, default: white)))))
+  ]
+}
 
+#let draw_transition(state) = {
+  [
+
+                #stack(
+                dir: ttb,
+                spacing: 4pt,
+                text(8pt)[#state.transition],
+                state.at("transition_icon", default: $-->$))
+           
+  ]
+}
+
+#let grid_example(caption_text, states, vinit: 10pt, vend: 10pt) = {
+
+v(vinit)
 align(center + horizon)[
   #stack(
     dir: ltr,
     spacing: 20pt,
 
-    ..slice.map(state => 
+    ..states.slice(0, -1).map(state => 
        stack(
           dir: ltr,
-          spacing: 20pt,
-
-      stack(
-        dir: ttb,
-        spacing: 10pt,
-
-        text(8pt)[#state.caption],
-          grid(
-              columns: state.columns, 
-              gutter: 5pt, 
-              ..state.data.map(str => 
-              rect(
-                  stroke: 1pt, 
-                  width: 10pt, 
-                  height: 10pt, 
-                  fill: color_map.at(str))))),
-
-          if state.transition.len() > 0
-          {
-              stack(
-                dir: ttb,
-                spacing: 4pt,
-                text(8pt)[#state.transition],
-                $-->$)
-          }
-          else 
-          {
-              $-->$
-          },
+          spacing: state.hspace,          
+          draw_grid(state),
+          draw_transition(state)
       )),
+      draw_grid(states.at(-1))
+      )
 
-      stack(
-        dir: ttb,
-        spacing: 10pt,
+    #if caption_text != "" [
+      #show figure.caption: emph
+      #figure("",caption: [#caption_text])
+    ]
 
-        if states.at(-1).caption.len() > 0
-        {
-          text(8pt)[#states.at(-1).caption]
-            grid(
-          columns: 6, 
-          gutter: 5pt, 
-          ..states.at(-1).data.map(str => 
-              rect(
-                stroke: 1pt, 
-                width: 10pt, 
-                height: 10pt, 
-                fill: color_map.at(str))))
-        }
-        else
-        {
-           
-          grid(
-          columns: 6, 
-          gutter: 5pt, 
-          ..states.at(-1).data.map(str => 
-              rect(
-                stroke: 1pt, 
-                width: 10pt, 
-                height: 10pt, 
-                fill: color_map.at(str))))
-        },
-
-        ))
-
-    #show figure.caption: emph
-
-    #figure("",caption: [#caption_text])
+    #v(vend)
 ]}
