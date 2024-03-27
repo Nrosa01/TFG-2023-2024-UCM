@@ -28,7 +28,7 @@
 
 
 #let state_01_ex2 =  (
-                      caption: "1ª Generación",
+                      caption: "Estado inicial",
                       caption_alignment: ttb,
                       hspace: 20pt,
                       transition: " ",
@@ -253,4 +253,85 @@
           0, 1, 1, 1, 0, 0,
           0, 0, 1, 0, 0, 0,
           0, 0, 0, 0, 0, 0),
+)
+
+#let lagnton_cellsize = 10pt;
+#let lagnton_hspace = 5pt;
+
+#let langton_ant_01 = (
+  caption: "1ª Generación",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 3,
+  cellsize: lagnton_cellsize,
+  color_map: (white, black, blue, red),
+  data:  (0, 0, 0,
+          0, 2, 0,
+          0, 0, 0),
+)
+
+#let langton_ant_02 = (
+  caption: "2ª Generación",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 3,
+  cellsize: lagnton_cellsize,
+  color_map: (white, black, blue, red),
+  data:  (0, 0, 0,
+          2, 1, 0,
+          0, 0, 0),
+)
+
+#let langton_ant_03 = (
+  caption: "3ª Generación",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 3,
+  cellsize: lagnton_cellsize,
+  color_map: (white, black, blue, red),
+  data:  (0, 0, 0,
+          1, 1, 0,
+          2, 0, 0),
+)
+
+#let langton_ant_04 = (
+  caption: "4ª Generación",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 3,
+  cellsize: lagnton_cellsize,
+  color_map: (white, black, blue, red),
+  data:  (0, 0, 0,
+          1, 1, 0,
+          1, 2, 0),
+)
+
+#let langton_ant_05 = (
+  caption: "5ª Generación",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 3,
+  cellsize: lagnton_cellsize,
+  color_map: (white, black, blue, red),
+  data:  (0, 0, 0,
+          1, 3, 0,
+          1, 1, 0),
+)
+
+#let langton_ant_06 = (
+  caption: "6ª Generación",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 3,
+  cellsize: lagnton_cellsize,
+  color_map: (white, black, blue, red),
+  data:  (0, 0, 0,
+          1, 0, 2,
+          1, 1, 0),
 )

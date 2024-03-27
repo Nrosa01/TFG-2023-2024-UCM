@@ -51,13 +51,14 @@ A continuación se muestra la regla 30 @wolfram_30 de Wolfram así como el autó
 
 Los autómatas de Greenberg-Hastings son bidimensionales y están compuestos de células que pueden estar en 3 estados: reposo, excitado y refractario. La evolución de las células se basa en reglas locales que determinan la activación y desactivación de las células en función de su estado actual y el estado de sus vecinos. Debido a esteo este modelo ha sido utilizado para simular patrones de propagación de la actividad eléctrica en tejidos cardiacos. Destacando por su capacidad para modelar fenómenos de propagación y ondas, este autómata sigue reglas específicas para la activación y desactivación de células, lo que lo convierte en una herramienta valiosa en la investigación biomédica.
 
-TODO: Añadir ejemplo de Greenberg-Hastings (no hay ninguno en el libro ni en internet, así que tendré que crearlo yo)
+TODO: Añadir ejemplo de Greenberg-Hastings (no hay ninguno en el libro ni en internet, así que tendré que crearlo yo).
 
-- Autómata de Langton @ca_karl_johannes
+- Hormiga de Langton @ca_karl_johannes
 
-El Autómata de Langton, propuesto por Christopher Langton, es un autómata celular bidimensional que se caracteriza por su simplicidad y la complejidad emergente de sus patrones. Se basa en reglas locales sencillas, donde cada célula evoluciona en función de su estado actual y el número de vecinos en cada paso. A pesar de su simplicidad, el Autómata de Langton puede generar patrones dinámicos y estructuras complejas, lo que lo convierte en un modelo intrigante en el estudio de la autoorganización en sistemas complejos.
+La hormiga de Langton es un autómata bidimensional de 18 estados. Cada celda puede ser blanca o negra, además de que puede contener o no a la hormiga (solo hay una). La hormiga está orientada a hacia una de las 4 direcciones cardinales y solo se mueve una sola vez de acorde a las siguientes reglas: Si le hormiga está en una celda negra, cambia su orientación 90 grados a la derecha. Si está en una celda blanca, cambia su orientación 90 grados a la izquierda. Finalmente, cada vez que la hormiga abandona una celda, esta cambia de color. Este sistema se vuelve periódico tras algo más de mil iteraciones, creando una estructura con forma de camino con periodo 104. A continuación se mostrará un ejemplo de las primeras iteraciones. La hormiga se representará con el color rojo si está en una celda negra y azul si está en una celda blanca. Se asume que en el estado inicial, la hormiga está orientada hacia arriba y en una celda blanca.
 
-TODO: Añadir ejemplo. En este hay ejemplos en el libro de una variante pero tanto dicha variante como el autómata original son complejos para crear un ejemplo simple.
+
+#grid_example("Ejemplo de la hormiga de Langton", (langton_ant_01, langton_ant_02, langton_ant_03, langton_ant_04, langton_ant_05, langton_ant_06), vinit: 1pt)
 
 - Juego de la vida
 
