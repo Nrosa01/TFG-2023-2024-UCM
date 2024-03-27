@@ -57,6 +57,7 @@ TODO: Añadir ejemplo de Greenberg-Hastings (no hay ninguno en el libro ni en in
 
 La hormiga de Langton es un autómata bidimensional de 18 estados. Cada celda puede ser blanca o negra, además de que puede contener o no a la hormiga (solo hay una). La hormiga está orientada a hacia una de las 4 direcciones cardinales y solo se mueve una sola vez de acorde a las siguientes reglas: Si le hormiga está en una celda negra, cambia su orientación 90 grados a la derecha. Si está en una celda blanca, cambia su orientación 90 grados a la izquierda. Finalmente, cada vez que la hormiga abandona una celda, esta cambia de color. Este sistema se vuelve periódico tras algo más de mil iteraciones, creando una estructura con forma de camino con periodo 104. A continuación se mostrará un ejemplo de las primeras iteraciones. La hormiga se representará con el color rojo si está en una celda negra y azul si está en una celda blanca. Se asume que en el estado inicial, la hormiga está orientada hacia arriba y en una celda blanca.
 
+#pagebreak()
 
 #grid_example("Ejemplo de la hormiga de Langton", (langton_ant_01, langton_ant_02, langton_ant_03, langton_ant_04, langton_ant_05, langton_ant_06), vinit: 1pt)
 
