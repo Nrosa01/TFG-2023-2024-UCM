@@ -36,6 +36,7 @@
 #let grid_example(caption_text, states, vinit: 0pt, vend: 10pt) = {
 v(vinit)
 align(center + horizon)[
+#box()[
   #stack(
     dir: ltr,
     spacing: states.at(0).at("hspace", default: 20pt),
@@ -56,4 +57,4 @@ align(center + horizon)[
     ]
 
     #v(vend)
-]}
+]]}
