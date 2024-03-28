@@ -18,8 +18,10 @@
 
 No sé si esta es la mejor forma de crear una tabla de figuras pero es lo que encontré por ahora. Es posible crear una tabla usando una query (figure.where) y dándole el formato que nosotros queramos.
 
+#pagebreak()
+
 #outline(
-  title: "Figuras",
+  title: "Índice de Figuras",
   target: figure.where()
 )
 

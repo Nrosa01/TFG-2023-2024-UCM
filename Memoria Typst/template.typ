@@ -20,38 +20,56 @@
   set heading(numbering: "1.1")
   set par(leading: 0.75em)
 
+  align(center + horizon)[
+    
+
   // Title row.
-  align(center)[
-    #block(text(weight: 700, 1.75em, title))
+  #align(center)[
+    #rect(stroke: (top: 1pt, bottom: 1pt), inset: 20pt)[
+      #block(text(weight: 700, 1.75em, title))
+    ]
     #v(1.2em, weak: true)
+    // #date
+  ]
+
+  #pad(
+    align(center)[
+     #image("images/escudoUCM.svg", width: 25%)
+    ]
+  )
+
+
+  // Author information.
+  #pad(
+    top: 0.8em,
+    x: 2em,
+    stack(spacing: 8pt,
+        ..authors.map(author => align(center, strong(author))))
+  )
+
+  #align(center)[
+    #v(1.5em, weak: true)
     #date
   ]
 
-  // Author information.
-  pad(
-    top: 0.8em,
-    x: 2em,
-    grid(
-      columns: (1fr,) * calc.min(3, authors.len()),
-      gutter: 1em,
-      ..authors.map(author => align(center, strong(author))),
-    ),
-  )
-
   // Abstract.
-  pad(
-    x: 2em,
-    top: 1em,
-    bottom: 1.5em,
-    align(center)[
-      #heading(
-        outlined: false,
-        numbering: none,
-        text(0.85em, smallcaps[Abstract]),
-      )
-      #abstract
-    ],
-  )
+  // #pad(
+  //   x: 2em,
+  //   top: 1em,
+  //   bottom: 1.5em,
+  //   align(center)[
+  //     #heading(
+  //       outlined: false,
+  //       numbering: none,
+  //       text(0.85em, smallcaps[Abstract]),
+  //     )
+  //     #abstract
+  //   ],
+  // )
+  ]
+
+
+  pagebreak()
 
   // Main body.
   set par(justify: true)
