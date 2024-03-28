@@ -16,9 +16,9 @@
 
 #outline(indent: auto)
 
-No sé si esta es la mejor forma de crear una tabla de figuras pero es lo que encontré por ahora. Es posible crear una tabla usando una query (figure.where) y dándole el formato que nosotros queramos.
-
 #pagebreak()
+
+No sé si esta es la mejor forma de crear una tabla de figuras pero es lo que encontré por ahora. Es posible crear una tabla usando una query (figure.where) y dándole el formato que nosotros queramos.
 
 #outline(
   title: "Índice de Figuras",

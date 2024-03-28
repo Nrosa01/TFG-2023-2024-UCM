@@ -18,6 +18,14 @@ ca_andrew:
     page-total: 576
     date: 2010-07-05
 
+cellular_automata_thomasmli:
+    type: Book
+    title: Cellular Automata
+    author: Thomas M. Li
+    serial-number: 9781617615924 
+    page-total: 309
+    date: 2010-07-05
+
 ca_karl_johannes:
     type: Book
     title: Cellular Automata':' Analysis and Applications
