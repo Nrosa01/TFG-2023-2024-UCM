@@ -1,3 +1,6 @@
 [submodule "lua-sand-engine"]
 	path = lua-sand-engine
 	url = https://github.com/Nrosa01/lua-sand-engine
+[submodule "rust-sand-engine"]
+	path = rust-sand-engine
+	url = https://github.com/Nrosa01/rust-sand-engine
