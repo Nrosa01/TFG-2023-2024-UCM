@@ -26,6 +26,15 @@ cellular_automata_thomasmli:
     page-total: 309
     date: 2010-07-05
 
+linkers_and_loaders:
+    type: Book
+    title: Linkers and Loaders
+    author: John R. Levine
+    data: 1999
+    serial-number: 1558604960
+    publishder: Morgan Kaufmann
+    pages: 299
+
 ca_karl_johannes:
     type: Book
     title: Cellular Automata':' Analysis and Applications
@@ -35,6 +44,22 @@ ca_karl_johannes:
     volume: 1
     page-total: 467
     date: 2017-06-15
+
+game_programming_patterns:
+    type: Book
+    title: Game Programming Patterns
+    author: Robert Nystrom
+    serial-number: 0990582906
+    date: 2014-11-02
+
+plugin_architecture:
+    type: Book
+    author: 
+        - Lázaro Bustio-Martínez
+        - Yenice Coma Peña
+        - Isneri Talavera Bustamante
+    title: Arquitectura basada en plugins para el desarrollo de software científico
+    date: 2013-03-15
 
 moore_neighborhood:
     type: Web

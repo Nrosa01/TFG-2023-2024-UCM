@@ -47,9 +47,9 @@ No sé si esta es la mejor forma de crear una tabla de figuras pero es lo que en
 
 #pagebreak(weak: true)
 
-= Plug-ins y lenguaje de script
+= Plug-ins y lenguajes de scripting
 
-#lorem(800)
+#include "capitulos/4.PluginsYScripting.typ"
 
 #pagebreak(weak: true)
 
