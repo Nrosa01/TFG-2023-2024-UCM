@@ -55,7 +55,7 @@ No sé si esta es la mejor forma de crear una tabla de figuras pero es lo que en
 
 = Simulador en CPU
 
-#lorem(800)
+#include "capitulos/5.SimuladorCPU.typ"
 
 #pagebreak(weak: true)
 
