@@ -335,3 +335,106 @@
           1, 0, 2,
           1, 1, 0),
 )
+
+#let luaimpl_ex1 = (
+  caption: " ",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 4,
+  color_map: (white, black, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (2, 0, 2, 0,
+          3, 1, 3, 1,
+          2, 0, 2, 0,
+          3, 1, 3, 1),
+)
+
+#let luaimpl_ex2 = (
+  caption: " ",
+  caption_alignment: ttb,
+  transition: " ",
+  columns: 2,
+  color_map: (white, black, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (2, 0,
+          3, 1),
+)
+
+#let luaimpl_problem1_1_1 = (
+  caption: "",
+  caption_alignment: ttb,
+  transition: "",
+  columns: 4,
+  color_map: (white, black, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (0, 0, 0, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0),
+)
+
+#let luaimpl_problem1_1_2 = (
+  caption: "",
+  caption_alignment: ttb,
+  transition: "",
+  columns: 4,
+  color_map: (white, black, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (0, 0, 0, 0,
+          0, 0, 0, 0,
+          0, 0, 1, 0,
+          0, 0, 1, 0),
+)
+
+#let luaimpl_problem1_1_3 = (
+  caption: "",
+  caption_alignment: ttb,
+  transition: "",
+  columns: 4,
+  color_map: (white, black, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (0, 0, 1, 0,
+          0, 0, 1, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0),
+)
+
+#let luaimpl_problem1_1_4 = (
+  caption: "",
+  caption_alignment: ttb,
+  transition: "",
+  columns: 4,
+  color_map: (white, black, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (0, 0, 0, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0,
+          0, 0, 1, 0),
+)
+
+#let luaimpl_problem1_1_5 = (
+  caption: "",
+  caption_alignment: ttb,
+  transition: "",
+  columns: 4,
+  color_map: (white, black, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (0, 0, 1, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0),
+)
+
+#let luaimpl_problem1_1_6 = (
+  caption: "",
+  caption_alignment: ttb,
+  transition: "",
+  columns: 4,
+  color_map: (white, black, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (0, 0, 0, 0,
+          0, 0, 1, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0),
+)

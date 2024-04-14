@@ -26,6 +26,15 @@ cellular_automata_thomasmli:
   page-total: 309
   date: 2010-07-05
 
+linkers_and_loaders:
+  type: Book
+  title: Linkers and Loaders
+  author: John R. Levine
+  data: 1999
+  serial-number: 1558604960
+  publishder: Morgan Kaufmann
+  pages: 299
+
 ca_karl_johannes:
   type: Book
   title: Cellular Automata':' Analysis and Applications
@@ -35,6 +44,22 @@ ca_karl_johannes:
   volume: 1
   page-total: 467
   date: 2017-06-15
+
+game_programming_patterns:
+  type: Book
+  title: Game Programming Patterns
+  author: Robert Nystrom
+  serial-number: 0990582906
+  date: 2014-11-02
+
+plugin_architecture:
+  type: Book
+  author:
+    - Lázaro Bustio-Martínez
+    - Yenice Coma Peña
+    - Isneri Talavera Bustamante
+  title: Arquitectura basada en plugins para el desarrollo de software científico
+  date: 2013-03-15
 
 moore_neighborhood:
   type: Web
@@ -117,6 +142,36 @@ wolfram_30:
   type: Web
   title: Rule 30 of Wolfram Automata
   url: https://mathworld.wolfram.com/Rule30.html
+
+csharpassembly:
+  type: Web
+  title: Assemblies in .NET
+  url: https://learn.microsoft.com/en-us/dotnet/standard/assembly/
+
+solorigate:
+  type: Web
+  title: Analyzing Solorigate, the compromised DLL file that started a sophisticated cyberattack
+  url: https://www.microsoft.com/en-us/security/blog/2020/12/18/analyzing-solorigate-the-compromised-dll-file-that-started-a-sophisticated-cyberattack-and-how-microsoft-defender-helps-protect/
+
+understanding_abi:
+  type: Web
+  title: Understanding Application Binary Interface (ABI)
+  url: https://link.springer.com/content/pdf/10.1007/978-1-4612-3192-9_25.pdf
+
+reprc:
+  type: Web
+  title: "The Rustonomicon: Alternative representations"
+  url: https://doc.rust-lang.org/nomicon/other-reprs.html
+
+resource_only_dll:
+  type: Web
+  title: Creating a resource-only DLL
+  url: https://learn.microsoft.com/en-us/cpp/build/creating-a-resource-only-dll?view=msvc-170
+
+Dylibcpp:
+  type: Web
+  title: Dylib - Dynamic Library Loader for C++
+  url: https://github.com/Layty/Dylib
 
 history_of_gpu:
   type: Book

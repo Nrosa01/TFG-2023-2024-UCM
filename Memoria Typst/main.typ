@@ -47,16 +47,14 @@ No sé si esta es la mejor forma de crear una tabla de figuras pero es lo que en
 
 #pagebreak(weak: true)
 
-= Plug-ins y lenguaje de script
+= Plug-ins y lenguajes de scripting
 
-
-
+#include "capitulos/4.PluginsYScripting.typ"
 
 
 = Simulador en CPU
 
-
-
+#include "capitulos/5.SimuladorCPU.typ"
 
 
 = Simulador en GPU
