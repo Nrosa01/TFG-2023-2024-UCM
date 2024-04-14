@@ -1,119 +1,156 @@
 neumann:
-    type: Web
-    title: John von Neumann
-    author: Wikipedia
-    url: https://es.wikipedia.org/wiki/John_von_Neumann
+  type: Web
+  title: John von Neumann
+  author: Wikipedia
+  url: https://es.wikipedia.org/wiki/John_von_Neumann
 
 ca_wiki:
-    type: Web
-    title: Autómata Celular
-    author: Wikipedia
-    url: https://es.wikipedia.org/wiki/Autómata_celular
+  type: Web
+  title: Autómata Celular
+  author: Wikipedia
+  url: https://es.wikipedia.org/wiki/Autómata_celular
 
 ca_andrew:
-    type: Book
-    title: Game of Life Cellular Automata
-    author: Andrew Adamatzky
-    volume: 1
-    page-total: 576
-    date: 2010-07-05
+  type: Book
+  title: Game of Life Cellular Automata
+  author: Andrew Adamatzky
+  volume: 1
+  page-total: 576
+  date: 2010-07-05
 
 cellular_automata_thomasmli:
-    type: Book
-    title: Cellular Automata
-    author: Thomas M. Li
-    serial-number: 9781617615924 
-    page-total: 309
-    date: 2010-07-05
+  type: Book
+  title: Cellular Automata
+  author: Thomas M. Li
+  serial-number: 9781617615924
+  page-total: 309
+  date: 2010-07-05
 
 ca_karl_johannes:
-    type: Book
-    title: Cellular Automata':' Analysis and Applications
-    author:
-        - Karl-Peter Hadeler
-        - Johannes Müller
-    volume: 1
-    page-total: 467
-    date: 2017-06-15
+  type: Book
+  title: Cellular Automata':' Analysis and Applications
+  author:
+    - Karl-Peter Hadeler
+    - Johannes Müller
+  volume: 1
+  page-total: 467
+  date: 2017-06-15
 
 moore_neighborhood:
-    type: Web
-    title: Moore Neighborhood
-    author: Wikipedia
-    url: https://en.wikipedia.org/wiki/Moore_neighborhood
+  type: Web
+  title: Moore Neighborhood
+  author: Wikipedia
+  url: https://en.wikipedia.org/wiki/Moore_neighborhood
 
 conway:
-    type: Web
-    title: John Conway
-    author: Wikipedia
-    url: https://en.wikipedia.org/wiki/John_Horton_Conway
+  type: Web
+  title: John Conway
+  author: Wikipedia
+  url: https://en.wikipedia.org/wiki/John_Horton_Conway
 
 neumann_neighborhood:
-    type: Web
-    title: Von Neumann Neighborhood
-    author: Wikipedia
-    url: https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
+  type: Web
+  title: Von Neumann Neighborhood
+  author: Wikipedia
+  url: https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
 
 fluid_simulation:
-    type: Web
-    title: Computational fluid dynamics
-    author: Wikipedia
-    url: https://en.wikipedia.org/wiki/Computational_fluid_dynamics
+  type: Web
+  title: Computational fluid dynamics
+  author: Wikipedia
+  url: https://en.wikipedia.org/wiki/Computational_fluid_dynamics
 
 particle_simulation:
-    type: Web
-    title: Particle System
-    author: Wikipedia
-    url: https://en.wikipedia.org/wiki/Particle_system
+  type: Web
+  title: Particle System
+  author: Wikipedia
+  url: https://en.wikipedia.org/wiki/Particle_system
 
 sand_simulation:
-    type: Web
-    title: Sand Simulator
-    author: Wikipedia
-    url: https://en.wikipedia.org/wiki/Falling-sand_game
+  type: Web
+  title: Sand Simulator
+  author: Wikipedia
+  url: https://en.wikipedia.org/wiki/Falling-sand_game
 
 noita:
-    type: Web
-    title: Noita
-    author: Wikipedia
-    url: https://en.wikipedia.org/wiki/Noita_(video_game)
+  type: Web
+  title: Noita
+  author: Wikipedia
+  url: https://en.wikipedia.org/wiki/Noita_(video_game)
 
 falling_sand_game:
-    type: Web
-    title: Falling Sand Game
-    author: Web Archive
-    url: https://web.archive.org/web/20090423105358/http://fallingsandgame.com/overview/index.html
+  type: Web
+  title: Falling Sand Game
+  author: Web Archive
+  url: https://web.archive.org/web/20090423105358/http://fallingsandgame.com/overview/index.html
 
 powder_toy:
-    type: Web
-    title: Powder Toy
-    author: Wikipedia
-    url: https://en.wikipedia.org/wiki/The_Powder_Toy
+  type: Web
+  title: Powder Toy
+  author: Powder Toy
+  url: https://powdertoy.co.uk/
 
 sandspiel:
-    type: Web
-    title: Sandspiel
-    author: Max Bittker
-    url: https://maxbittker.com/making-sandspiel
+  type: Web
+  title: Sandspiel
+  author: Max Bittker
+  url: https://maxbittker.com/making-sandspiel
 
 sandspiel_club:
-    type: Web
-    title: Sandspiel Club
-    author: Wikipedia
-    url: https://en.wikipedia.org/wiki/Noita_(video_game)
+  type: Web
+  title: Sandspiel Club
+  author: Max Bittker
+  url: https://sandspiel.club/
 
 blockly:
-    type: Web
-    title: Blockly
-    author: Google
-    url: https://developers.google.com/blockly
+  type: Web
+  title: Blockly
+  author: Google
+  url: https://developers.google.com/blockly
 
 gardner_article:
-    type: Web
-    title: MATHEMATICAL GAMES. The fantastic combinations of John Conway\'s new solitaire game 'life'
-    url: https://www.ibiblio.org/lifepatterns/october1970.html
+  type: Web
+  title: MATHEMATICAL GAMES. The fantastic combinations of John Conway\'s new solitaire game 'life'
+  url: https://www.ibiblio.org/lifepatterns/october1970.html
 
 wolfram_30:
-    type: Web
-    title: Rule 30 of Wolfram Automata
-    url: https://mathworld.wolfram.com/Rule30.html
+  type: Web
+  title: Rule 30 of Wolfram Automata
+  url: https://mathworld.wolfram.com/Rule30.html
+
+history_of_gpu:
+  type: Book
+  title: The History of the GPU - Steps to Invention
+  author: Jon Peddie
+  volume: 1
+  page-total: 424
+  date: 2023-01-01
+
+gpu_arquitecture:
+  type: Web
+  title: Cuda C++ Programming Guide
+  url: https://docs.nvidia.com/cuda/cuda-c-programming-guide/
+
+gpu_architecture2:
+  type: Book
+  title: Professional CUDA C Programming
+  author: Jon Peddie
+  volume: 1
+  page-total: 528
+  date: 2014-09-09
+  url: https://www.cs.utexas.edu/~rossbach/cs380p/papers/cuda-programming.pdf
+
+compute_shaders:
+  type: Web
+  title: Compute Shaders Introduction
+  url: https://learnopengl.com/Guest-Articles/2022/Compute-Shaders/Introduction
+
+graphics_pipeline:
+  type: Web
+  title: Rendering Pipeline Overview
+  url: https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview
+
+geforce_256:
+  type: Web
+  title: Nvidias Geforce 256
+  url: https://www.computer.org/publications/tech-news/chasing-pixels/nvidias-geforce-256

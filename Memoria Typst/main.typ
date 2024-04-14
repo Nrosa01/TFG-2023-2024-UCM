@@ -29,7 +29,7 @@ No sé si esta es la mejor forma de crear una tabla de figuras pero es lo que en
 
 = Introduction
 
-#lorem(800)
+
 
 #pagebreak(weak: true)
 
@@ -43,38 +43,33 @@ No sé si esta es la mejor forma de crear una tabla de figuras pero es lo que en
 
 = Programación paralela
 
-#lorem(800)
+#include "capitulos/3.ProgramacionParalela.typ"
 
 #pagebreak(weak: true)
 
 = Plug-ins y lenguaje de script
 
-#lorem(800)
 
-#pagebreak(weak: true)
+
+
 
 = Simulador en CPU
 
-#lorem(800)
 
-#pagebreak(weak: true)
+
+
 
 = Simulador en GPU
 
-#lorem(800)
 
-#pagebreak(weak: true)
+
 
 = Comparación y pruebas
 
-#lorem(800)
 
-#pagebreak(weak: true)
 
 = Conclusiones y trabajo futuro
 
-#lorem(800)
 
-#pagebreak(weak: true)
 
 #bibliography("bibliography.yml")
