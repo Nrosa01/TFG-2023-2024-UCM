@@ -1,21 +1,22 @@
 #import "setup.typ": *
 #show: project
 
-= Creación de 3 parrtículas
+= Creación de 3 partículas
 
 == Arena
 
-La particula de arena debe moverse hacia debajo si está vacio o hay agua. En caso contrario, se intenta lo mismo abajo a la derecha, en caso contrario abajo a la izquierda. Extra: En vez de probar siempre abajo derecha, hacer que sea aleatorio.
-
-== Agua
-
-Es muy similar a la arena. Si no hay nada debajo, se mueve hacia abajo. Si no, intenta moverse hacia abajo a la derecha y luego a la izquierda. Si no, intenta moverse hacia la derecha y luego a la izquierda.
+La partícula de arena se desplaza hacia abajo si el espacio está vacío o si hay agua. En caso contrario, intenta moverse hacia la derecha y luego hacia abajo; si no es posible, intenta moverse hacia la izquierda y luego hacia abajo. Adicionalmente, para mayor dinamismo, en lugar de probar siempre hacia abajo a la derecha, se sugiere hacerlo de manera aleatoria.
 
 == Vapor
 
-Funciona igual que la arena, pero en vez de ir hacia debajo va hacia arriba.
+El vapor se comporta como la arena en su movimiento, pero en lugar de descender, asciende hacia arriba. Puede copiarse el bloque if de la arena 
+
+== Agua
+
+Similar a la arena, la partícula de agua se desplaza hacia abajo si no hay obstrucción. Si encuentra alguna, intenta moverse hacia abajo a la derecha y luego a la izquierda. Si no es posible, busca moverse primero hacia la derecha y luego hacia la izquierda.
 
 == Lava
 
-Funciona igual que la arena, pero después de moverse comprueba si hay una particula de agua alrededor, si la hay, la convierte en vapor.
+Al igual que la arena, la lava se desplaza en dirección descendente. Sin embargo, después de moverse, verifica si hay alguna partícula de agua adyacente; si la encuentra, la convierte en vapor.
 
+Es decir, por un lado está el movimiento, que es igual que la arena, comprobando solo con el vacío sin el agua. Después de esto, se verifica si hay agua adyacente y, en caso afirmativo, se ha de convertir en vapor
