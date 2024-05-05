@@ -3,13 +3,10 @@
                       caption_alignment: ttb,
                       hspace: 20pt,
                       transition: " ",
-                      columns: 6,
-                      color_map: (white, blue, red, black),
-                      data:  (0, 0, 0, 0, 2, 0,
-                              1, 2, 1, 0, 0, 0,
-                              1, 0, 2, 0, 1, 3,
-                              0, 0, 3, 0, 2, 3,
-                              3, 3, 3, 3, 3, 3)
+                      columns: 3,
+                      data:  (0, 0, 0,
+                              0, 1, 1,
+                              1, 0, 0 )
 )
 
 #let state_02_ex1 = (
@@ -17,14 +14,24 @@
                    caption_alignment: ttb,
                    hspace: 20pt,
                    transition: "",
-                   columns: 6,
-                   color_map: (white, blue, red, black),
-                   data:  (0, 0, 0, 0, 0, 0,
-                           1, 0, 0, 0, 2, 0,
-                           0, 2, 3, 0, 0, 3,
-                           1, 0, 3, 0, 3, 3,
-                           3, 3, 3, 3, 3, 3)
+                    columns: 3,
+                      data:  (1, 1, 1,
+                              1, 0, 0,
+                              0, 1, 1 )
 )
+
+
+#let state_03_ex1 = (
+                   caption: "3ª Generación",
+                   caption_alignment: ttb,
+                   hspace: 20pt,
+                   transition: "",
+                    columns: 3,
+                      data:  (0, 0, 0,
+                              0, 1, 1,
+                              1, 0, 0 )
+)
+
 
 
 #let state_01_ex2 =  (

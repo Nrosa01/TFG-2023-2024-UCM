@@ -209,3 +209,13 @@ geforce_256:
   type: Web
   title: Nvidias Geforce 256
   url: https://www.computer.org/publications/tech-news/chasing-pixels/nvidias-geforce-256
+
+cellular_automata_wikipedia:
+  type: Web
+  title: Cellular Automata
+  url: https://en.wikipedia.org/wiki/Cellular_automaton
+
+martin_gadner:
+  type: Web
+  title: Martin Gardner
+  url: https://es.wikipedia.org/wiki/Martin_Gardner
