@@ -1,5 +1,6 @@
 #import "../utilities/gridfunc.typ": *
 #import "../data/gridexamples.typ": *
+#import "../data/data.typ": *
 
 En este capítulo se hablará sobre el concepto de automátas celulares, su historia y su relevancia en la ciencia y matemáticas. Además, se presentarán algunos ejemplos de autómatas celulares relevantes en la investigación científica.
 
@@ -15,9 +16,9 @@ Para ilustrar mejor el concepto de autómata celular se muestra un ejepmlo a con
 
 #grid_example("Ejemplo de autómata celular sencillo", (state_01_ex1, state_02_ex1, state_03_ex1))
 
-El concepto de autómatas celulares tiene sus raíces en las investigaciones pioneras llevadas a cabo por John von Neumann en la década de 1940. Von Neumann, un matemático húngaro-estadounidense, es ampliamente reconocido por sus contribuciones significativas en una variedad de campos, incluyendo la física cuántica, la economía y la teoría de juegos. Su trabajo en la teoría de autómatas y sistemas auto-replicantes fue particularmente revolucionario.
+El concepto de autómatas celulares tiene sus raíces en las investigaciones pioneras llevadas a cabo por John von Neumann en la década de 1940. Von Neumann, un matemático húngaro-estadounidense, es ampliamente reconocido por sus contribuciones significativas en una variedad de campos, incluyendo la física cuántica, la economía y la teoría de juegos. Su trabajo en la teoría de autómatas y sistemas auto-replicantes @theory_self_replication fue particularmente revolucionario.
 
-Von Neumann se enfrentó al desafío de diseñar sistemas auto-replicantes, y propuso un diseño basado en la autoconstrucción de robots. Sin embargo, esta idea se encontró con obstáculos debido a la complejidad inherente de proporcionar al robot un conjunto suficientemente amplio de piezas para su replicación. A pesar de estos desafíos, el trabajo de von Neumann en este campo fue fundamental y marcó un punto de inflexión significativo. Su trabajo seminal en este campo fue documentado en un artículo científico de 1948 titulado "The general and logical theory of automata".
+Von Neumann se enfrentó al desafío de diseñar sistemas auto-replicantes, y propuso un diseño basado en la autoconstrucción de robots. Sin embargo, esta idea se encontró con obstáculos debido a la complejidad inherente de proporcionar al robot un conjunto suficientemente amplio de piezas para su replicación. A pesar de estos desafíos, el trabajo de von Neumann en este campo fue fundamental y marcó un punto de inflexión significativo. Su trabajo seminal en este campo fue documentado en un artículo científico de 1948 titulado "The general and logical theory of automata".  
 
 Stanislaw Ulam, un matemático polaco y colega de von Neumann, conocido por su trabajo en la teoría de números y su contribución al diseño de la bomba de hidrógeno, propuso durante este período una solución alternativa al desafío de la auto-replicación. Ulam sugirió la utilización de un sistema discreto para crear un modelo reduccionista de auto-replicación. Su enfoque proporcionó una perspectiva que ayudó a avanzar en el campo de los autómatas celulares.
 
@@ -25,17 +26,37 @@ En 1950, Ulam y von Neumann desarrollaron un método para calcular el movimiento
 
 Los descubrimientos de von Neumann y Ulam propiciaron que otros matemáticos e investigadoras contribuyeran al desarrollo de los automátas celulares, sin embargo, no fue hasta 1970 que se popularizaron de cara al público general. En este año, Martin Gardner, divulgador de ciencia y matemáticas estadounidense; escribió un artículo @gardner_article en la revista Scientific American sobre un automáta celular específico: El juego de la vida de Conway.
 
-A continuación se mostrará un ejemplo de automáta celular para comprender mejor su concepto y propiedades. Este sistema consiste en una matriz bidimensional infinita cuyas celdas pueden tener cuatro estados posibles que serán llamados `agua`, `lava`, `roca` y `vacío`. Se presupone un sistema de coordenadas (X,Y). La coordenada X representa la posición horizontal de la celda de izquiera a derecha. La coordenada Y representa la posición vertical de la celda de abajo a arriba. Para simplificar la explicación de este sistema se definirá la operación mover. Se entiende como moverse a la transformación matemática por el cual se toman dos coordenadas, `inicio` y `final`, en la que la que el estado de la celda final se sobreescribe con el de la celda inicio. La celda inicio pasa a tener como estado `vacío`. (no sé si debería escribir esto en notación matemática, tampoco estoy muy seguro de como sería dicha notación). Una celda en estado agua puede moverse hacia debajo si la celda inferior contiene estado `vacío`. Si la celda inferior contiene el estado `lava`, la celda inferio pasará a ser estado `roca` y la celda actual pasará de estado `agua` a `vacío`. Una celda en estado `roca` no sufre alteraciones de ningún tipo. Una celda en estado `lava` se comporta similar a una celda con estado `agua`. Puede moverse hacia abajo si la celda inferior está vacía y se transforma en roca si la celda inferior es `agua`. Para representar el estado de forma visual, se asigna el color rojo a la celda en estado lava, azul al estado agua, negro al estado roca y blanco al estado vacío:
+A continuación se mostrarán algunos ejemplos de autómatas celulares relevantes, destacando sus características y aplicaciones en la ciencia y la matemática.
 
-/*
-0 => Aire
-1 => Agua
-2 => Lava
-3 => Roca
-*/
+== Ejemplos de autómatas celulares
 
-/* Function from utilities/gridfunc, data from data/gridexamples */
-#grid_example("Ejemplo de autómata celular", (state_01_ex1, state_02_ex1))
+Los automátas celulares mostrados a continuación siguen un orden específico. Primero se expondrá un automáta conocido como `La hormiga de Langton` debido a su sencillez. Posteriormente se hablará sobre el automáta celular más conocido: `El juego de la vida`. Finalmente se mostrarán otros autómatas celulares relevantes en la investigación científica sin un orden específico.
+
+=== Hormiga de Langton 
+
+
+La "hormiga de Langton" @ca_karl_johannes, referido en Math World @langtonOnline como una máquina de Turing bidimensional de 4 estados, se describe de manera sencilla de la siguiente manera. Se considera un tablero cuadriculado donde cada casilla puede ser negra o blanca, y también puede contener una hormiga. Esta hormiga tiene cuatro direcciones posibles: norte, este, oeste y sur. Su movimiento sigue reglas simples: gira 90 grados a la derecha cuando está sobre una casilla negra, y 90 grados a la izquierda cuando está sobre una casilla blanca, tras lo cual 'avanza' en dicha dirección. Además, al 'dejar' una casilla, ésta cambia de color. El proceso comienza con una sola hormiga en una casilla blanca. Al principio, su movimiento parece caótico, pero después de un cierto número de pasos, se vuelve predecible, repitiendo un patrón cada cierto tiempo. En este punto, la parte del rastro de la hormiga que está en casillas negras crece de manera periódica, extendiéndose infinitamente por el tablero.
+
+La hormiga de Langton también puede ser concebida como un autómata celular con 18 @ca_karl_johannes estados. Esto es debido a que la hormiga en sí no avanza. Siempre que la hormiga está en una celda, dicha celda cambiar de color y la hormiza desaparece. Sin embargo, alguna de las celdas vecinas verá que la celda de al lado contiene a la hormiga orientada a hacia la dirección en la que está dicha celda, por lo que su estado cambiará a tener la hormiga en la próxima iteración. Es decir, si se tienen dos celdas alineadas, una blanca sin hormiga y a su derecha otra celda blanca con una hormiga orientada hacia arriba. Como el estado de una celda en un autómata celular depende de sus vecinos, la celda vacía verá que su vecino contiene la hormiga orientada hacia arriba, y además es blanca. Debido a esto, la hormiga "debería girar hacia la izquierda", que es justo donde está la celda vacía, debido a esto la celda vacía cambiará su estado a seguir siendo blanca pero con la hormiga orientada hacia la izquierda, mientras que la celda con la hormiga cambiará a estar vacía y pasar a ser negra. El ejemplo a continuación ilustra de una forma mucho más clara e intuitiva este concepto.
+
+#grid_example("Ejemplo simple de la hormiga de Langton", (langton_ant_01, langton_ant_02, langton_ant_03, langton_ant_04, langton_ant_05, langton_ant_06), vinit: 1pt)
+
+A partir de las 10000 generaciones aproximadamente, la hormiga de Langton muestra un comportamiento periódico que se repite en un ciclo de 104 generaciones. Este es el resultado en la generación 11000:
+
+// #grid_example("Ejemplo completo de la hormiga de Langton", (langton_ant_final,), vinit: 1pt)
+
+#align(center + horizon)[
+  #grid(
+    fill: (x, y) => rgb(
+      if angton.at(x + y * 80) == 0 { white }
+      else { black }
+    ),
+    stroke: black + 0.1pt,
+    columns: (3.25pt,) * 80,
+    rows: (3.25pt,) * 80,
+    align: center + horizon,
+  )
+]
 
 Los automátas celulares han interesado a la comunidad científica y matemática desde su establecimiento por von Neumann. Debido a esto existen diversos autómatas celulares desarrolladores por distintos investigadores. A continuación se muestran una serie de autómatas celulares relevantes.
 
@@ -64,11 +85,7 @@ Los autómatas de Greenberg-Hastings son bidimensionales y están compuestos de 
 
 #text(red)[TODO: Añadir ejemplo de Greenberg-Hastings (no hay ninguno en el libro ni en internet, no esoty muy seguro de como crearlo pero el concepto de este autómata es intereante, ¿Podría dejarlo sin ejeplo o tendría que quitarlo por ser el único sin ejepmlo?).]
 
-- Hormiga de Langton @ca_karl_johannes
 
-La hormiga de Langton es un autómata bidimensional de 18 estados. Cada celda puede ser blanca o negra, además de que puede contener o no a la hormiga (solo hay una). La hormiga está orientada a hacia una de las 4 direcciones cardinales y solo se mueve una sola vez de acorde a las siguientes reglas: Si le hormiga está en una celda negra, cambia su orientación 90 grados a la derecha. Si está en una celda blanca, cambia su orientación 90 grados a la izquierda. Finalmente, cada vez que la hormiga abandona una celda, esta cambia de color. Este sistema se vuelve periódico tras algo más de mil iteraciones, creando una estructura con forma de camino con periodo 104. A continuación se mostrará un ejemplo de las primeras iteraciones. La hormiga se representará con el color rojo si está en una celda negra y azul si está en una celda blanca. Se asume que en el estado inicial, la hormiga está orientada hacia arriba y en una celda blanca.
-
-#grid_example("Ejemplo de la hormiga de Langton", (langton_ant_01, langton_ant_02, langton_ant_03, langton_ant_04, langton_ant_05, langton_ant_06), vinit: 1pt)
 
 - Juego de la vida
 

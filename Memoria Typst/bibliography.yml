@@ -219,3 +219,16 @@ martin_gadner:
   type: Web
   title: Martin Gardner
   url: https://es.wikipedia.org/wiki/Martin_Gardner
+
+theory_self_replication:
+  type: Book
+  title: "J. von Neumann, Theory of Self-reproducing Automata, ed. by A.W. Burks (University of
+Illinois Press, Illinois, 1966)"
+
+lagnton114:
+  type: Book
+  title: "C.G. Langton, Self-reproduction in cellular automata. Phys. D 10, 135–144 (1984)"
+
+langtonOnline:
+  type: Web
+  title: Weisstein, Eric W. "Langton's Ant." From MathWorld--A Wolfram Web Resource. https://mathworld.wolfram.com/LangtonsAnt.html

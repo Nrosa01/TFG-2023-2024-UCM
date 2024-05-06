@@ -2,8 +2,10 @@
   [
     #let stroke_map = state.at("stroke_map", default: ())
     #let color_map = state.at("color_map", default: (white, black, blue, red, green, yellow))
+    #let rect_content = state.at("rect_content", default: ())
+    #let default_stroke = state.at("default_stroke", default: black+.3pt)
 
-    #let count = 0;
+    #let count =-1;
     #stack(
             dir: state.caption_alignment,
             spacing: 10pt,
@@ -12,12 +14,17 @@
                 columns: state.columns, 
                 row-gutter: state.at("gutter-row", default:  state.at("gutter", default: 0pt)),
                 column-gutter: state.at("gutter-column", default: state.at("gutter", default: 0pt)),
-                ..state.data.map(str => 
-                    rect(
-                      stroke: stroke_map.at(str, default: black+0.3pt),
-                      width: state.at("cellsize", default: 15pt),
-                      height: state.at("cellsize", default: 15pt),
-                      fill: color_map.at(str, default: white)))))
+                ..for str in state.data
+                {
+                  count = count + 1;
+                  (rect(
+                    stroke: stroke_map.at(str, default: default_stroke), 
+                    width: state.at("cellsize", default: 15pt), 
+                    height: state.at("cellsize", default: 15pt), 
+                    fill: color_map.at(str, default: white),
+                  )[#rect_content.at(count, default: "")], )
+                })
+    )
   ]
 }
 

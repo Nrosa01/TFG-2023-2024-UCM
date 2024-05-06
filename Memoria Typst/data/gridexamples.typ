@@ -1,3 +1,5 @@
+#import "./data.typ": *
+
 #let state_01_ex1 =  (
                       caption: "1ª Generación",
                       caption_alignment: ttb,
@@ -272,10 +274,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           0, 2, 0,
           0, 0, 0),
+  rect_content:  (none, none, none,
+                  none, text(black)[⬆], none,
+                  none, none, none),
 )
 
 #let langton_ant_02 = (
@@ -285,10 +290,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           2, 1, 0,
           0, 0, 0),
+  rect_content:  (none, none, none,
+                  text(black)[⬅], none, none,
+                  none, none, none),
 )
 
 #let langton_ant_03 = (
@@ -298,10 +306,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           1, 1, 0,
           2, 0, 0),
+  rect_content:  (none, none, none,
+                  none, none, none,
+                  text(black)[⬇], none, none),
 )
 
 #let langton_ant_04 = (
@@ -311,10 +322,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           1, 1, 0,
           1, 2, 0),
+  rect_content:  (none, none, none,
+                  none, none, none,
+                  none, text(black)[➡], none),
 )
 
 #let langton_ant_05 = (
@@ -324,10 +338,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           1, 3, 0,
           1, 1, 0),
+  rect_content:  (none, none, none,
+                  none, text(white)[⬆], none,
+                  none, none, none),
 )
 
 #let langton_ant_06 = (
@@ -337,10 +354,25 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           1, 0, 2,
           1, 1, 0),
+  rect_content:  (none, none, none,
+                  none, none, text(black)[➡],
+                  none, none, none),
+)
+
+#let langton_ant_final = (
+  caption: "11000 Generaciones",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 100,
+  cellsize: 3.25pt,
+  default_stroke: black+.1pt,
+  color_map: (white, black, white, black),
+  data: angton,
 )
 
 #let luaimpl_ex1 = (
