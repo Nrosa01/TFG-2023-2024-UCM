@@ -51,7 +51,7 @@ A partir de las 10000 generaciones aproximadamente, la hormiga de Langton muestr
       if angton.at(x + y * 80) == 0 { white }
       else { black }
     ),
-    stroke: black + 0.1pt,
+    stroke: rgb(100, 100, 100) + 0.03em,
     columns: (3.25pt,) * 80,
     rows: (3.25pt,) * 80,
     align: center + horizon,

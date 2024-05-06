@@ -368,9 +368,9 @@
   caption_alignment: ttb,
   hspace: lagnton_hspace,
   transition: " ",
-  columns: 100,
+  columns: 80,
   cellsize: 3.25pt,
-  default_stroke: black+.1pt,
+  default_stroke: black+.05pt,
   color_map: (white, black, white, black),
   data: angton,
 )
