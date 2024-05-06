@@ -36,43 +36,43 @@
 
 
 
-#let state_01_ex2 =  (
+#let state_01_contact_automata =  (
                       caption: "Estado inicial",
                       caption_alignment: ttb,
                       hspace: 20pt,
                       transition: " ",
-                      columns: 6,
-                      data:  (0, 0, 0, 0, 0, 0,
-                              0, 0, 0, 0, 0, 0,
-                              0, 0, 0, 1, 0, 0,
-                              0, 0, 0, 0, 0, 0,
-                              0, 0, 0, 0, 0, 0)
+                      columns: 5,
+                      data:  (0, 0, 0, 0, 0,
+                              0, 0, 0, 0, 0,
+                              0, 0, 1, 0, 0,
+                              0, 0, 0, 0, 0,
+                              0, 0, 0, 0, 0)
 )
 
-#let state_02_ex2 = (
-                   caption: "10ª Generación",
+#let state_02_contact_automata = (
+                   caption: "2ª Generación",
                    caption_alignment: ttb,
                    hspace: 20pt,
                    transition: " ",
-                   columns: 6,
-                   data:     (0, 0, 0, 0, 0, 0,
-                              0, 0, 0, 0, 1, 0,
-                              0, 0, 1, 1, 0, 0,
-                              0, 0, 1, 0, 0, 0,
-                              0, 0, 0, 0, 0, 0)
+                   columns: 5,
+                   data:     (0, 0, 0, 0, 0,
+                              0, 1, 1, 1, 0,
+                              0, 1, 1, 1, 0,
+                              0, 1, 1, 1, 0,
+                              0, 0, 0, 0, 0)
 )
 
-#let state_03_ex2 = (
-                   caption: "100ª Generación",
+#let state_03_contact_automata = (
+                   caption: "3ª Generación",
                    caption_alignment: ttb,
                    hspace: 20pt,
                    transition: " ",
-                   columns: 6,
-                   data:     (0, 0, 1, 1, 0, 0,
-                              0, 1, 0, 0, 1, 0,
-                              0, 0, 1, 1, 0, 0,
-                              0, 1, 1, 0, 1, 0,
-                              0, 0, 0, 1, 1, 0)
+                   columns: 5,
+                   data:     (1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1)
 )
 
 
