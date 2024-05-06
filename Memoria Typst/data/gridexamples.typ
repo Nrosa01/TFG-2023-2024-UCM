@@ -364,7 +364,7 @@
 )
 
 #let langton_ant_final = (
-  caption: "11000 Generaciones",
+  caption: "",
   caption_alignment: ttb,
   hspace: lagnton_hspace,
   transition: " ",
@@ -476,4 +476,179 @@
           0, 0, 1, 0,
           0, 0, 0, 0,
           0, 0, 0, 0),
+)
+
+#let gameOfLifeStructuresCellSize = 10pt
+
+#let game_of_life_block = (
+  caption: "Bloque",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  transition_icon: "",
+  columns: 4,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0,
+          0, 1, 1, 0,
+          0, 1, 1, 0,
+          0, 0, 0, 0)
+)
+
+#let game_of_life_hive = (
+  caption: "Colmena",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  transition_icon: "",
+  columns: 6,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0, 0,
+          0, 0, 1, 1, 0, 0,
+          0, 1, 0, 0, 1, 0,
+          0, 0, 1, 1, 0, 0,
+          0, 0, 0, 0, 0, 0),
+)
+
+#let game_of_life_bread = (
+  caption: "Pan",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  transition_icon: "",
+  columns: 6,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0, 0,
+          0, 0, 1, 1, 0, 0,
+          0, 1, 0, 0, 1, 0,
+          0, 0, 1, 0, 1, 0,
+          0, 0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0, 0),
+)
+
+#let game_of_life_boat = (
+  caption: "Bote",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  transition_icon: "",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data: (0, 0, 0, 0, 0, 
+          0, 1, 1, 0, 0,
+          0, 1, 0, 1, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0,),
+)
+
+#let game_of_life_bath = (
+  caption: "Bañera",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data: (0, 0, 0, 0, 0, 
+          0, 0, 1, 0, 0,
+          0, 1, 0, 1, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0,),
+)
+
+#let game_of_life_blinker1 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0),
+)
+
+#let game_of_life_blinker2 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 1, 1, 1, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0),
+)
+
+#let game_of_life_glider1 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 1, 0,
+          0, 1, 1, 1, 0,
+          0, 0, 0, 0, 0),
+)
+
+#let game_of_life_glider2 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 1, 0, 1, 0,
+          0, 0, 1, 1, 0,
+          0, 0, 1, 0, 0),
+)
+
+#let game_of_life_glider3 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 0, 1, 0,
+          0, 1, 0, 1, 0,
+          0, 0, 1, 1, 0),
+)
+
+#let game_of_life_glider4 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 1, 1,
+          0, 0, 1, 1, 0),
+)
+
+
+#let game_of_life_glider5 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 0, 1, 0,
+          0, 0, 0, 0, 1,
+          0, 0, 1, 1, 1),
 )

@@ -11,7 +11,7 @@
             spacing: 10pt,
             text(8pt)[#state.caption],
     grid(
-                columns: state.columns, 
+                columns: state.columns,
                 row-gutter: state.at("gutter-row", default:  state.at("gutter", default: 0pt)),
                 column-gutter: state.at("gutter-column", default: state.at("gutter", default: 0pt)),
                 ..for str in state.data

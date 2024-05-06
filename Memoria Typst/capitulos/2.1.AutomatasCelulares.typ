@@ -38,24 +38,48 @@ A continuación se mostrarán algunos ejemplos de autómatas celulares relevante
 
 == Ejemplos de autómatas celulares
 
-Los automátas celulares mostrados a continuación siguen un orden específico. Primero se hablará sobre el automáta celular más conocido: `El juego de la vida`. Tras el cual se hablará de la Hormiga de Finalmente se mostrarán otros autómatas celulares relevantes en la investigación científica sin un orden específico.
-
-A continuación se mostrarán diversos ejemplos de automátas celulares, comenzando por el conocido Juego de la Vida de Conway. Posteriormente, se presentarán: los autómatas de Wolfram, la Hormiga de Langton, el autómata de contacto y el autómata de Greenberg-Hastings.
+A continuación se mostrarán diversos ejemplos de automátas celulares, comenzando por el conocido `Juego de la Vida de Conway`. Posteriormente, se presentarán: los autómatas de Wolfram, la Hormiga de Langton, el autómata de contacto y el autómata de Greenberg-Hastings.
 
 === Juego de la vida
 
-El Juego de la Vida, propuesto por el matemático John Conway, es un autómata celular bidimensional que se desarrolla en una cuadrícula teóricamente infinita de células, cada una de las cuales puede estar en uno de dos estados: viva o muerta. La evolución del juego está determinada por reglas simples basadas en el número de vecinos vivos alrededor de cada célula. Este modelo ha demostrado ser notable debido a su capacidad para generar patrones complejos y estructuras dinámicas a partir de reglas simples de transición de estados. El Juego de la Vida ha sido ampliamente estudiado en el campo de la teoría de la complejidad y ha sido utilizado como un modelo para explorar la autoorganización y la emergencia de la complejidad en sistemas dinámicos.
+El Juego de la Vida, concebido por el matemático británico John Horton Conway, es un autómata celular bidimensional que se desarrolla en una cuadrícula teóricamente infinita de células cuadradas. Cada una de estas células puede estar en uno de dos posibles estados: `viva` (negra) o `muerta` (blanca).
+
+El Juego de la Vida es un ejemplo de un sistema que exhibe comportamiento complejo a partir de reglas simples. Estas reglas, que determinan el estado de una célula en la siguiente generación, son las siguientes:
+
+- Si una célula viva está rodeada por más de tres células vivas, muere por sobrepoblación.
+- Si una célula viva está rodeada por dos o tres células vivas, sobrevive.
+- Si una célula viva está rodeada por menos de dos células vivas, muere por soledad.
+- Si una célula muerta está rodeada por exactamente tres células vivas, se vuelve viva.
+
+Como se mencionó anteriomente, estas reglas se aplican simultáneamente a todas las células en la cuadrícula - es decir, todos los cambios de estado ocurren al mismo tiempo en cada paso de tiempo.
 
 #grid_example("Ejemplo del Juego de la Vida", (game_of_life_01, game_of_life_02, game_of_life_03), vinit: 1pt)
 
-Con el tiempo, esos sistema llamaron la atención de un público menos científico debido a su cualidad recreacional, pues no era necesario entender los fundamentos matemáticos de estos para poder disfrutar sus interacciones. De esta forma, y con un enfoque orientado a lo lúdico, es como surgieron los simuladores de arena.
+A pesar de su aparente simplicidad, el Juego de la Vida es capaz de generar una diversidad notable de patrones y estructuras. Algunos de estos patrones son estáticos, como el "bloque", que consiste en un cuadrado de 2x2 células vivas, y el "barco", que se asemeja a una forma de L compuesta por cinco células vivas.
 
-- Autómatas de Wolfram @ca_karl_johannes
+#grid_example("Estructuras estáticas en el juego de la vida", (game_of_life_block, game_of_life_hive, game_of_life_bread, game_of_life_boat, game_of_life_bath), vinit: 1pt)
 
-Los Autómatas de Wolfram, propuestos por el físico y matemático Stephen Wolfram, son un conjunto de reglas para autómatas celulares unidimensionales de estados binarios. Cada regla define cómo evolucionan las células en función de su estado y el estado de sus vecinos. Cada generación en un automáta de wolfram es una fila más qu ese añade a las anteriores. Numeradas del 0 al 255, estas reglas proporcionan un marco teórico para explorar la complejidad emergente y la computación universal en sistemas celulares simples.
+Existen también patrones oscilatorios, que alternan entre dos o más configuraciones. Un ejemplo sencillo de esto es el "blinker", una formación lineal de tres células vivas que oscila entre una orientación horizontal y vertical.
 
+#grid_example("Blinker, estructura oscilatoria del juego de la vida", (game_of_life_blinker1, game_of_life_blinker2, game_of_life_blinker1), vinit: 1pt)
 
-A continuación se muestra la regla 30 @wolfram_30 de Wolfram así como el autómata derivado de ejecutar 15 iteraciones de este:
+Adicionalmente, se pueden observar patrones que se desplazan a lo largo de la cuadrícula, a los que se les denomina "naves espaciales". El más simple de estos es el "planeador", un patrón de cinco células que se mueve en una trayectoria diagonal a través de la cuadrícula.
+
+#grid_example("Planeador, estructura moviente del juego de la vida", (game_of_life_glider1, game_of_life_glider2, game_of_life_glider3, game_of_life_glider4, game_of_life_glider5), vinit: 1pt)
+
+El Juego de la Vida ha sido objeto de considerable estudio en el campo de la teoría de la complejidad. Ha demostrado ser un modelo útil para explorar conceptos como la autoorganización, la emergencia de la complejidad en sistemas dinámicos, y la computación universal (la capacidad de simular cualquier computadora de Turing). A pesar de su aparente simplicidad, el Juego de la Vida esconde una riqueza de comportamientos complejos y sorprendentes, y continúa siendo un área activa de investigación y experimentación.
+
+=== Autómatas de Wolfram
+
+Los Autómatas de Wolfram @ca_karl_johannes, ideados por el físico y matemático Stephen Wolfram, son un conjunto de reglas que rigen el comportamiento de autómatas celulares unidimensionales con estados binarios. Estos autómatas consisten en una línea de celdas, cada una de las cuales puede estar en uno de dos estados: 0 o 1.
+
+Cada regla en el conjunto de autómatas de Wolfram determina cómo cambia el estado de una celda en función de su estado actual y los estados de sus vecinos inmediatos (la celda a la izquierda y la celda a la derecha). Dado que cada celda y sus dos vecinos pueden estar en uno de dos estados, hay $2^3 = 8$ configuraciones posibles para una celda y sus vecinos.
+
+Cada regla se puede representar como un número binario de 8 bits, donde cada bit corresponde a una de las 8 configuraciones posibles de una celda y sus vecinos. Por lo tanto, hay $2^8$ = 256 reglas posibles, numeradas del 0 al 255.
+
+Aunque los autómatas de Wolfram son unidimensionales, a menudo se visualizan en dos dimensiones para mostrar cómo evolucionan con el tiempo. En esta visualización, cada generación (o iteración) del autómata se representa como una nueva fila debajo de la fila anterior. Esto permite ver cómo los estados de las celdas cambian con el tiempo y cómo emergen patrones a partir de las reglas simples del autómata.
+
+A continuación se muestra la regla 30 @wolfram_30 de Wolfram tras ejecutar 15 iteraciones de este:
 
 #align(center + horizon)[Regla 30 de Wolfram]
 
@@ -77,28 +101,25 @@ Para una mejor comprensión, se pueden considerar dos celdas adyacentes: una cel
 
 A partir de las 10000 generaciones aproximadamente, la hormiga de Langton muestra un comportamiento periódico que se repite en un ciclo de 104 generaciones. Este es el resultado en la generación 11000:
 
-// #grid_example("Ejemplo completo de la hormiga de Langton", (langton_ant_final,), vinit: 1pt)
+#grid_example("Ejemplo completo de la hormiga de Langton", (langton_ant_final,), vinit: 1pt)
 
-#align(center + horizon)[
-  #grid(
-    fill: (x, y) => rgb(
-      if angton.at(x + y * 80) == 0 { white }
-      else { black }
-    ),
-    stroke: rgb(100, 100, 100) + 0.03em,
-    columns: (3.25pt,) * 80,
-    rows: (3.25pt,) * 80,
-    align: center + horizon,
-  )
-]
-
-
-A continuación se verá el autómata celular más conocido y estudiado: El juego de la vida de Conway.
+// #align(center + horizon)[
+//   #grid(
+//     fill: (x, y) => rgb(
+//       if angton.at(x + y * 80) == 0 { white }
+//       else { black }
+//     ),
+//     stroke: rgb(100, 100, 100) + 0.03em,
+//     columns: (3.25pt,) * 80,
+//     rows: (3.25pt,) * 80,
+//     align: center + horizon,
+//   )
+// ]
 
 
-- Autómata de Contacto @ca_karl_johannes
+=== Autómata de Contacto
 
-Un autómata de contacto puede considerarse como uno de los modelos más simples para la propagación de una enfermedad infecciosa. Este autómata está compuesto por 2 estados: `celda infectada` (negra) y `celda no infectada` (blanca). Las reglas son las siguiente: Una celda infectada nunca cambia, una celda no infectada se vuelve una celda infectada si cualquiera de las 8 celdas adyacente es una infectada. La forma general sigue siendo cuadrática. Existe una versión no determinista en la que la una celda no infectada se infecta pero con una probabilidad p. Este modelo es muy útil en la investigación de la propagación de enfermedades infecciosas, ya que en una situación real existen variables aleatorias como se mencionó anteriormente.
+Un autómata de contacto  @ca_karl_johannes puede considerarse como uno de los modelos más simples para la propagación de una enfermedad infecciosa. Este autómata está compuesto por 2 estados: `celda infectada` (negra) y `celda no infectada` (blanca). Las reglas son las siguiente: Una celda infectada nunca cambia, una celda no infectada se vuelve una celda infectada si cualquiera de las 8 celdas adyacente es una infectada. La forma general sigue siendo cuadrática. Existe una versión no determinista en la que la una celda no infectada se infecta pero con una probabilidad p. Este modelo es muy útil en la investigación de la propagación de enfermedades infecciosas, ya que en una situación real existen variables aleatorias como se mencionó anteriormente.
 
 #grid_example("Ejemplo de autómata de contacto determinista", (state_01_contact_automata, state_02_contact_automata, state_03_contact_automata), vinit: 10pt)
 
@@ -116,3 +137,4 @@ La evolución de las células en un autómata de Greenberg-Hastings se rige por 
 
 Estas reglas simples permiten la propagación de la excitación a través del autómata, creando patrones de propagación que pueden ser analizados y estudiados. Esto hace que los autómatas de Greenberg-Hastings sean una herramienta valiosa en la investigación biomédica, especialmente en el estudio de la actividad eléctrica del corazón y otros tejidos que exhiben comportamientos similares.
 
+Los automátas celulares han sido una influencia en el mundo del videojuego. Existen diversos juegos y hasta géneros basados en autómatas celulares. El siguiente apartado tratará sobre los simuladores de arena y su relación con los autómatas celulares.
