@@ -36,7 +36,7 @@ function langtonAnt(dimension, iterations) {
     }
 
     // Convert the 2D grid to a 1D array
-    let result = grid.reduce((acc, val) => acc.concat(val), []);
+    let result = grid.flat().join(',');
 
     return result;
 }
