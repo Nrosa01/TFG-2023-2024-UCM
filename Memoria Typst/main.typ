@@ -81,9 +81,7 @@
 
 = Comparación y pruebas
 
-== Comparación de rendimiento
-
-== Comparación de usabilidad
+#include "capitulos/ComparacionYPruebas.typ"
 
 = Conclusiones y trabajo futuro
 
