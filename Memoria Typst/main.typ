@@ -28,7 +28,7 @@
 
 = Resumen 
 
-= palabras clave 
+= Palabras clave 
 
 #pagebreak(weak: true)
 
