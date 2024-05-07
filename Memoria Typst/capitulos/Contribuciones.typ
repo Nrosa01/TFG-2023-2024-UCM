@@ -4,6 +4,8 @@ En este capítulo se detalla la aportación de cada uno de los alumnos en el des
 
 #text(red)[Según la normativa hay que sacar 4 páginas de esto, 2 cada uno pero a pesar de que consider que he hecho muchísimas cosas enumerarlas no ocupa tanto espacio. Además de que estoy poniendo solo lo que al final se ha quedado, hay cosas que al final se descartaron u otras que no pero que fueron problemáticas y llevaron mucho tiempo. Esta simple enumeración no refleja el esfuerzo que ha llevado cada una de estas tareas.]
 
+#text(red)[Trato de hablar impersonal en este apartado pero dado que es un apartado de contribuciones no sé si sería posible hablar en primera persona.]
+
 Existen 3 aportaciones principales de Nicolás al proyecto:
 
 - Simulador en C++
