@@ -263,10 +263,19 @@ blockly-block-creation:
   url: https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks
 
 Real-Time-Rendering:
-  type: Web
+  type: Book
   title: Real-Time Rendering
-  author: Tomas Akenine-Möller, Eric Haines, Naty Hoffman, Angelo Pesce, Michał Iwanicki, and Sébastien Hillaire
+  author:
+    [
+      "Tomas Akenine-Möller",
+      "Eric Haines",
+      "Naty Hoffman",
+      "Angelo Pesce",
+      "Michał Iwanicki",
+      "Sébastien Hillaire",
+    ]
   serial-number: 978-1138627000
+
 cellular_automata_wikipedia:
   type: Web
   title: Cellular Automata
@@ -279,8 +288,7 @@ martin_gadner:
 
 theory_self_replication:
   type: Book
-  title: "J. von Neumann, Theory of Self-reproducing Automata, ed. by A.W. Burks (University of
-Illinois Press, Illinois, 1966)"
+  title: "J. von Neumann, Theory of Self-reproducing Automata, ed. by A.W. Burks (University of Illinois Press, Illinois, 1966)"
 
 lagnton114:
   type: Book
@@ -288,4 +296,5 @@ lagnton114:
 
 langtonOnline:
   type: Web
-  title: Weisstein, Eric W. "Langton's Ant." From MathWorld--A Wolfram Web Resource. https://mathworld.wolfram.com/LangtonsAnt.html
+  title: Weisstein, Eric W. "Langton's Ant." From MathWorld--A Wolfram Web Resource.
+  url: https://mathworld.wolfram.com/LangtonsAnt.html

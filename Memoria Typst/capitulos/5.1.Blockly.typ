@@ -1,4 +1,3 @@
-== Blockly
 
 Este apartado tiene como objetivo explicar qué es Blockly así como su funcionamiento.
 
@@ -25,7 +24,7 @@ Un proyecto de blockly se tiene la siguiente estructura @blockly-visual:
 
 Un proyecto de blockly se divide en 2 partes básicas, la toolbox o caja de herramientas y el workspace o espacio de trabajo. La toolbox alberga todos los bloques que haya creado el programador o que haya incluido por defecto. Estos bloques los puede arrastrar al workspace para generar lógica que haya sido definida por el desarrollador. Por defecto, todos los bloques son instanciables las veces que sean necesarias.
 
-Para que el usuario pueda usar un bloque correctamente, son necesarios 3 pasos desde el punto de vista del desarrollador@blockly-blockl-creation:
+Para que el usuario pueda usar un bloque correctamente, son necesarios 3 pasos desde el punto de vista del desarrollador @blockly-block-creation:
 - Definir cómo es su apariencia visual. Esto puede ser realizado tanto usando código Javascript como mediante JSON. Es recomendable usar Json, aunque por características particulares puede ser necesario definirlos mediante Javascript.
 - Especificar el código que será generado una vez haya sido arrastrado el bloque al workspace. Debe haber una definición del código a generar por cada bloque y lenguaje que se quiera soportar.
 - Incluirlo en la toolbox para que pueda ser utilizado. Esto puede ser realizado mediante XML y JSON, aunque Google recomienda el uso de JSON.

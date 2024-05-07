@@ -1,5 +1,3 @@
-== Simulador GPU
-
 Existe una distinción con respecto a las simulaciones anteriores en cuanto al procesado de partículas. En la introducción del capítulo anterior, Simulador CPU @SimuladorCPU/*meter referencia al cap*/,  se declara que la implementación de los simuladores de arena difiere de los automatas celulares en que las partículas pueden observar los cambios que se han producido en otras partículas al momento, sin tener que esperar a que se procesen todas.
 
 Por el funcionamiento y arquitectura de la GPU, cada hilo de ejecución, que procesará una partícula independiente, debe ser completamente ajeno a cambios de las partículas de su alrededor. Podría manejarse también haciendo un uso muy controlado de los hilos, bloques de hilos y de la memoria compartida, pero en cierta manera el establecer tanto control para el actualizado de partículas limitaría la fortaleza de la GPU, que es paralelizar lo máximo posible una tarea. Por lo tanto la aproximación que toma este simulador es de que cada celda sea capaz de determinar su estado en el siguiente frame con solo la información de sus vecinas, de la misma manera que cualquier autómata celular. 
