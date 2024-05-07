@@ -28,13 +28,35 @@
 
 = Resumen 
 
-= palabras clave 
+= Palabras clave 
+
+- Simuladores de arena
+- Automatas celulares
+- Programación paralela
+- Multihilo
+- GPU
+- Lua
+- Rust
+- WebAssembly
+- Blockly
+- Compute shader
 
 #pagebreak(weak: true)
 
 = Abstract
 
 = Key Words
+
+- Sand simulators
+- Cellular automata
+- Parallel programming
+- Multithreading
+- GPU
+- Lua
+- Rust
+- WebAssembly
+- Blockly
+- Compute shader
 
 #pagebreak(weak: true)
 
