@@ -1,22 +1,46 @@
 #import "@preview/sourcerer:0.2.1": code
 
-El desarrollo de software puede llegar a ser complejo. Mientras más funcionalidad se requiere más complejo es mantener el código. Debido a esto, los ingenieros de software han desarrollado una serie de técnicas y metodologías para facilitar el desarrollo de software. Un problema habitual, es querer usar cierta funcionalidad en diferentes programas. Podría implementarse en cada uno de estos, pero en dicho caso se está duplicando código. Además de que hay que mantener la misma funcionalidad en diferentes lugares. Para paliar este problema existen las librerías dinámicas y estáticas @linkers_and_loaders. Una librería dinámica no forma parte del programa en sí, es un archivo separado del ejecutable principal. En cambio, una librería estática es parte del ejecutable. Esto tiene varias implicaciones, de las cuales una es particularmente interesante: Se puede cambiar una librería dinámica por otra, actualizando así el programa sin tener que compilarlo entero.
+Algunos programas necesitan ser extendidos para añadir funcionalidad sin tener que acceder al código fuente. Además, esto permite a usuarios que no sean el desarrollador original añadir funcionalidad al programa. A estos sistemas de extensión se les denomina comúnmente plugins. Un plugin @plugin_architecture es un componente de software que añade una funcionalidad específica a un programa. Los plugins pueden ser utilizados en programas de todo tipo, desde editores de texto hasta videojuegos.
 
-Esta particularidad da lugar a la posibilidad de crear plugins @plugin_architecture. Sin embargo, un plugin no tiene por qué ser una librería dinámica. Un plugin es cualquier componente de software que permita añadir funcionalidad a un programa sin tener que modificar el código fuente del programa.
-
-Tras investigar distintos mecanismos para extender un programa, se llegó a la conclusión de que hay 3 posibilidades principales. Cada una con sus ventajas y desventajas: 
+Existen 3 formas principales de extender un programa: mediante librerías dinámicas, mediante un archivo de configuración o mediante un lenguaje de scripting. Cada una tiene sus ventajas y desventajas. En este capítulo se explorarán y explicarán estas opciones. 
 
 == Extensión mediante librería dinámica
 
-Extender un programa mediante librerías dinámicas es algo habitual. Las librerías dinámicas tienen dos ussos fundamentales. Por un lado, permiten utilizar código común en diferentes programas. Por otro lado, permiten extender un programa sin tener que modificar el código fuente del programa. Además de esta modularidad, también simplifica el desarrollo, pues al separar el código en módulos, solo es necesario compilar aquellos que se han modificado. Un ejemplo claro son las 'assemblies' en .NET. @csharpassembly. Por último, una ventaja utilizada en el mundo de los videojuegos es que las DLLs en el caso de windows, además de código, permiten guardar recursos como texturas, modelos 3D, sonidos, etc. @resource_only_dll. Esto permite, por ejemplo, compartir mods de un juego en un solo archivo. 
+Una librería dinámica, también conocida como biblioteca compartida, es un archivo que contiene código compilado que puede ser cargado y vinculado a un programa en tiempo de ejecución. Esto significa que el programa no necesita incluir este código en su propio archivo binario, sino que puede cargarlo cuando se necesita. Esto puede ahorrar espacio en el disco y en la memoria, ya que varias aplicaciones pueden compartir la misma copia de la librería en lugar de tener que incluir su propio código duplicado.
 
-Sin embargo, las librerías dinámicas tienen algunos problema o inconveniencias a tener en cuenta. Por un lado, la compatibilidad entre plataformas. Cada sistema operativo gestiona las librerías dinámicas de una forma disinta @linkers_and_loaders, en Windows se usan DLLs, en distribuciones Linux se usan SOs, en MacOS se usan dylibs. Por otro lado, la compatibilidad entre versiones. Existen también problemas de seguridad, pues una librería dinámica puede ser modificada por un atacante para lograr la ejecución de código malicioso cierto grado de acceso al sistema.
+Las librerías dinámicas son especialmente útiles para proporcionar una interfaz estandarizada a funciones de sistema o a librerías de terceros que pueden cambiar con el tiempo. Al vincular estas funciones en tiempo de ejecución, un programa puede beneficiarse de las actualizaciones y correcciones de errores en la librería sin necesidad de ser recompilado. Al mismo tiempo, si el programa está preparado para ello, las librería dinámicas pueden extender funcionalidad.
 
-Por último, un gran problema es la compatibilidad entre distintos lenguajes o versiones del mismo lenguaje @understanding_abi. Podemos tener un programa principal que carga una DLL y llama a una función de esta. Si el programa y la DLL están compilados con la misma versión de g++, funcionará, sin embargo, si compilamos la DLL o el programa con clang o msvc podría no funcionar correctamente. Existe una solución para esto que es común a la mayoría de lenguajes, y es la creación de una interfaz en C. El problema de esto es que que al trabajar con el ABI de C no es posible acceder a ciertas características del lenguaje en el que se está trabajando, o en ciertos casos es incluso necesario modificar tu propio programa para que sea compaible @reprc. En el caso de querer usar tipos del lenguaje, es necesario pasar un puntero opaco void\* y castearlo, según el lenguaje esto podría suponer un overhead.
+Las librerías dinámicas, al ser módulos de código que se cargan y vinculan en tiempo de ejecución, necesitan una forma de comunicarse con el programa principal. Esta comunicación implica saber cómo se llaman las funciones, cómo se pasan los datos y cómo se maneja la memoria. En otras palabras, necesitan un protocolo común que permita al programa y a la librería interactuar de manera efectiva. Aquí es donde entra en juego la Interfaz Binaria de Aplicación, o ABI.
 
-== Extensión mediante un archivo propietiario
+La ABI @understanding_abi es un contrato entre dos piezas de código binario que define cómo deben interactuar entre sí. Incluye detalles como el formato de los datos, la disposición de las llamadas a funciones y el manejo de la memoria.
 
-Esta opción consiste en usar una especie de archivo de configuración definida por el desarrollador. El programa leerá este archivo y realizará ciertas acciones. Esto es independiente de la plataforma, no conlleva riesgos de seguridad\* y no depende del ABI de ningún lenguaje. Además, al ser un fichero de texto, no es necesario compilarlo. Sin embargo, esta opción es mucho más limitada, pues solo podrá extenderse cierta funcionalidad del programa de forma limitada. Esto puede ser útil para tareas específicas, por ejemplo un sistema danmaku:
+La ABI es esencial para las librerías dinámicas porque define cómo el código en la librería debe ser llamado y cómo debe interactuar con el código que la llama. Si la ABI de una librería cambia, cualquier código que dependa de ella puede dejar de funcionar correctamente a menos que sea recompilado para usar la nueva ABI. Por esta razón, los desarrolladores de librerías dinámicas suelen esforzarse por mantener la compatibilidad con la ABI para evitar romper los programas existentes.
+
+Cabe destacar que las librería dinámicas no son un formato universal, sino que cada sistema operativo tiene su propio mecanismo para cargar y vincular librerías dinámicas. Por ejemplo, en Windows se utilizan archivos DLL, en Linux se utilizan archivos SO y en macOS se utilizan archivos dylib. Esto significa que las librerías dinámicas no son necesariamente portables entre sistemas operativos, lo que puede ser una limitación en algunos casos. No obstante, existe un consenso al respecto a su funcionalidad. Por ejemplo, los grandes sistemas operativos actuales, Windows, Linux y MacOS, permiten definir callbacks o funciones para que una librería detecte cuando se ha cargado o descargado por el programa principal.
+
+Existe un tercer uso de las librerías dinámicas: Organizar código y optimizar tiempos de compilación. Dividir el código en módulos permite compilar solo aquellos que han sido modificados, lo que puede acelerar el proceso de compilación. Sin embargo, esta separación puede ser un arma de doble filo, ya que puede complicar la gestión de dependencias y la resolución de problemas de enlazado. Un ejemplo habitual son los 'ensamblados' en .NET, que permiten dividir el código en módulos independientes que se cargan en tiempo de ejecución. Un ensamblado es simplemente una un proyecto de .NET compilado en un archivo DLL o EXE. @csharpassembly. Motores como Unity permiten usar distintos ensamblados, además de que es posible definir ensamblados específicos par cada plataforma.
+
+Por último, cabe mencionar que en Windows, las librerías dinámicas pueden contener recursos como texturas, modelos 3D, sonidos, etc. Esto permite, por ejemplo, compartir mods de un juego en un solo archivo. @resource_only_dll.
+
+Sin embargo, las librerías dinámicas tienen algunos problema o inconveniencias a tener en cuenta. Por un lado, la compatibilidad entre plataformas. Cada sistema operativo gestiona las librerías dinámicas de una forma disinta @linkers_and_loaders, en Windows se usan DLLs, en distribuciones Linux se usan SOs, en MacOS se usan dylibs, por lo que hay que mantener más código. Por otro lado, la compatibilidad entre versiones y el ABI. Además, existen también problemas de seguridad, pues una librería dinámica puede ser modificada por un atacante para lograr la ejecución de código malicioso cierto grado de acceso al sistema. O simplemente un usuario malicioso puede distribuir una librería dinámica que no haga lo que dice hacer.
+
+Mantener la compatibilidad con el ABI también es un problema. Es posible no usar un ABI estable, pero en dicho caso, compilar el programa con una versión distinta del compilador podría dar lugar a binarios no compatibles con librerías dinámicas creadas anteriormente. Esto puede suponer un problema en ciertos sistemas y para la escena de modding, ya que los usuarios podrían dejar de crear contenido si cada actualización del juego rompe los mods. Una opción para evitar esto es usar el ABI de C, que es estable y compatible con la mayoría de lenguajes, pero esto implica no poder usar ciertas características de los lenguajes modernos. @reprc. Además puede llegar a dificultar el desarrollo e incluso el rendimiento si no se se implementa correctamente.
+
+La mayor ventaja de este sistema es su flexibilidad. Si el API (las funciones que define la librería) está bien diseñada, las posibilidad de extensión pueden llegar a ser infinitas, véanse los motores de videojuegos, que al final son programas en los que los desarrolladores añaden funcionalidades mediante plugins, normalmente librerías dinámicas. Además, una librería dinámica puede tener estado, es decir, sus propios datos. Este estado es global pero ofrece más posibilidades de extensión y mantenimiento. Por ejemplo, aprovechando que las librerías pueden detectar cuando se carga y se descarga, sería posible para un plugin guardar el número de veces que se ha cargado, para ello lo único que hay que hacer es escribir en un fichero la cantidad de veces que se ha cargado y leerlo al cargar la librería. Extendiendo este sistema, un plugin podría persistir todo su estado en un fichero. Esto permite a los sistemas de mods gestionar su propio estado sin tener que depender del programa principal.
+
+== Extensión mediante un archivo de configuración
+
+Un archivo de configuración es una herramienta que ofrece la posibilidad de ajustar el comportamiento de un programa sin necesidad de modificar su código fuente y `sin necesidad de compilar código`. Esta práctica resulta especialmente útil en situaciones donde acceder al código no es una opción viable, ya sea porque no está disponible o porque el usuario carece del conocimiento técnico necesario para modificarlo, o porque el desarrollador o empresa quiera mantener el control sobre el código fuente.
+
+La lectura de este archivo por parte del programa le permite realizar acciones específicas basadas en la información contenida en el mismo. Es como proporcionarle al programa un conjunto de instrucciones adicionales que le dicen cómo comportarse en ciertas circunstancias.
+
+Una de las ventajas más destacadas de este enfoque es que es multiplataforma. Debido a que es un formato específico creado a medida para el programa, no depende de ningún protocolo que indique como cargar símbolos (nombres de funciones) o como gestionar la memoria y datos. Esto facilita la mantención del código.
+
+Además, el uso de archivos de configuración no presenta riesgos de seguridad inherentes. A diferencia de ejecutar código arbitrario, que puede ser potencialmente peligroso, la lectura de un archivo de configuración solo implica que el programa interprete ciertos datos de manera específica. Al mismo tiempo, este es el mayor problema de este foramto. En una librería dinámica, el desarrollador puede realizar las operaciones que quiera dentro de una función, siendo la única limitación las funciones que el programa principal exponga para comunicarse con este. En el caso de un fichero de configuración las limitaciones se extreman al no poder controlar nada que no esté especificado en el formato. Es como si tuvieras una serie de piezas que puedes combinar de forma específica, porque el diseñador de las piezas las creó de tal forma que no todas encajan con todas, además se está limitado a las piezas que el diseñador creó. Por otro lado, al definir una serie de órdenes secuenciales que no pueden conocerse de antemano, el código no puede optimizarse tanto como en una DLL, pues hay que leer el archivo e interpretarlo adecuadamente. Sin embargo las DLLs, una vez cargadas podían ejecutar código directamente.
+
+Los archivos de configuración, al ser de especificación libre y no estar sujeto a normas, pueden no ser ficheros de texto. Es posible que sean un formato binario no legible para el ser humano. Sin embargo, lo más habitual es que sean ficheros de texto, ya que la intención es que sean fácilmante modificables por el usuario. Además, que sea un fichero de texto elimina la dependencia de una herramienta que pueda leer y escribir el formato del archivo.
+
+Como ejemplo se muestra un archivo de configuración para un sistema bullet hell inspirado en Danmaku:
 
 #code(
   lang: "Danmaku",
@@ -27,130 +51,36 @@ fire circle-blue <0,-5>
         fire-particle
             cartesian-velocity
                 randomize-time 0 4
-                    periodize 4
-                        lerpfromtoback 0.5 1.5 2.5 3.5
+                      lerpfromtoback 0.5 1.5 2.5 3.5
                             <0,0.4>
                             <0,0.7>
 ```
 )
 
+Un sistema bullet hell es un tipo de juego de disparos en el que el jugador debe esquivar una gran cantidad de proyectiles en pantalla. En este caso, el archivo de configuración define un patrón de disparo que lanza proyectiles azules en forma de círculo hacia arriba. El patrón se repite cada 8 fotogramas y los proyectiles se mueven aleatoriamente en el eje X entre -6 y 6 unidades. Cada proyectil tiene una velocidad inicial de 0.4 unidades en el eje Y y aumenta a 0.7 unidades a lo largo de su vida útil.
 
 El usuario que consuma esta API está limitado al formato y funciones que el desarrollador ha dado. Además, en sistemas más complejos como el de este ejemplo, esta solución puede ser más difícil de implementar de manera eficiente. Este método de extensión va más alla de un simple archivo de configuración para un sistema con unos parámetros fijos. Esta clase de sistemas puede permitir elegir cierta combinación de parámetros en cierto orden. Este sistema es similar al siguiente que veremos.
 
 == Extensión mediante un lenguaje de scripting
 
-Hay un punto intermedio entre ambas opciones. El uso de DLLs brinda una flexibilidad notable, pero su portabilidad hacia otras plataformas puede ser problemática. Por otro lado, un archivo de configuración es más limitado, requiriendo que el desarrollador implemente un parseador (si utiliza un formato propio) y luego genere las funciones adecuadas. Dar el paso hacia un lenguaje de scripting va un poco más allá. Aquí, el programador se libera de la necesidad de crear un parseador, ya que el intérprete del lenguaje asume esta tarea. Este intérprete puede interactuar con el programa principal a través de una API, permitiendo al programador aprovechar todas las funciones que el lenguaje de scripting ofrece. Además, al igual que los archivos de configuración, este método es multiplataforma, ya que los intérpretes suelen estar disponibles en distintos sistemas operativos. No obstante, toda esta flexibilidad conlleva problemas de seguridad. Además, los lenguajes interpretados suelen ser más lentos que los compilados, lo cual debe tenerse en cuenta especialmente si se prioriza el rendimiento o si el código del lenguaje de scripting se encuentra en un camino crítico de ejecución (hotpath). Se debe tener en cuenta también el overhead por transferir datos de un lenguaje a otro, en el caso de Lua esto implica modificar constantemente un stack. Para demostrar esto, a continuación se muestra una pequeña prueba comparando la ejecución de código en C++ desde una DLL y desde un script en LuaJit usando Sol2 como bridge. Las pruebas se ejecutan en release.
+Existe un punto intermedio en cuanto a ventajas y desventajas entre los sistemas ya mencionados: los lenguajes de scripting. Un lenguaje de scripting es un lenguaje de programación que se utiliza para controlar la ejecución de un programa o para extender su funcionalidad. A diferencia de los lenguajes de programación tradicionales, los lenguajes de scripting suelen ser interpretados en lugar de compilados, lo que significa que el código se ejecuta directamente por un intérprete en lugar de ser traducido a código máquina antes de la ejecución.
 
-Entorno común:
+Un lenguaje de scripting, al igual que otros lenguajes de programación, posee la característica de ser Turing completo. Esto implica que tiene la capacidad de llevar a cabo cualquier operación computacional que sea teóricamente posible. Sin embargo, debido a que los lenguajes de scripting son interpretados en tiempo de ejecución, en lugar de ser compilados previamente, pueden presentar una velocidad de ejecución más lenta en comparación con los lenguajes compilados.
 
-#text(red)[Por ahora pongo esto aquí, pero no sé si debería poner el resultado y poner esta explicación y código como un fichero anexo. Tengo muchos más benchmarks, este es simplemente el más significativo.]
+La interpretación en tiempo de ejecución significa que el código se traduce a código máquina mientras el programa se está ejecutando, lo cual puede introducir una sobrecarga adicional que afecta el rendimiento. A pesar de esta desventaja en términos de velocidad, los lenguajes de scripting ofrecen la ventaja de ser multiplataforma.
 
-Se define una estructura de la siguiente forma:
+Ser multiplataforma significa que los scripts escritos en un lenguaje de scripting pueden ser ejecutados en diferentes sistemas operativos o plataformas de hardware. Esto es posible porque el intérprete del lenguaje de scripting, que es el programa que realiza la traducción a código máquina, suele estar disponible para una amplia variedad de plataformas.
 
-#code(
-  lang: "C++",
-```cpp
-struct ship {
-	int life = 100;
+Además, los lenguajes de scripting suelen ser más fáciles de aprender y de utilizar que los lenguajes de programación tradicionales. Esto se debe a que los lenguajes de scripting suelen tener una sintaxis más sencilla y menos reglas que los lenguajes de programación compilados. Suelen ser lenguajes que gestionan la memoria automáticamente, es decir, no es necesario liberar la memoria que se ha reservado, lo que facilita la programación.
 
-	bool hurt(int by) {
-		life -= by;
-		return life < 1;
-	}
-};
-```
-)
+Uno de los lenguajes de scripting más usados para modificar e incluso desarrollar videojuegos es Lula. Lua es un lenguaje de scripting de alto nivel, multi-paradigma, ligero y eficiente, diseñado principalmente para la incorporación en aplicaciones. Fue creado en 1993 por Roberto Ierusalimschy, Luiz Henrique de Figueiredo y Waldemar Celes, miembros del Grupo de Tecnología en Computación Gráfica (Tecgraf) de la Pontificia Universidad Católica de Río de Janeiro, Brasil.
 
-Para el test de lua se creará obtendrá una función de lua que usará nuestro struct de C++ y se llamará desde C++ 10000*10000 veces. Para exponer la función a Lua se usará la api c_call de sol2. Esta es menos legible que el api común de sol2, pero es más rápida.\*
+Lua es conocido por su simplicidad, eficiencia y flexibilidad. Su diseño se centra en la economía de recursos, tanto en términos de memoria como de velocidad de ejecución. Existe una única estructura de datos, la tabla, que se utiliza para representar tanto arrays como diccionarios. Además, para poder "heredar" funciones de una tabla, Lua define el concepto de metatabla. En Lua, cada tabla puede tener asociada una metatabla. Cuando el desarrollador llama a una función y esta no está definida en la tabla, Lua busca en la metatabla de la tabla para ver si la función está definida ahí. Esto es comparable a los prototipos en JavaScript.
 
-#text(red)[Además de que la doc de sol2 menciona que esta forma es más aunque sea más lenta, hice pruebas, no las puse porque no creo que sean importantes. Pero por poder podría hasta explicar porque esto es más rápido que lo otro, pero creo que se sale del ámbito de este TFG.]
+Una de las características más destacadas de Lua es su capacidad para ser embebido en aplicaciones. Esto se debe a su diseño como un lenguaje de scripting, que permite que el código Lua sea llamado desde un programa en C, C++ u otros lenguajes de programación. Esta característica ha llevado a que Lua sea ampliamente utilizado en la industria de los videojuegos, donde se utiliza para controlar la lógica del juego y las interacciones del usuario. Existen motore como Defold que integran Lua como lenguaje de scripting o el popular juego Roblox, que permite a los usuarios crear sus propios juegos utilizando una version modificada de Lua llamada Luau.
 
-#code(
-  lang: "C++",
-```cpp
-	sol::state lua;
-	lua.open_libraries(sol::lib::base);
-	lua.set("shiphurt", sol::c_call<decltype(&ship::hurt), &ship::hurt>);
-```
-)
+Existe una versión más rápida de Lua llamada LuaJIT. El nombre no es arbitrario, JIT hace referencia a un término en inglés que significa "Just In Time", es decir, "Justo a Tiempo". Existen dos estrategias de compilación: la compilación AOT (Ahead Of Time) y la compilación JIT (Just In Time). La compilación AOT consiste en compilar el código fuente a código máquina antes de la ejecución del programa. Tradicionalmente se llaman lenguajes compilados a los lenguajes que compilan con esta estrategia. La compilación JIT, por otro lado, consiste en compilar el código fuente a código máquina durante la ejecución del programa. La compilación JIT tiene la ventaja de ser multiplataforma. LuaJIT es un intérprete de Lua que utiliza la compilación JIT para mejorar el rendimiento de los scripts Lua. Esto significa que el código Lua se compila a código máquina en tiempo de ejecución, lo que puede mejorar significativamente la velocidad de ejecución de los scripts.
 
-Finalmente, antes de ejecutar la prueba, se creará una instancia de ship con 2000000 de vida y se pasará a Lua. Además, se creará una función en la tabla global y la guardaremos en C++ en un std:function.
+Sin embargo, cabe destacar que en los lenguajes JIT, puede llegar a ser importante saber ciertos detalles de su funcionamietno interno para poder aprovechar su potencial. Como se mencionó anteriormente, la única estructura de datos en Lua es la tabla, no existen tipos salvo los primitivos (números, booleanos y cadenas de texto). Esto significa que algunas optimizaciones dependen del uso que el desarrollador haga del lenguajes. Por ejemplo, si una función recibe dos parámetros y esos dos parámetros siempre son números, LuaJIT puede optimizar la función en base a heurísticas. Sin embargo, si durante la ejecución se llama a la función con otro tipo de dato, LuaJIT desactivará la optimización y la función se ejecutará de forma más lenta. Este tipo de optimizaciones son comunes en los lenguajes JIT, por lo que es importante tener en cuenta cómo funcionan para poder aprovechar su potencial. De ser del interés del lector, se recomienda leer al respecto el monomorfismo y polimorfismo de JavaScript, ya que suele ser implementarse con una estrategia JIT y existe documentación adecuada al respecto.
 
-#code(
-  lang: "C++",
-```cpp
-ship s;
-s.life = 2000000;
-
-lua.set("ship", &s);
-
-const auto& code = R"(
-	_G.testfunc = function(amount) shiphurt(ship, amount)  end
-)";
-
-lua.script(code); // Ejecutar el código de Lua
-
-sol::function func = lua["testfunc"]; // Guardar la función de lua en C++
-```)
-
-Finalmente, se ejecutará la función de Lua 10000*10000 veces.
-
-#code(
-  lang: "C++",
-```cpp
-auto start = std::chrono::high_resolution_clock::now();
-
-const int size = 10000;
-const int amount = 20;
-
-sol::function func = lua["testfunc"];
-for (int i = 0; i < size * size; i++)
-{
-	func(amount);
-}
-
-std::cout << "ship life is: " << s.life << std::endl;
-
-auto end = std::chrono::high_resolution_clock::now();
-auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-
-std::cout << "Time taken: " << duration.count() << " miliseconds" << std::endl;
-```)
-
-El output obtenido:
-
-```
-ship life is: -1998000000
-Time taken: 4959 miliseconds
-```
-
-En C++ la configuración es similar, pero se usa Dylib @Dylibcpp para cargar la librería dinámica y obtener la función.
-
-#code(
-  lang: "C++",
-```cpp
-	dylib lib("CDll", dylib::extension);
-	auto func = lib.get_function<bool(ship&, int)>("testfunc");
-	
-  [...]
-
-	for (int i = 0; i < size * size; i++)
-	{
-		func(s, amount);
-	}
-```)
-
-El output obtenido:
-
-```
-ship life is: -1998000000
-Time taken: 167 miliseconds
-```
-
-#text(red)[Tengo otro test pero a la inversa, una sola llamada a lua o a la dll, y es lua/dll la que realiza un montón de iteraciones, esa prueba la hice para ver mejor el overhead, porque no es lo mismo llamar 100000000 a Lua que llamar una vez y que Lua haga 100000000 operaciones. Al fin y al cabo te ahorras 1000000 \* 3 modificaiones del stack (una para poner la función al top, otra para poner el parámetro y otra para el de retorno, que aunuqe no se use se pone en el stack). Y esto funciona así porque también hice este test sin usar Sol como librería, lo hice también usando lua a pelo modificando el stack, pero la diferencia era inexistente así que para el ejemplo usé Sol que es más legible.]
-
-#text(red)[Este texto a continuación puede ser redundante, pero es como estoy enfocando el TFG ahora, una comparación entre implementar el sistema de partículas de Noita en CPU y GPU. ¿Quié tiene que ver el sistema de scripting en esto? Que Noita usa Lua pero como configurador para varitas y pequeños comportamientos (la simulación es en C++ y no se puede tocar hasta donde sé, pero creo que algú mod lo hace), por lo tanto este sistema debe ser tanto eficinete como modeable, en el TFG intentar´eexplicarlo mejor para que sea coherente porque es la única forma de enfocarlo que se me ocurre.]
-
-Esto demuestra la diferencia que puede llegar a haber entre ambas aproximaciones a un sistema modular que aproveche la CPU. Como el objetivo es recrear el sistema de partículas de Noita explorando todas las posibilidades de la CPU, se implementarán los sistemas de extensión mediante librerías dinámicas y lenguajes de scripting. Tras esto, se valorán ambas opciones, comparándolas con su alternativa en GPU para así poder determinar cuál es la mejor opción para este caso en concreto.
-
-#text(red)[Quizás pienses que he hablado poco de Lua, y es cierto, me estoy reservando el resto de destalles de Lua para la parte de implementación en CPU en Lua.]
+A continuación se explicará de forma general qué es una CPU, que es el multithreading o multihilo y cuales son sus ventajas e inconvenientes. 

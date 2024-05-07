@@ -1,15 +1,14 @@
+#import "./data.typ": *
+
 #let state_01_ex1 =  (
                       caption: "1ª Generación",
                       caption_alignment: ttb,
                       hspace: 20pt,
                       transition: " ",
-                      columns: 6,
-                      color_map: (white, blue, red, black),
-                      data:  (0, 0, 0, 0, 2, 0,
-                              1, 2, 1, 0, 0, 0,
-                              1, 0, 2, 0, 1, 3,
-                              0, 0, 3, 0, 2, 3,
-                              3, 3, 3, 3, 3, 3)
+                      columns: 3,
+                      data:  (0, 0, 0,
+                              0, 1, 1,
+                              1, 0, 0 )
 )
 
 #let state_02_ex1 = (
@@ -17,53 +16,63 @@
                    caption_alignment: ttb,
                    hspace: 20pt,
                    transition: "",
-                   columns: 6,
-                   color_map: (white, blue, red, black),
-                   data:  (0, 0, 0, 0, 0, 0,
-                           1, 0, 0, 0, 2, 0,
-                           0, 2, 3, 0, 0, 3,
-                           1, 0, 3, 0, 3, 3,
-                           3, 3, 3, 3, 3, 3)
+                    columns: 3,
+                      data:  (1, 1, 1,
+                              1, 0, 0,
+                              0, 1, 1 )
 )
 
 
-#let state_01_ex2 =  (
+#let state_03_ex1 = (
+                   caption: "3ª Generación",
+                   caption_alignment: ttb,
+                   hspace: 20pt,
+                   transition: "",
+                    columns: 3,
+                      data:  (0, 0, 0,
+                              0, 1, 1,
+                              1, 0, 0 )
+)
+
+
+
+#let state_01_contact_automata =  (
                       caption: "Estado inicial",
                       caption_alignment: ttb,
                       hspace: 20pt,
                       transition: " ",
-                      columns: 6,
-                      data:  (0, 0, 0, 0, 0, 0,
-                              0, 0, 0, 0, 0, 0,
-                              0, 0, 0, 1, 0, 0,
-                              0, 0, 0, 0, 0, 0,
-                              0, 0, 0, 0, 0, 0)
+                      columns: 5,
+                      data:  (0, 0, 0, 0, 0,
+                              0, 0, 0, 0, 0,
+                              0, 0, 1, 0, 0,
+                              0, 0, 0, 0, 0,
+                              0, 0, 0, 0, 0)
 )
 
-#let state_02_ex2 = (
-                   caption: "10ª Generación",
+#let state_02_contact_automata = (
+                   caption: "2ª Generación",
                    caption_alignment: ttb,
                    hspace: 20pt,
                    transition: " ",
-                   columns: 6,
-                   data:     (0, 0, 0, 0, 0, 0,
-                              0, 0, 0, 0, 1, 0,
-                              0, 0, 1, 1, 0, 0,
-                              0, 0, 1, 0, 0, 0,
-                              0, 0, 0, 0, 0, 0)
+                   columns: 5,
+                   data:     (0, 0, 0, 0, 0,
+                              0, 1, 1, 1, 0,
+                              0, 1, 1, 1, 0,
+                              0, 1, 1, 1, 0,
+                              0, 0, 0, 0, 0)
 )
 
-#let state_03_ex2 = (
-                   caption: "100ª Generación",
+#let state_03_contact_automata = (
+                   caption: "3ª Generación",
                    caption_alignment: ttb,
                    hspace: 20pt,
                    transition: " ",
-                   columns: 6,
-                   data:     (0, 0, 1, 1, 0, 0,
-                              0, 1, 0, 0, 1, 0,
-                              0, 0, 1, 1, 0, 0,
-                              0, 1, 1, 0, 1, 0,
-                              0, 0, 0, 1, 1, 0)
+                   columns: 5,
+                   data:     (1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1,
+                              1, 1, 1, 1, 1)
 )
 
 
@@ -265,10 +274,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           0, 2, 0,
           0, 0, 0),
+  rect_content:  (none, none, none,
+                  none, text(black)[⬆], none,
+                  none, none, none),
 )
 
 #let langton_ant_02 = (
@@ -278,10 +290,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           2, 1, 0,
           0, 0, 0),
+  rect_content:  (none, none, none,
+                  text(black)[⬅], none, none,
+                  none, none, none),
 )
 
 #let langton_ant_03 = (
@@ -291,10 +306,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           1, 1, 0,
           2, 0, 0),
+  rect_content:  (none, none, none,
+                  none, none, none,
+                  text(black)[⬇], none, none),
 )
 
 #let langton_ant_04 = (
@@ -304,10 +322,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           1, 1, 0,
           1, 2, 0),
+  rect_content:  (none, none, none,
+                  none, none, none,
+                  none, text(black)[➡], none),
 )
 
 #let langton_ant_05 = (
@@ -317,10 +338,13 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           1, 3, 0,
           1, 1, 0),
+  rect_content:  (none, none, none,
+                  none, text(white)[⬆], none,
+                  none, none, none),
 )
 
 #let langton_ant_06 = (
@@ -330,10 +354,25 @@
   transition: " ",
   columns: 3,
   cellsize: lagnton_cellsize,
-  color_map: (white, black, blue, red),
+  color_map: (white, black, white, black),
   data:  (0, 0, 0,
           1, 0, 2,
           1, 1, 0),
+  rect_content:  (none, none, none,
+                  none, none, text(black)[➡],
+                  none, none, none),
+)
+
+#let langton_ant_final = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 80,
+  cellsize: 3.25pt,
+  default_stroke: black+.05pt,
+  color_map: (white, black, white, black),
+  data: angton,
 )
 
 #let luaimpl_ex1 = (
@@ -437,4 +476,179 @@
           0, 0, 1, 0,
           0, 0, 0, 0,
           0, 0, 0, 0),
+)
+
+#let gameOfLifeStructuresCellSize = 10pt
+
+#let game_of_life_block = (
+  caption: "Bloque",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  transition_icon: "",
+  columns: 4,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0,
+          0, 1, 1, 0,
+          0, 1, 1, 0,
+          0, 0, 0, 0)
+)
+
+#let game_of_life_hive = (
+  caption: "Colmena",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  transition_icon: "",
+  columns: 6,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0, 0,
+          0, 0, 1, 1, 0, 0,
+          0, 1, 0, 0, 1, 0,
+          0, 0, 1, 1, 0, 0,
+          0, 0, 0, 0, 0, 0),
+)
+
+#let game_of_life_bread = (
+  caption: "Pan",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  transition_icon: "",
+  columns: 6,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0, 0,
+          0, 0, 1, 1, 0, 0,
+          0, 1, 0, 0, 1, 0,
+          0, 0, 1, 0, 1, 0,
+          0, 0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0, 0),
+)
+
+#let game_of_life_boat = (
+  caption: "Bote",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  transition_icon: "",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data: (0, 0, 0, 0, 0, 
+          0, 1, 1, 0, 0,
+          0, 1, 0, 1, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0,),
+)
+
+#let game_of_life_bath = (
+  caption: "Bañera",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data: (0, 0, 0, 0, 0, 
+          0, 0, 1, 0, 0,
+          0, 1, 0, 1, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0,),
+)
+
+#let game_of_life_blinker1 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0),
+)
+
+#let game_of_life_blinker2 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 1, 1, 1, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0),
+)
+
+#let game_of_life_glider1 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 1, 0,
+          0, 1, 1, 1, 0,
+          0, 0, 0, 0, 0),
+)
+
+#let game_of_life_glider2 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 1, 0, 1, 0,
+          0, 0, 1, 1, 0,
+          0, 0, 1, 0, 0),
+)
+
+#let game_of_life_glider3 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 0, 1, 0,
+          0, 1, 0, 1, 0,
+          0, 0, 1, 1, 0),
+)
+
+#let game_of_life_glider4 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 1, 1,
+          0, 0, 1, 1, 0),
+)
+
+
+#let game_of_life_glider5 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 0, 1, 0,
+          0, 0, 0, 0, 1,
+          0, 0, 1, 1, 1),
 )
