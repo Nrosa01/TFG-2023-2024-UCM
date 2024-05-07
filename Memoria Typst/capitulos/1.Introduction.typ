@@ -6,7 +6,7 @@ The objective of this Final Degree Project is to immerse ourselves in the world 
 
 In short, we want to understand and help improve arena simulators to make them more useful and effective for users.
 
-== Objectives
+== Objectives <Objectives>
 
 The main objective of this TFG is to study the behavior and ease of learning of different users using different implementations of sand simulators.
 
@@ -21,3 +21,21 @@ With these analyses, we aim to explore the characteristics that contribute to an
 In summary, our goal is to find a balance between performance and extensibility that provides both a playful environment for casual users and a development base for developers interested in arena simulators.
 
 == Work plan
+
+Work planning was mostly carried out between the authors of the TFG, relying on our tutor through regular meetings to help us measure our work pace. At the beginning of the project, a series of tasks were defined as necessary for successful development. These tasks were planned in this order:
+
+- Preliminary research on the fundamental concepts of cellular automata and sand simulators, as well as deciding and discussing which libraries and software will be used.
+
+- Implementation of the Simulator in C++, using OpenGL and GLFW: The aim of this simulator was to have a reference base to support us when developing the rest of the simulators, as well as allowing us to apply in a slightly more lax way the knowledge learned in the preliminary research phase on cellular automata.
+
+- Development of Simulator in LUA with LÖVE: The aim of this implementation was to apply the functionality of the previous system by adding the ability for the user to add custom particles, as well as adding multithreading capability to improve performance.
+
+- Development of Simulator with logic execution through GPU: The aim of this implementation was to have a performance reference to compare the rest of the implementations, as well as to explore the viability of programming the entire system through GPU.
+
+- Development of Simulator in Rust using Macroquad and Blockly for the creation of custom blocks: The aim of this implementation was to explore the option of creating a version with greater accessibility for a non-technical user profile, as well as potentially superior performance compared to the LUA implementation.
+
+- User testing: Compare using the parameters mentioned above @Objectives[].
+
+- Analysis of the data and comparison between the results obtained by the different implementations.
+
+- Conclusions and future work: From the analysis of the previous data, conclusions are drawn and the potential for future project expansions is explored.
