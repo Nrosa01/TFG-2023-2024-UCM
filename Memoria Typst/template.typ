@@ -3,8 +3,12 @@
 // Go ahead and customize it to your liking!
 #let project(
   title: "",
+  titleEng: "",
+  degree: "",
+  course: "",
   abstract: [],
   authors: (),
+  directors: (),
   date: none,
   body,
 ) = {
@@ -22,29 +26,47 @@
 
   align(center + horizon)[
     
+  #block(text(weight: 1000, 1.5em, course))
+
+  #block(text(weight: 700, 1.0em, rgb(77,77,77), degree))
+
+    #v(2.2em, weak: true)
 
   // Title row.
   #align(center)[
     #rect(stroke: (top: 1pt, bottom: 1pt), inset: 20pt)[
-      #block(text(weight: 700, 1.75em, title))
+      #block(text(weight: 700, 1.5em, title))
+      #v(10pt)
+      #block(text(weight: 700, 1.0em, rgb(77,77,77), titleEng))
     ]
-    #v(1.2em, weak: true)
+    #v(2.2em, weak: true)
     // #date
   ]
+
 
   #pad(
     align(center)[
      #image("images/escudoUCM.svg", width: 25%)
+    #v(-0.5em, weak: true)
+     Universidad Complutense de Madrid
     ]
   )
 
 
+  #v(2.5em, weak: true)
   // Author information.
+    Alumnos
   #pad(
-    top: 0.8em,
     x: 2em,
     stack(spacing: 8pt,
         ..authors.map(author => align(center, strong(author))))
+  )
+
+      Dirección
+  #pad(
+    x: 2em,
+    stack(spacing: 8pt,
+        ..directors.map(author => align(center, strong(author))))
   )
 
   #align(center)[
