@@ -51,6 +51,9 @@ No sé si esta es la mejor forma de crear una tabla de figuras pero es lo que en
 
 #include "capitulos/4.PluginsYScripting.typ"
 
+= CPU y Multithreading
+
+#include "capitulos/3.5.ProgramaciónParalelaCPU.typ"
 
 = Simulador en CPU
 
