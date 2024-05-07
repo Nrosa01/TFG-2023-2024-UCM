@@ -91,4 +91,6 @@
 
 = Contribuciones
 
+#include "capitulos/Contribuciones.typ"
+
 #bibliography("bibliography.yml")
