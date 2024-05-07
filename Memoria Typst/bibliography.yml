@@ -209,3 +209,61 @@ geforce_256:
   type: Web
   title: Nvidias Geforce 256
   url: https://www.computer.org/publications/tech-news/chasing-pixels/nvidias-geforce-256
+
+SimVascular:
+  type: Web
+  title: SimVascular
+  url: https://simvascular.github.io/documentation/flowsolver.html
+
+OpenSees:
+  type: Web
+  title: SimVascular
+  url: https://opensees.berkeley.edu/
+
+SketchPad:
+  type: thesis
+  title: A man-machine graphical communication system
+  author: Ivan Edward Sutherland
+  date: 1963-05-21
+  url: https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-574.pdf
+
+LinearAlgebraGPU:
+  type: thesis
+  title: Linear algebra operators for GPU implementation of numerical algorithms
+  author: Jens Krüger, Rüdiger Westermann
+  serial-number: 0-7803-8120-3
+  date: 2003-12-08
+
+ComputerOrganizationWilliam:
+  type: book
+  title: Computer Organization and Architecture Designing for Performance
+  author: William Stallings
+  serial-number: 978-0-13-410161-3
+
+ComputerOrganizationPatterson:
+  type: book
+  title: Computer Organization and Design the Hardware/Software Interface for Performance
+  author: David A.Patterson, John L. Hennessy
+  serial-number: 978-0-12-407726-3
+
+GPGP-Architecture:
+  type: book
+  title: General-Purpose Graphics Processor Architectures
+  author: Tor M. Aamodt, Wilson Wai Lun Fung, and Timothy G. Rogers
+  serial-number: 978-3-031-01759-9
+
+blockly-visual:
+  type: Web
+  title: Blockly Visual
+  url: https://developers.google.com/blockly/guides/get-started/workspace-anatomy
+
+blockly-block-creation:
+  type: Web
+  title: Blockly Block Creation
+  url: https://developers.google.com/blockly/guides/create-custom-blocks/define-blocks
+
+Real-Time-Rendering:
+  type: Web
+  title: Real-Time Rendering
+  author: Tomas Akenine-Möller, Eric Haines, Naty Hoffman, Angelo Pesce, Michał Iwanicki, and Sébastien Hillaire
+  serial-number: 978-1138627000
