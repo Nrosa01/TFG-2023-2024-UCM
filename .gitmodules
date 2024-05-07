@@ -4,3 +4,6 @@
 [submodule "rust-sand-engine"]
 	path = rust-sand-engine
 	url = https://github.com/Nrosa01/rust-sand-engine
+[submodule "pixel-creator"]
+	path = pixel-creator
+	url = https://github.com/Nrosa01/pixel-creator
