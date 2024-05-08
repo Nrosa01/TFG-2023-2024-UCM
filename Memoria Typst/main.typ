@@ -135,9 +135,13 @@
 
 = Conclusiones y trabajo futuro
 
+#include "capitulos/Conclusiones.typ"
+
 #pagebreak(weak: true)
 
 = Conclusions and future work
+
+#include "capitulos/Conclusions.typ"
 
 #pagebreak(weak: true)
 
