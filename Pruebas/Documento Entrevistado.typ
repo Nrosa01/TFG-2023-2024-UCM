@@ -9,7 +9,7 @@ La partícula de arena se desplaza hacia abajo si el espacio está vacío o si h
 
 == Vapor
 
-El vapor se comporta como la arena en su movimiento, pero en lugar de descender, asciende hacia arriba. Puede copiarse el bloque if de la arena 
+El vapor se comporta como la arena en su movimiento, pero en lugar de descender, asciende hacia arriba. Es posible usar el comportamiento de la arena como base.
 
 == Agua
 
