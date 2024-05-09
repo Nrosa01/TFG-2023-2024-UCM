@@ -1,22 +1,23 @@
+#import "@preview/subpar:0.1.0"
+
 Para poder ejecutar los programas se requiere de una estructura que pueda procesar un conjunto de instrucciones dados, esta estructura es la Unidad Central de Procesamiento (CPU, por sus siglas en inglés). La CPU es el componente principal de un ordenador y otros dispositivos programables, que interpreta y ejecuta instrucciones contenidas en los programas informáticos. La CPU lleva a cabo la mayoría de los cálculos que permiten a un sistema operativo y sus aplicaciones funcionar. La CPU no es una pieza única, sino que está compuesta por una series núcleos que a su vez están compuestos por otras partes @ComputerOrganizationPatterson. Cada CPU es distinta pero todas presentan al menos los siguientes componentes en la estructura de su núcleo: la Unidad de Control (UC), la Unidad Aritmético Lógica (ALU), varios registros, la Unidad de Punto Flotante (FPU), una memoria de muy rápido acceso llamada caché y un conjunto de buses que conectan estos componentes.
 
 La UC supervisa y coordina las operaciones de la CPU. Controla la secuencia de ejecución de las instrucciones y dirige el flujo de datos entre la CPU y otras partes del sistema. La ALU realiza operaciones aritméticas y lógicas en los datos, como sumas, restas, multiplicaciones, divisiones y operaciones booleanas con la restricción de estar limitada a números enteros. Los registros son pequeñas áreas de almacenamiento de alta velocidad que se utilizan para almacenar datos temporales y direcciones de memoria, estos forman parte del ensamblado principal de la CPU. La FPU es una unidad especializada que realiza operaciones en números de punto flotante, como sumas, restas, multiplicaciones y divisiones. La caché es una memoria de muy rápido acceso que almacena copias de datos, tienen más almacenamiento que los registros pero son más lentas en comparación al estar en una parte más externa del ensamblaje principal. Los buses son caminos de comunicación que permiten que los datos se muevan entre los componentes de la CPU y otros dispositivos del sistema.
 
-#grid(columns: 2,
-  ..(figure(
-  image("../images/cpuinternal.png", width: 100%),
-  caption: [
-    Estructura del núcleo de una CPU
-  ],
-),
-figure(
-  image("../images/cpuinternal2.png", width: 75%),
-  caption: [
-    Estructura general de una CPU
-  ],
+#subpar.grid(
+  figure(image("../images/cpuinternal.png"), caption: [
+    Interior de un núcleo
+  ]), <cpuInternal>,
+  figure(image("../images/cpuinternal2.png"), caption: [
+   Vista general de una CPU
+  ]), <cpuInternal2>,
+  columns: (1.23fr, 1fr),
+  gap: 10pt,
+  caption: [Estructura de los componentes de una CPU],
+  label: <fullcpu>,
 )
-)
-)
+
+#v(5pt)
 
 
 Un núcleo de CPU es una unidad de procesamiento que puede ejecutar instrucciones de programa usando los componentes mencinoados. En los sistemas modernos, una CPU puede tener múltiples núcleos, lo que permite que se ejecuten múltiples instrucciones simultáneamente.

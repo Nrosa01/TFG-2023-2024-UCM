@@ -3,7 +3,7 @@ En este capítulo, se hablará de manera resumida acerca de qué son los simulad
 
 === Introducción a la simulacion de partículas
 
-Los simuladores de partículas son un subgénero destacado tanto en el sector de los videojuegos como en el de los autómatas celulares @ca_wiki, haciendose uso de ellos para herramientas y experiencias capaces de representar interacciones dinámicas presentes en el mundo real.
+Los simuladores de partículas son un subgénero destacado tanto en el sector de los videojuegos como en el de los autómatas celulares @cellular_automata_thomasmli, haciendose uso de ellos para herramientas y experiencias capaces de representar interacciones dinámicas presentes en el mundo real.
 
 Los simuladores de partículas cumplen las características básicas que permiten considerarlos autómatas celulares, ya que: el "mapa" de la simulación está formado por un conjunto de celdas dentro de un número finito de dimensiones, cada una de estas celdas se encuentra, en cada paso discreto de la simulación, en un estado concreto dentro de un número finito de estados en los que puede encontrarse y el estado de cada celda es determinado mediante interacciones locales, es decir, está determinado por condiciones relacionadas con sus celdas adyacentes.
 

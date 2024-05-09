@@ -55,7 +55,7 @@ A continuación se muestran los resultados obtenidos en las pruebas de rendimien
   figure(image("../images/compc2.png"), caption: [
     Resultados segundo equipo
   ]), <b>,
-  v(5pt),
+  gap: 10pt,
   columns: (1fr, 1fr),
   caption: [Resultados de las pruebas de rendimiento con GPU],
   label: <full>,
@@ -74,7 +74,7 @@ A continuación se muestra una segunda prueba, realizada solo entre las implemen
   figure(image("../images/compc3.png"), caption: [
     Resultados segundo equipo
   ]), <b2>,
-  v(5pt),
+  gap: 10pt,
   columns: (1fr, 1fr),
   caption: [Resultados de las pruebas de rendimiento con GPU],
   label: <full2>,
