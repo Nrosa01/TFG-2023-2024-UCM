@@ -151,4 +151,4 @@
 
 #pagebreak(weak: true)
 
-#bibliography("bibliography.yml")
+#bibliography("bibliography.bib", style: "nature")
