@@ -105,6 +105,12 @@ Con esto el sistema funciona satisfactoriamente, es suficientemente rápido y f�
 
 Finalmente, se explora la posibilidad de tener un sistema más eficiente manteniendo la flexibilidad. Para ello, se implementó una versión en Rust con Macroquad.
 
+#pagebreak(weak: true)
+= Blockly
+
+#include "5.1.Blockly.typ"
+#pagebreak(weak: true)
+
 == Simulador en Rust con Macroquad
 
 Rust es un lenguaje de programación de propósito general con características de lenguajes funcionales y orientados a objetos. Es un lenguaje con características de bajo y alto nivel, es decir, permite manipular la memoria directamtene pero al mismo tiempo permite programar con atajos y abstracciones que ocultan lógica subyacente para simplificar la tarea del progrmador.

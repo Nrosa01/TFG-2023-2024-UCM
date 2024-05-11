@@ -13,6 +13,7 @@ Blockly opera del lado del cliente y ofrece un editor dentro de la aplicación, 
 
 A continuación, se detalla tanto la interfaz que se muestra al usuario de la aplicación como el funcionamiento y proceso de creación de bloques y de código a partir de ellos.
 
+#pagebreak()
 Un proyecto de blockly se tiene la siguiente estructura @blockly-visual:
 
 #figure(
@@ -38,10 +39,8 @@ Estos tres pasos se ven de la siguiente manera en código. Suponiendo la creaci�
   radius: 2pt,
 )
 
+#pagebreak()
 Apariencia
-
-
-
 ```Javascript
 export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([{
 {
@@ -93,6 +92,7 @@ En el caso de este proyecto, por optimización se decidió que la definición de
 
 // a partir de aqui hablar de la implementacion particular de blockly en nuestra implementacion, no se como de mucho tendre que hablar, no voy a ponerme a contar todos los bloques , o si
 
+#pagebreak()
 La apariencia de blockly en nuestra aplicación es la siguiente: 
 
 #figure(

@@ -32,7 +32,7 @@ Al ser el objetivo de la GPU el procesar tareas de manera paralela, se puede obs
 #figure(
   image("../images/cpugpu2.png", width: 60%),
   caption: [
-    Comparativa arquitectura de un chip de CPU y de GPU
+    Comparativa arquitectura de un chip de CPU y de GPU @ComputerOrganizationWilliam
   ],
 )
 
@@ -48,7 +48,7 @@ La gran cantidad de cores presentes en una GPU, están agrupados en estructuras 
 #figure(
   image("../images/SM2.png", width: 50%),
   caption: [
-    Streaming Multiprocessor
+    Streaming Multiprocessor @ComputerOrganizationWilliam
   ],
 )
 
@@ -65,7 +65,7 @@ Al código destinado a ser procesado por la GPU se le llama kernel. El código q
 #figure(
   image("../images/softwareGPU.png", width: 40%),
   caption: [
-    Jerarquía de ejecución
+    Jerarquía de ejecución @gpu_arquitecture
   ],
 )
 

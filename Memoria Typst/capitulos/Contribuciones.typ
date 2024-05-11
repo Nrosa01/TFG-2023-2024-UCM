@@ -31,3 +31,40 @@ La web fue realizada en su mayoría por Nicolás, siendo la mayor excepción Blo
 Nicolás creó la estructura de la memoria, la portada, el índice, la sección de autómatas celulares (mas no la de simuladores de arena), la sección de Plugins y Lenguajes de scripting, la sección de CPU y multithreading, la sección de Simualdor en CPU y parte de las secciones de comparación y conclusiones.
 
 == Jonathan Andrade Gordillo
+
+- Simulador en C++
+
+Configuración incial del proyecto así como configurado de solución, proyecto y biblicotecas
+
+Implementación de partículas iniciales como agua, roca y gas
+
+Asistido en la interaccion con el usuario añadiendo pincel ajustable
+
+Añadido propiedades físicas a las particulas como la densidad, permitiendo movimiento que se ajuste a estos parámetros
+
+Investigación de sistema alternativo de interaccion entre partículas
+
+Solución de bugs a lo largo del desarrollo
+
+- Simulador en Rust con Vulkan haciendo uso de GPU
+
+Investigación de posibles formas de hacer uso de la GPU para el cálculo de la lógica
+
+Desarrollo de pipeline gráfico básico haciendo uso de Vulkan
+
+Implementación de partícula de arena 
+
+Investigación y desarrollo de compute shaders que permitan delegar el movimiento a la GPU
+
+
+- Blockly para simulador de Rust
+
+Investigación sobre las necesidades del proyecto y los requisitos del módulo de Blockly.
+
+Creación de todos los bloques presentes en el proyecto, así como de los posibles mutadores que necesiten a excepcion de uno
+
+Ajuste del toolbox para incluir los bloques desarrollados
+
+Implementación de los generadores para cada bloque creado, aunque algunos de ellos tuvieron que ser corregidos más tarde junto a Nicolás de
+
+Colaboración con mi compañero para incluir Blockly en la página web
