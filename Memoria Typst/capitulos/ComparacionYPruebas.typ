@@ -71,7 +71,7 @@ A continuación se muestra una segunda prueba, realizada solo entre las implemen
   figure(image("../images/compc3.png"), caption: [
     Resultados primer equipo
   ]), <a2>,
-  figure(image("../images/compc3.png"), caption: [
+  figure(image("../images/compc4.png"), caption: [
     Resultados segundo equipo
   ]), <b2>,
   gap: 10pt,
