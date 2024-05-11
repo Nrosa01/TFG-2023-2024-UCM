@@ -28,6 +28,10 @@
 
 = Resumen 
 
+#include "capitulos/0.Resumen.typ"
+
+#linebreak()
+
 = Palabras clave 
 
 - Simuladores de arena
@@ -45,6 +49,10 @@
 
 = Abstract
 
+#include "capitulos/0.Abstract.typ"
+
+#linebreak()
+
 = Key Words
 
 - Sand simulators
@@ -60,12 +68,14 @@
 
 #pagebreak(weak: true)
 
+
+#outline(indent: auto)
+
 #outline(
   title: "Índice de Figuras",
   target: figure.where()
 )
 
-#outline(indent: auto)
 
 #pagebreak(weak: true)
 
@@ -78,6 +88,7 @@
 = Introduction
 
 #include "capitulos/1.Introduction.typ"
+
 
 #pagebreak(weak: true)
 

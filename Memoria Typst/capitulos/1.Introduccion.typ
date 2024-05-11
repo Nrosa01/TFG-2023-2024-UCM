@@ -2,10 +2,9 @@
 
 Los simuladores de arena fueron un subgénero destacado durante la decada de los noventa, y continuaron siendo populares hasta principios de los años 2000. Durante ese tiempo, surgieron muchos programas y juegos que permitían a la gente interactuar con mundos virtuales llenos de partículas simuladas. Esto atrajo tanto a amantes de la simulación como a desarrolladores de videojuegos. Sin embargo, tras un período de relativa tranquilidad, estamos presenciando un nuevo auge del género de la mano de videojuegos como Noita o simuladores sandbox como Sandspiel.
 
-El objetivo de este Trabajo de Fin de Grado es sumergirnos en el mundo de los simuladores de arena. Queremos explorar sus diferentes aspectos y características asi como entender mejor las ventajas y desventajas de diferentes enfoques de desarrollo de cara al usuario, para así poder contribuir a su evolución y expansión, ya que consideremos que es un subgénero que puede dar muy buenas experiencias de juego y de uso. 
+Este proyecto nace del deseo de sumergirnos en el mundo de los simuladores de arena. Queremos explorar sus diferentes aspectos y características asi como entender mejor las ventajas y desventajas de diferentes enfoques de desarrollo de cara al usuario, para así poder contribuir a su evolución y expansión, ya que consideremos que es un subgénero que puede dar muy buenas experiencias de juego y de uso. 
 
 En resumen, queremos entender y ayudar a mejorar los simuladores de arena  para hacerlos más útiles y efectivos para los usuarios.
-
 
 
 == Objetivos <Objetivos>
@@ -20,7 +19,7 @@ Se valorará la funcionalidad de cada implementación haciendo uso de los siguie
 
 Con estos análisis, se pretende explorar las características que contribuyen a una experiencia de usuario óptima en un simulador de arena, tanto en términos de facilidad de uso como de rendimiento esperado por parte del sistema. Al comprender mejor estas características, se podrán identificar áreas de mejora y desarrollar recomendaciones para optimizar la experiencia general del usuario con los simuladores de arena.
 
-En resumen, nuestro objetivo es encontrar un balance entre rendimiento y facilidad de extensión que proporcione tanto un entorno lúdico a usuarios casuales como una base de desarrollo para desarrolladores interesados en los simuladores de arena. 
+Nuestro objetivo es encontrar un balance entre rendimiento y facilidad de extensión que proporcione tanto un entorno lúdico a usuarios casuales como una base sólida de desarrollo para desarrolladores interesados en los simuladores de arena. 
 
 == Plan de trabajo
 
@@ -32,7 +31,7 @@ La planificación de trabajo se realizó mayormente entre los autores del TFG, a
 
 - Desarrollo de Simulador en LUA con LÖVE: El objetivo de esta implementación era aplicar la funcionalidad del sistema anterior añadiendo capacidad de adición de parículas personalizadas por parte del usuario, además de añadir capacidad de multithreading para mejorar el rendimiento.
 
-- Desarrollo de Simulador con ejecución de lógica mediante GPU: El objetivo de esta implementación era tener una referencia a nivel de rendimiento sobre la que comparar el resto de implementaciones, así como explorar la viabilidad de programar al sistema al completo mediante GPU.
+- Desarrollo de Simulador con ejecución de lógica mediante GPU: El objetivo de esta implementación era tener una referencia a nivel de rendimiento sobre la que comparar el resto de implementaciones, así como explorar la viabilidad de programar el sistema al completo mediante GPU.
 
 - Desarrollo de Simulador en Rust haciendo uso de Macroquad y Blockly para la creación de bloques personalizados: El objetivo de esta implementación era explorar la opción de crear una version cuya accesibilidad mayor para un perfil de usuario no técnico,además de un rendimiento potencialmente superior en comparación a la implementación de LUA.
 
