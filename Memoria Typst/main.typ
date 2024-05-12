@@ -24,6 +24,8 @@
 
 = Agradecimientos
 
+#include "capitulos/Agradecimientos.typ"
+
 #pagebreak(weak: true)
 
 = Resumen 
