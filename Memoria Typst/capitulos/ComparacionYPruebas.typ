@@ -27,9 +27,9 @@ Las características de los equipos son las siguientes:
 [
   #set align(left)
   Equipo 2:
-  - CPU: Intel Core i7-10750H
-  - GPU: NVIDIA GeForce RTX 2060
-  - RAM: 16 GB
+  - CPU: AMD Ryzen 7 2700x
+  - GPU: AMD RX 5700XT
+  - RAM: 32 GB GDDR4 3200 MHz
   - Sistema operativo: Windows 11
 ]
 )]

@@ -66,12 +66,13 @@ Existen 3 aportaciones principales de Nicolás al proyecto:
 
 - Simulador en C++
 
-  - Configuración incial del proyecto así como configurado de solución, proyecto y biblicotecas
+  - Configuración inicial del proyecto así como configurado de solución, proyecto y biblicotecas
 
   - Implementación de partículas iniciales como agua, roca y gas
   - Asistido en la interaccion con el usuario añadiendo pincel ajustable
   - Añadido propiedades físicas a las particulas como la densidad
   - Movimiento que se ajuste a estos parámetros físicos
+  - Añadido de granularidad a las partículas
   - Investigación de sistema alternativo de interaccion entre partículas mediante funciones anónimas
   - Solución de bugs a lo largo del desarrollo relacionados con rendimiento e interacciones
 
