@@ -60,7 +60,6 @@ Existen 3 aportaciones principales de Nicolás al proyecto:
   - Elaboración de pruebas de rendimiento entre distintos simuladores.
   - Elaboración de figuras para la memoria mediante scripting en Typst y Canva.
 
-#pagebreak()
 == Jonathan Andrade Gordillo
 #linebreak()
 
