@@ -59,7 +59,7 @@
   ]
 }
 
-#let grid_example(caption_text, states, vinit: 0pt, vend: 10pt, alignment: center + horizon) = {
+#let grid_example(caption_text, states, vinit: 0pt, vend: 10pt, alignment: center + horizon, ref: "") = {
 v(vinit)
 align(alignment)[
 #box()[
@@ -79,13 +79,13 @@ align(alignment)[
 
     #if caption_text != "" [
       #show figure.caption: emph
-      #figure("",caption: [#caption_text])
+      #figure("",caption: [#caption_text]) #if ref != "" {label(ref)}
     ]
 
     #v(vend)
 ]]}
 
-#let grid_example_from(caption_text, states, vinit: 0pt, vend: 10pt) = {
+#let grid_example_from(caption_text, states, vinit: 0pt, vend: 10pt, ref: "") = {
 v(vinit)
 align(center)[
 #box()[
@@ -107,7 +107,7 @@ align(center)[
 
     #if caption_text != "" [
       #show figure.caption: emph
-      #figure("",caption: [#caption_text])
+      #figure("",caption: [#caption_text]) #if ref != "" {label(ref)}
     ]
 
     #v(vend)
