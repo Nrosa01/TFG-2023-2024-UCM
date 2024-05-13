@@ -128,12 +128,6 @@
 
 #pagebreak(weak: true)
 
-= Blockly
-
-#include "capitulos/5.1.Blockly.typ"
-
-#pagebreak(weak: true)
-
 = Simulador en GPU
 
 #include "capitulos/6.SimuladorGPU.typ"
