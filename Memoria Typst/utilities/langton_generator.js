@@ -34,6 +34,12 @@ function langtonAnt(dimension, iterations) {
         }
     }
 
+    // Mark the final position of the ant with the number 2 to render it differently
+    // Really I shouldn't do bounds checking but just in case I messs while testing...
+    if (x >= 0 && x < dimension && y >= 0 && y < dimension) {
+        grid[y][x] = 2;
+    }
+
     // Convert the 2D grid to a 1D array
     // This should really be done outside but meh, I'm just coding this quickly for to render the example in typst
     let result = grid.flat().join(',');
