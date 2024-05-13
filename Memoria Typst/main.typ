@@ -94,13 +94,11 @@
 
 #pagebreak(weak: true)
 
-= Autómatas Celulares 
+= Autómatas celulares y simuladores de arena
 
 #include "capitulos/2.1.AutomatasCelulares.typ"
 
 #pagebreak(weak: true)
-
-= Simuladores de arena
 
 #include "capitulos/2.2.SimuladoresDeArena.typ"
 
