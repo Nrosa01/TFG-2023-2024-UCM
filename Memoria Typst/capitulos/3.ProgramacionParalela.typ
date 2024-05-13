@@ -1,12 +1,16 @@
 == Introduccion historica
 
+//Definir que es una GPU antes de mencionarla y justificando por que queremos usarla, ver comentario
+
 Esta sección describe brevemente la evolucion de las GPU's. No se pretende entrar en detalles, sino mas bien señalar los distintos hitos evolutivos que se dieron durante la creación de este hardware.
 
-La necesidad de presentar gráficos en pantalla ha estado siempre presente, desde proyectos como Sketchpad @SketchPad ,animacion 2D cinematográfica o videojuegos, y con ello la necesidad de que los computadores posean hardware que facilite esta tarea. 
+La necesidad de presentar gráficos en pantalla ha estado siempre presente, desde proyectos como Sketchpad @SketchPad, animación 2D cinematográfica o videojuegos, y con ello la necesidad de que los computadores posean hardware que facilite esta tarea. 
 
-Durante la evolución historica del proceso de desarrollo de este hardware, podemos diferenciar 3 fases principalmente @ComputerOrganizationWilliam @history_of_gpu @GPGP-Architecture:
+Durante la evolución historica del proceso de desarrollo de este hardware, podemos diferenciar 3 fases principalmente @ComputerOrganizationWilliam @history_of_gpu @GPGP-Architecture.
 
-En la primera fase, que abarca desde principios de los 80s a mediados de los 90s,  la "GPU" constaba de elementos hardware muy especializados y no programables. Cumplian funciones muy específicas de renderizado en pantalla. Por ello, en esta epoca a este tipo de hardware se le denominaba como aceleradores 2D / 3D.
+//al parecer a pedro pablo no le gusta que se mencionen conceptos que luego van a ser explicados, asi que toca rehacer esto o borrarlo
+
+En la primera fase, que abarca desde principios de los 1980 a mediados de los 1990,  la "GPU" constaba de elementos hardware muy especializados y no programables. Cumplian funciones muy específicas de renderizado en pantalla. Por ello, en esta epoca a este tipo de hardware se le denominaba como aceleradores 2D / 3D.
 
 La segunda fase, que duró hasta mediados de los años 2000, abarca el proceso iterativo de la transformacion de una arquitectura fija y muy especifica a una que permitia la programación de shaders dentro del pipeline gráfico, mediante la modificacion de los shaders de vertices y de pixeles. Este hecho es importante, ya que dada la potencia y características de la GPU, que no dejaba de ser hardware destinado al procesamiento gráfico, añadida a la capacidad de personalizar estos shaders, muchos desarrolladores buscaron formas de mapear datos ajenos a los gráficos a texturas y ejecutar operaciones sobre estos datos mediante shaders @LinearAlgebraGPU .El fin de esta era viene marcado por la introducción por parte de NVIDIA de su novedoso lenguaje GPGPU (General-Purpose Graphics Processing Unit), CUDA (compute unified device architecture), capa de software que proporciona acceso directo al conjunto de instrucciones virtuales de la GPU para la ejecución de kernels.
 
@@ -23,11 +27,12 @@ Este apartado se centra en explicar las diferencias de arquitectura entre una CP
 
 La tarea de renderizado requería de un hardware diferente al presente en la CPU debido a la gran cantidad de cálculos matemáticos que requiere. Desde transformaciones geométricas hasta el cálculo de la iluminación y la aplicación de texturas, todas estas tareas se basan en manipulaciones matemáticas haciendo uso de vectores y matrices. Para optimizar el proceso de renderizado, es esencial reducir el tiempo necesario para llevar a cabo estas operaciones @GPGP-Architecture.
 
+//poner otro ejemplo de utilizacion de GPU 
 Gran parte de estas son divisibles en tareas más pequeñas. Por ejemplo, la multiplicación de matrices se descompone en operaciones vectoriales, donde el resultado de cada elemento de la matriz se calcula mediante la multiplicación y suma de vectores. Esto permitiría, en caso de tener núcleos con capacidad de cómputo suficientes, el cálculo de cada elemento de la matriz por separado. Este enfoque permite una mayor eficiencia en el procesamiento, lo que resulta en una aceleración significativa en la tarea de renderizado.
 
 Por lo tanto, surge la GPU como co-procesador con una arquitectura SIMD (single instruction multiple data) cuya funcion es la de facilitar a la CPU el procesado de tareas relacionadas con lo gráfico, como renderizar imágenes, videos, animaciones etc @ComputerOrganizationPatterson.
 
-Al ser el objetivo de la GPU el procesar tareas de manera paralela, se puede observar una gran diferencia en cuanto a la distribución de espacio físico(recuentode transistores) dentro del chip con respecto a la CPU, que esta diseñada para procesar las instrucciones secuencialmente @ComputerOrganizationWilliam.
+Al ser el objetivo de la GPU el procesar tareas de manera paralela, se puede observar una gran diferencia en cuanto a la distribución de espacio físico (recuento de transistores) dentro del chip con respecto a la CPU, que esta diseñada para procesar las instrucciones secuencialmente @ComputerOrganizationWilliam.
 
 #figure(
   image("../images/cpugpu2.png", width: 60%),
@@ -36,14 +41,17 @@ Al ser el objetivo de la GPU el procesar tareas de manera paralela, se puede obs
   ],
 )
 
-Una GPU dedica la mayor cantidad de espacio a alojar núcleos para tener la mayor capacidad de paralelización posible, mientras que la CPU dedica, la mayoria de su espacio en chip a diferentes niveles de caché y circuitos dedicados a la logica de control@ComputerOrganizationWilliam.
+Una GPU dedica la mayor cantidad de espacio a alojar núcleos para tener la mayor capacidad de paralelización posible, mientras que la CPU dedica, la mayoria de su espacio en chip a diferentes niveles de caché y circuitos dedicados a la logica de control @ComputerOrganizationWilliam.
 
 
 La CPU necesita estos niveles de caché para intentar minimizar al máximo los accesos a memoria principal, los cuales ralentizan mucho la ejecución. De igual manera, al estar diseñados los núcleos CPU para ser capaces de ejecutar cualquier tipo de instruccion, requieren lógica de control para gestionar los flujos de datos, controlar el flujo de instrucciones, entre otras funciones.
 
-Sin embargo, la GPU al estar dedicada principalmente a operaciones matemáticas y por lo tanto tener un set de instrucciones mucho mas reducido en comparación con la CPU, puede prescindir de dedicarle espacio a la logica de control. Al acceder a memoria, a pesar de que los cores tengan registros para guardar datos, la capacidad de estos es muy limitada, por lo que es común que se acceda a la VRAM (Video RAM). La GPU consigue camuflar los tiempos de latencia manejando la ejecucion de hilos sobre los datos. Cuando un hilo esta realizando acceso a datos, otro hilo esta ejecutandose @ComputerOrganizationWilliam.
+Sin embargo, la GPU al estar dedicada principalmente a operaciones matemáticas y por lo tanto tener un set de instrucciones mucho más reducido en comparación con la CPU, puede prescindir de dedicarle espacio a la logica de control. Al acceder a memoria, a pesar de que los cores tengan registros para guardar datos, la capacidad de estos es muy limitada, por lo que es común que se acceda a la VRAM (Video RAM). La GPU consigue camuflar los tiempos de latencia manejando la ejecucion de hilos sobre los datos. Cuando un hilo esta realizando acceso a datos, otro hilo está ejecutandose @ComputerOrganizationWilliam.
 
-La gran cantidad de cores presentes en una GPU, están agrupados en estructuras de hardware llamados SM (Streaming Multiprocessors) en Nvidia y CP (Compute Units) en AMD. Además de núcleos de procesamiento, estas agrupaciones incluyen normalmente una jerarquia básica de memoria con una cache L1, una memoria compartida entre núcleos, una caché de texturas, un programador de tareas y registros para almacenar datos. Su tarea principal es ejecutar programas SIMT (single-instruction multiple-thread) correspondientes a un kernel, asi como manejar los hilos de ejecución, liberándolos una vez que han terminado y ejecutando nuevos hilos para reemplazar los finalizados. @GPGP-Architecture
+//explicar que es nvidia y amd supongo
+La gran cantidad de cores presentes en una GPU, están agrupados en estructuras de hardware llamados SM (Streaming Multiprocessors) en NVIDIA y CP (Compute Units) en AMD. Además de núcleos de procesamiento, estas agrupaciones incluyen normalmente una jerarquia básica de memoria con una cache L1, una memoria compartida entre núcleos, una caché de texturas, un programador de tareas y registros para almacenar datos. Su tarea principal es ejecutar programas SIMT (single-instruction multiple-thread) correspondientes a un kernel, asi como manejar los hilos de ejecución, liberándolos una vez que han terminado y ejecutando nuevos hilos para reemplazar los finalizados. @GPGP-Architecture
+
+//esta figura se entiende mal, poner una version simplificada
 
 #figure(
   image("../images/SM2.png", width: 50%),
@@ -60,7 +68,8 @@ Un programa CUDA puede ser dividido en 3 secciones @ComputerOrganizationWilliam:
 - Código destino a procesarse en el Host (CPU).
 - Codigo destinado a ser procesado en el Dispositivo (GPU).
 - Código que maneja la transferencia de datos entre el Host y el dispositivo. 
-Al código destinado a ser procesado por la GPU se le llama kernel. El código que constituye un kernel tendrá la menor cantidad de codigo condicional posibles preferiblemente estar formado por una secuencia de instrucciones definida. A cada instancia de ejecución del kernel se le conoce como hilo. El desarrollador define cual es el numero de hilos sobre los que quiere ejecutar el kernel, idealmente maximizando la paralelización de los calculos. Estos hilos pueden ser agrupados uniformemente en bloques, y a su vez estos bloques son agrupados en un grid de bloques. El número de bloques totales que se crean viene dictado por el volumen de datos a procesar. Tanto los bloques como los grids pueden tener de 1 a 3 dimensiones, y no necesariamente tienen que coincidir.
+//" preferiblemente estar formado por una secuencia de instrucciones definida", esto esta mal explicado, reescribir explicando por que no es beneficioso el que exista mucho codigo condicional
+Al código destinado a ser procesado por la GPU se le llama kernel. El código que constituye un kernel tendrá la menor cantidad de codigo condicional posible preferiblemente estar formado por una secuencia de instrucciones definida. A cada instancia de ejecución del kernel se le conoce como hilo. El desarrollador define cual es el numero de hilos sobre los que quiere ejecutar el kernel, idealmente maximizando la paralelización de los calculos. Estos hilos pueden ser agrupados uniformemente en bloques, y a su vez estos bloques son agrupados en un grid de bloques. El número de bloques totales que se crean viene dictado por el volumen de datos a procesar. Tanto los bloques como los grids pueden tener de 1 a 3 dimensiones, y no necesariamente tienen que coincidir.
 
 #figure(
   image("../images/softwareGPU.png", width: 40%),
@@ -69,11 +78,11 @@ Al código destinado a ser procesado por la GPU se le llama kernel. El código q
   ],
 )
 
-
+//explicar que es el scheduler global
 A la hora de ejecutar el kernel, el scheduler global crea warps, sub-bloques de un cierto numero de hilos consecutivos sobre los que se llevara a cabo la ejecucion, que luegos serán programados para ejecutar por el scheduler de cada SM.
-Es totalmente imprescindible que estos bloques de hilos puedan ser ejcutados de manera totalmente independiente y sin dependencias entre ellos, ya que a partir de aquí el programador de tareas es el que decide que y cuando se ejecuta. Los hilos dentro del bloque pueden cooperar compartiendo datos y sincronizando su ejecución para coordinar los accesos a datos mediante esperas, mediante una memoria compartida a nivel de bloque. El número de hilos dentro de un bloque esta limitado por el tamaño del SM, ya que todos los hilos dentro de un bloque necesitan residir en el mismo SM para poder compartir recursos de memoria.
+Es totalmente imprescindible que estos bloques de hilos puedan ser ejecutados de manera totalmente independiente y sin dependencias entre ellos, ya que a partir de aquí el programador de tareas es el que decide que y cuando se ejecuta. Los hilos dentro del bloque pueden cooperar compartiendo datos y sincronizando su ejecución para coordinar los accesos a datos mediante esperas, mediante una memoria compartida a nivel de bloque. El número de hilos dentro de un bloque esta limitado por el tamaño del SM, ya que todos los hilos dentro de un bloque necesitan residir en el mismo SM para poder compartir recursos de memoria.
 
-
+//leer comentario, reorganizarlo al inicio supongo
 == Pipeline gráfico y shaders
 
 La función inicial y principal de las GPU era la de procesar la imagen que iba a ser mostrada al usuario. Para facilitar esto, se crearon los shaders, pequeños programas gráficos destinados a ejecutarse en la GPU como parte del pipeline principal de renderizado, cuya base es transformar inputs en outputs que finalmente formarán la imagen a mostrar @Real-Time-Rendering.

@@ -1,5 +1,7 @@
 #import "@preview/sourcerer:0.2.1": code
 
+//Añadir subaparatado pequeño hablando de blockly y relacionandolo con lenguajes de script visuales
+
 Algunos programas necesitan ser extendidos para añadir funcionalidad sin tener que acceder al código fuente. Además, esto permite a usuarios que no sean el desarrollador original añadir funcionalidad al programa. A estos sistemas de extensión se les denomina comúnmente plugins. Un plugin @plugin_architecture es un componente de software que añade una funcionalidad específica a un programa. Los plugins pueden ser utilizados en programas de todo tipo, desde editores de texto hasta videojuegos.
 
 Existen 3 formas principales de extender un programa: mediante librerías dinámicas, mediante un archivo de configuración o mediante un lenguaje de scripting. Cada una tiene sus ventajas y desventajas. En este capítulo se explorarán y explicarán estas opciones. 

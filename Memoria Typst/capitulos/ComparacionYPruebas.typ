@@ -86,7 +86,7 @@ Una vez realizadas las pruebas de rendimiento, se procede a evaluar la usabilida
 
 == Comparación de usabilidad
 
-Para evaluar la usabilidad de los distintos sistemas se ha realizado una encuesta a un grupo de 8 personas. En ella se les ha pedido que realicen una serie de tareas en el simulador de Lua, el de Rust web o ambos. Se descartó el simulador en GPU al resultar complejo de expandir y de ejecutar debido a los requisitos necesarios para su ejecución. La tarea fue la misma para ambos simuladores y el proceso fue grabado para su posterior análisis. Se evalúa tanto el tiempo que tardan en realizar la tarea como la cantidad de errores y confusiones que cometen. El grupo de usuarios seleccionado cubre un perfil amplio de individuos, desde de estudiantes de informática hasta personas sin conocimientos previos en programación. En ambos casos, ninguno de los usuarios había utilizado previamente ninguno de los simuladores ni conocían la existencia de los simuladores de arena.
+Para evaluar la usabilidad de los distintos sistemas se ha realizado una encuesta a un grupo de 12 personas. En ella se les ha pedido que realicen una serie de tareas en el simulador de Lua, el de Rust web o ambos. Se descartó el simulador en GPU al resultar complejo de expandir y de ejecutar debido a los requisitos necesarios para su ejecución. La tarea fue la misma para ambos simuladores y el proceso fue grabado para su posterior análisis. Se evalúa tanto el tiempo que tardan en realizar la tarea como la cantidad de errores y confusiones que cometen. El grupo de usuarios seleccionado cubre un perfil amplio de individuos, desde de estudiantes de informática hasta personas sin conocimientos previos en programación. En ambos casos, ninguno de los usuarios había utilizado previamente ninguno de los simuladores ni conocían la existencia de los simuladores de arena.
 
 La tarea pedida consistía en crear 4 particulas: Arena, Agua, Gas y Lava. La arena trata de moverse hacia debajo si hay vacío o agua, en caso de no poder, realiza el mismo intento hacia abajo a la derecha y abajo a la izquierda. Es decir, intenta moverse en las 3 direcciones descritas si hay aire o agua. Solo se mueve una vez en la primera dirección en la que es posible en cada generación. La particula de gas tiene el mismo comportamiento que el de arena pero yendo hacia arriba en vez de hacia abajo. La partícula de agua se comporta igual que la arena, pero si no puede moverse en ninguna de las 3 direcciones descritas, se debe intentar mover también directamente a la derecha y a la izquierda, en ese orden. Por último, la particula de lava es igual a la de arena en su movimiento, pero si toca una partícula de agua la convierte en gas. Este punto es importante, pues es la particula de lava la que detecta si hay agua y no al revés. Esto tiene implicaciones en su implementación mediante bloques. Esta tarea es común a las pruebas de Lua y Blockly.
 
@@ -98,7 +98,22 @@ No todas las personas pudieron realizar la prueba de Lua debido a falta de conoc
 
 Para la realización de la prueba de Lua, los parámetros registrados son los siguientes:
 
---- Insertar parametros
+- Necesitó asistencia en la creación de la lógica: Positivo si el usuario necesitó ayuda activa después de la explicación inicial. Las dudas preguntadas por el usuario no cuentan como necesitar ayuda. 2
+- Usó el método isEmpty: Esta funcion permite comprobar si la particula en una direccion es vacía. Este parámetro es positivo si hizo uso del método sin sugerencia previa. 1
+- Necesitó ayuda para implementar movimiento aleatorio horizontal: Se considera positivo si el usuario necesitó asistencia del probador para añadirle aleatoriedad de movimiento a las partículas 1
+- Necesitó ayuda con errores de ejecución: Se considera positivo si el usuario necesitó asistencia del probador para solucionar la ejecución de una partícula que provocase que el programa crashee. 3
+- Terminó la prueba: Se considera positivo si el usuario terminó la prueba en menos, negativo si por frustración u otras razones no la terminó. 5
+
+Los resultados son los siguientes:
+
+// #figure(image("../images/pruebaUsuarioLua.png", width: 50%), caption: [
+//     Resultados de las pruebas con usuarios para la prueba de Lua
+//   ])
+
+Todos los usuarios fueron capaces de crear las partículas deseadas de una manera rápida, aunque no de la mas efectiva en la mayoría de casos. Prácticamente ningún usuario hizo uso de la función 'isEmpty' sin sugerencia previa del probador, la mayoría aprovechaba para reutilizar la lógica creada en la partícula de arena, lo que provocaba que usasen la función 'check_neighbour_multiple' de una forma incorrecta, ya que lo empleaban para hacer comprobaciones con un solo tipo de partícula. 
+Todos los usuarios tuvieron errores de ejecución. Las causas mas comunes son: falta de escribir 'api:' para llamar a funciones de programación de partículas, errores de escritura a la hora de hacer uso de estas mismas funciones, y olvidos de hacer uso de 'end' para cerrar claúsulas condicionales 'if'. La mayoría de participantes pudo implementar aleatoriedad en el movimiento de manera satisfactoria sin ayuda del probador.
+Como particularidad, un usuario el cual realizó la prueba de blockly antes que la de Lua, a la hora de implementar aleatoriedad, buscó hacer uso de una funcionalidad 'randomtransformation(horizontalReflection)' inexistente en esta simulación. No se detectó ningún sesgo de este tipo por parte de los participantes que realizaron la prueba de Lua y después la de blockly.
+
 
 Respecto la prueba de Blockly, los parámetros registrados son los siguientes:
 

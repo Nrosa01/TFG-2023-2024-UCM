@@ -1,4 +1,3 @@
-
 Este apartado tiene como objetivo explicar qué es Blockly así como su funcionamiento.
 
 Blockly es una biblioteca perteneciente a Google lanzada en 2012 que permite a los desarrolladores la generación automática de codigo en diferentes lenguajes de programación mediante la creación de bloques personalizados. Fue diseñado inicialmente para generar código en JavaScript, pero debido a su creciente demanda, se ha adaptado para admitir de manera nativa la generación de código en una amplia variedad de lenguajes de programación: JavaScript, Python, PHP, Lua y Dart. 
@@ -30,67 +29,12 @@ Para que el usuario pueda usar un bloque correctamente, son necesarios 3 pasos d
 - Especificar el código que será generado una vez haya sido arrastrado el bloque al workspace. Debe haber una definición del código a generar por cada bloque y lenguaje que se quiera soportar.
 - Incluirlo en la toolbox para que pueda ser utilizado. Esto puede ser realizado mediante XML y JSON, aunque Google recomienda el uso de JSON.
 
-Estos tres pasos se ven de la siguiente manera en código. Suponiendo la creación de un simple bloque con un cuadro de texto rellenable por el usuario:
-
-#show raw.where(block: true): box.with(
-  fill: luma(240),
-  inset: (x: 3pt, y: 0pt),
-  outset: (y: 3pt),
-  radius: 2pt,
-)
-
-#pagebreak()
-Apariencia
-```Javascript
-export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([{
-{
-    "type": 'text',
-    "message0": "%1",
-    "args0": [
-        {
-            "type": "field_input",
-            "name": "FIELDNAME",
-            "text": "default text",
-            "spellcheck": false
-        }
-    ],
-}
-}]);
-
-```
-#linebreak()
-Generación
-
-```Javascript
-import {javascriptGenerator} from 'blockly/javascript';
-javascriptGenerator.forBlock = function(block) {
-  var text_fieldname = block.getFieldValue('FIELDNAME');
-  var code = '"' + text_fieldname + '"';
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
-};
-
-```
-#linebreak()
-Inclusión
-
-```JavaScript
-export const toolbox = {
-  'kind': 'flyoutToolbox',
-  'contents': [
-    {
-      {
-        'kind': 'block',
-        'type': 'text'
-      }
-}]};
-```
+//esta zona en caso de que esto se quede en "estado del arte" no tendria mucho sentido
 
 La definición de la apariencia y la inclusión en la toolbox son tareas bastante directas. Sin embargo, la generacion de código requiere la presencia de un intérprete que genere código a partir del texto que devuelve la función. En caso de querer generar código para un lenguaje no soportado por defecto, el desarrollador necesitará crear este intérprete.
 
 En el caso de este proyecto, por optimización se decidió que la definición de partículas se diera a traves de JSON, y que ese JSON se parseara a código Rust. Debido a que JSON no requiere especificar la ejecución de nada, solo definir el texto de una manera correcta, esta implementación no resultó compleja.
 
-
-// a partir de aqui hablar de la implementacion particular de blockly en nuestra implementacion, no se como de mucho tendre que hablar, no voy a ponerme a contar todos los bloques , o si
 
 #pagebreak()
 La apariencia de blockly en nuestra aplicación es la siguiente: 
@@ -106,11 +50,3 @@ la apariencia visual es igual a la apariencia general presentada anteriormente. 
 
 Cada partícula nueva crea un workspace nuevo e independiente del resto. Este workspace es creado con un bloque por defecto que define atributos básicos para la particula como el nombre, el color o el rango de transparencia aleatoria que puede tener cada instancia de partícula creada. Todo bloque que no se encuentre contenido dentro de este bloque no será procesado por el intérprete de JSON.
 
-
-// iba a explicar como va esto pero cuento con que para este punto se haya explicado como funciona la creacion de particulas ¿?
-// #figure(
-//   image("../images/CreacionParticulas.png", width: 75%),
-//   caption: [
-//     workspace creación de partícula
-//   ],
-// )
