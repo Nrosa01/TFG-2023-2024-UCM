@@ -371,7 +371,7 @@
   columns: 80,
   cellsize: 3.25pt,
   default_stroke: black+.05pt,
-  color_map: (white, black, white, black),
+  color_map: (white, black, red, black),
   data: angton,
 )
 
