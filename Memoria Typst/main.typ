@@ -94,7 +94,7 @@
 
 #pagebreak(weak: true)
 
-= Autómatas Celulares y simuladores de arena
+= Autómatas celulares y simuladores de arena
 
 #include "capitulos/2.1.AutomatasCelulares.typ"
 
@@ -158,4 +158,4 @@
 
 #pagebreak(weak: true)
 
-#bibliography("bibliography.bib", style: "nature")
+#bibliography("bibliography.bib", style: "ieee")
