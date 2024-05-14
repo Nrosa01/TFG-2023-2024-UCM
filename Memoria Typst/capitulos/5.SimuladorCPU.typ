@@ -2,13 +2,14 @@
 #import "../utilities/gridfunc.typ": *
 #import "../data/gridexamples.typ": *
 
-Este trabajo trata sobre simuladores de arena y, como se mencionó en la @simuladoresArena, los simuladores de arena no son paralelizables debido a que cada celda puede modificar el estado de las demás. En este capítulo se muuestran distintas implementaciones de simuladores de arena que se ejecutan en la CPU para poder compararlos.
+Este trabajo trata sobre simuladores de arena y, como se mencionó en la @simuladoresArena, los simuladores de arena no son paralelizables debido a que cada celda puede modificar el estado de las demás. En este capítulo se muestran distintas implementaciones de simuladores de arena que se ejecutan en la CPU para poder compararlos.
 
 Para poder realizar la comparativa, se han realizado 3 simuladores diferentes basados en explotar la CPU. Cada uno de ellos tiene sus propias ventajas y desventajas, además de distintos propósitos. 
 
 A continuación se detalla cada implementación, profundizando en sus rasgos particulares.
 
-== Simulador en C++ <SimuladorCPU>
+== Simulador en C++  
+
 
 El primer simulador fue desarrollado en C++ con OpenGL y GLFW. Este simulador sirve como base comparativa de las siguientes implementaciones. Este sistema posee 6 partículas: Arena, Agua, Aire, Gas, Roca y Ácido. En este sistema las partículas están programadas en el sistema y no son modificables de forma externa. Cada partícula tiene una serie de propiedades: color, densidad, granularidad, id y movimiento. El color es el color de la partícula, la densidad es un valor númerico que indica la pesadez relativa respecto otras partículas, la granularidad es un valor que modifica ligeramente el color de la partícula, la id es un valor que indica el tipo de partícula y el movimiento es una serie de valores que describe el movimiento de la partícula. Estos rasgos son particulares de esta implementación y no se repiten en las siguientes a excepción del identificador de la particula, que es común a todas las implementaciones.
 
@@ -98,18 +99,18 @@ La tercera generacion ya deja ver el problema. Si la simulación fuera single th
   rect(fill: rgb("#838383"), inset: 0pt, outset: 0pt)[#draw_grid_simple(luaimpl_problem1_1_3)],
 )))
 
-Alcanzar la solución esperada en la figura 17 es teóricamente imposible. Sin embargo es posible convertir el comportamiento indeseado en la norma. Para ello se decidió cambiar el procesamiento del sistema a un sistema de doble buffer. Para una mayor comprensión, este sistema puede entender como el usado en los autómata celulares formales. Todas las celdas se ejecutan "a la vez", es decir, si unca celda camnbia así lo dictan las reglas del sistema, las vecinas no percibirán ese cambio hasta la siguiente iteración. Esto permite que el procesimiento sea más uniforme aún cuando la particula se mueve fuera de su área de procesamiento.
+Alcanzar la solución esperada en la figura 17 es teóricamente imposible. Sin embargo es posible convertir el comportamiento indeseado en la norma. Para ello se decidió cambiar el procesamiento del sistema a un sistema de doble buffer. Para una mayor comprensión, este sistema puede entender como el usado en los autómata celulares formales. Todas las celdas se ejecutan "a la vez", es decir, si una celda camnbia así lo dictan las reglas del sistema, las vecinas no percibirán ese cambio hasta la siguiente iteración. Esto permite que el procesimiento sea más uniforme aún cuando la particula se mueve fuera de su área de procesamiento.
 
 
 Con esto el sistema funciona satisfactoriamente, es suficientemente rápido y fácil de extender mediante mods que son arrastrar y soltar. Existe un API (PDF, documento adjunto, no sé como indicarlo) que explica a los usuarios como crear sus propias particulas. El sistema permite referenciar otras particulas. Es decir, una partícula de arena puede comprobar si debajo de ella hay agua. Esto otorga una gran flexibilidad y portabilidad, además de un rendimiento competente gracias a la compilación `Just in Time` y el aprovechamiento de los recursos de la CPU.
 
 Finalmente, se explora la posibilidad de tener un sistema más eficiente manteniendo la flexibilidad. Para ello, se implementó una versión en Rust con Macroquad.
 
-#pagebreak(weak: true)
-= Blockly
+// #pagebreak(weak: true)
+// = Blockly
 
-#include "5.1.Blockly.typ"
-#pagebreak(weak: true)
+// #include "5.1.Blockly.typ"
+// #pagebreak(weak: true)
 
 == Simulador en Rust con Macroquad
 

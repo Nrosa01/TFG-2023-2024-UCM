@@ -56,8 +56,6 @@ Este proyecto utiliza la misma base de sus predecesores, proporcionando al jugad
 
 Hasta aquí hemos explorado los fundamentos de los autómatas celulares y los simuladores de arena, así como algunos ejemplos de sus aplicaciones en la industria de los videojuegos.
 
-// AÑADIR UNA JUSTIFICACION MAS GRANDE PARA EL PROXIMO CAPITULO ------------
-
 //habria que ser consistentes con estas introducciones, o se ponen en todos lados o no se pone en ninguno
 #text(weight: "bold")[Proximo capítulo]
 
@@ -65,5 +63,5 @@ A mayor sea el tamaño de la matriz que represente el estado de un autómata cel
 
 Esto no ocurre de manera tan directa en los simuladores de arena, donde el orden de ejecución de las celdas afecta al resultado final, aunque se verá en el @SimuladorGPU cómo modificando un poco las reglas, se puede conseguir transformar un problema de simulación de partículas en un problema 'Embarrassingly parallel'.
 
-Existe un componente de ordenador que, por arquitectura, es muy eficaz en la resolución de este tipo de problemas. Este componente se llama GPU, y se hablará de él a continuación. 
+Existe un componente de ordenador que, por su arquitectura, es muy eficaz en la resolución de este tipo de problemas. Este componente se llama GPU, y se hablará de él a continuación. 
 

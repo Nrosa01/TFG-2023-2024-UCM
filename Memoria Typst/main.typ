@@ -126,7 +126,7 @@
 
 #pagebreak(weak: true)
 
-= Simuladores de arena en CPU
+= Simuladores de arena en CPU <SimuladorCPU>
 
 #include "capitulos/5.SimuladorCPU.typ"
 

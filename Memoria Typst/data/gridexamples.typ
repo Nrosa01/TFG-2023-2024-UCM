@@ -761,3 +761,67 @@
           0, 0, 1, 0, 0,
           0, 1, 1, 1, 0),
 )
+
+
+#let gpu_01 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 7,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 1, 1, 1, 0, 0,
+          0, 0, 1, 1, 1, 0, 0,
+          0, 0, 1, 1, 1, 0, 0,
+          0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, ),
+)
+
+#let gpu_03 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 7,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 1, 1, 1, 0, 0,
+          0, 0, 1, 1, 1, 0, 0,
+          0, 0, 0,0,0, 0, 0,
+          0, 0, 1, 1, 1, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, ),
+)
+
+#let gpu_04 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 7,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 1, 1, 1, 0, 0,
+          0, 0, 0, 0, 0, 0, 0,
+          0, 0, 1, 1, 1, 0, 0,
+          0, 0, 0, 0, 0, 0, 0,
+          0, 0, 1, 1, 1, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, ),
+)
+
+
+
+#let gpu_02 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 3,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (1, 0, 1,
+          0, 0, 0,
+          0, 0, 0,),
+          
+)

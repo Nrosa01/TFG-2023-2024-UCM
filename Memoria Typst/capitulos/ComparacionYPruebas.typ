@@ -98,17 +98,17 @@ No todas las personas pudieron realizar la prueba de Lua debido a falta de conoc
 
 Para la realización de la prueba de Lua, los parámetros registrados son los siguientes:
 
-- Necesitó asistencia en la creación de la lógica: Positivo si el usuario necesitó ayuda activa después de la explicación inicial. Las dudas preguntadas por el usuario no cuentan como necesitar ayuda. 2
-- Usó el método isEmpty: Esta funcion permite comprobar si la particula en una direccion es vacía. Este parámetro es positivo si hizo uso del método sin sugerencia previa. 1
-- Necesitó ayuda para implementar movimiento aleatorio horizontal: Se considera positivo si el usuario necesitó asistencia del probador para añadirle aleatoriedad de movimiento a las partículas 1
-- Necesitó ayuda con errores de ejecución: Se considera positivo si el usuario necesitó asistencia del probador para solucionar la ejecución de una partícula que provocase que el programa crashee. 3
-- Terminó la prueba: Se considera positivo si el usuario terminó la prueba en menos, negativo si por frustración u otras razones no la terminó. 5
+- Necesitó asistencia en la creación de la lógica: Positivo si el usuario necesitó ayuda activa después de la explicación inicial. Las dudas preguntadas por el usuario no cuentan como necesitar ayuda.
+- Usó el método isEmpty: Esta funcion permite comprobar si la particula en una direccion es vacía. Este parámetro es positivo si hizo uso del método sin sugerencia previa.
+- Necesitó ayuda para implementar movimiento aleatorio horizontal: Se considera positivo si el usuario necesitó asistencia del probador para añadirle aleatoriedad de movimiento a las partículas
+- Necesitó ayuda con errores de ejecución: Se considera positivo si el usuario necesitó asistencia del probador para solucionar la ejecución de una partícula que provocase que el programa crashee.
+- Terminó la prueba: Se considera positivo si el usuario terminó la prueba en menos, negativo si por frustración u otras razones no la terminó.
 
 Los resultados son los siguientes:
 
-// #figure(image("../images/pruebaUsuarioLua.png", width: 50%), caption: [
-//     Resultados de las pruebas con usuarios para la prueba de Lua
-//   ])
+#figure(image("../images/pruebaUsuarioLua.png", width: 50%), caption: [
+    Resultados de las pruebas con usuarios para la prueba de Lua
+  ])
 
 Todos los usuarios fueron capaces de crear las partículas deseadas de una manera rápida, aunque no de la mas efectiva en la mayoría de casos. Prácticamente ningún usuario hizo uso de la función 'isEmpty' sin sugerencia previa del probador, la mayoría aprovechaba para reutilizar la lógica creada en la partícula de arena, lo que provocaba que usasen la función 'check_neighbour_multiple' de una forma incorrecta, ya que lo empleaban para hacer comprobaciones con un solo tipo de partícula. 
 Todos los usuarios tuvieron errores de ejecución. Las causas mas comunes son: falta de escribir 'api:' para llamar a funciones de programación de partículas, errores de escritura a la hora de hacer uso de estas mismas funciones, y olvidos de hacer uso de 'end' para cerrar claúsulas condicionales 'if'. La mayoría de participantes pudo implementar aleatoriedad en el movimiento de manera satisfactoria sin ayuda del probador.
