@@ -132,7 +132,7 @@
 
 #pagebreak(weak: true)
 
-= Simulador en GPU
+= Simulador en GPU <SimuladorGPU>
 
 #include "capitulos/6.SimuladorGPU.typ"
 
