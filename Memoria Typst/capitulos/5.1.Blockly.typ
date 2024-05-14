@@ -1,6 +1,6 @@
 Este apartado tiene como objetivo explicar qué es Blockly así como su funcionamiento.
 
-Blockly es una biblioteca perteneciente a Google lanzada en 2012 que permite a los desarrolladores la generación automática de codigo en diferentes lenguajes de programación mediante la creación de bloques personalizados. Fue diseñado inicialmente para generar código en JavaScript, pero debido a su creciente demanda, se ha adaptado para admitir de manera nativa la generación de código en una amplia variedad de lenguajes de programación: JavaScript, Python, PHP, Lua y Dart. 
+Blockly es una biblioteca perteneciente a Google lanzada en 2012 que permite a los desarrolladores la generación automática de código en diferentes lenguajes de programación mediante la creación de bloques personalizados. Fue diseñado inicialmente para generar código en JavaScript, pero debido a su creciente demanda, se ha adaptado para admitir de manera nativa la generación de código en una amplia variedad de lenguajes de programación: JavaScript, Python, PHP, Lua y Dart. 
 
 Esta biblioteca es cada vez más conocida y usada en grandes proyectos. Actualmente se emplea en algunos como ‘App Inventor’@app_inventor del MIT@MIT,para crear aplicaciones para Android, ‘Blockly Games’@blockly_games, que es un conjunto de juegos educativos para enseñar conceptos de programación que también pertenece a Google, ‘Scratch’@scratch, web que permite a jóvenes crear historias digitales, juegos o animaciones o Code.org@code.org para enseñar conceptos de programación básicos. 
 
@@ -8,7 +8,7 @@ Esta biblioteca es cada vez más conocida y usada en grandes proyectos. Actualme
 //y que fallos me permite revisar el tener acceso al codigo fuente
 //tampoco es una biblioteca reciente aunque las carencias en documentacion y demas si que estan ahi
 
-El motivo de la utilización de Blockly como biblioteca para desarrollar el comportamiento deseado fue que es la biblioteca mas extendida para realizar este tipo de comportamiento. No existe mucho software que permita generar codigo personalizado utilizando tus propios bloques. Además, tiene otras ventajas como que es de código abierto, lo que facilitó el desarrollo al permitir consultar el código fuente para revisar fallos o comprender cómo se crean ciertos elementos. Como principal desventaja se encuentra que al ser una biblioteca reciente no cuenta con una documentación del todo completa, además que cada versión renueva muchos elementos por lo que tutoriales, guías o soluciones a problemas pasados cambian completamente de un año a otro.
+El motivo de la utilización de Blockly como biblioteca para desarrollar el comportamiento deseado fue que es la biblioteca mas extendida para realizar este tipo de comportamiento. No existe mucho software que permita generar código personalizado utilizando tus propios bloques. Además, tiene otras ventajas como que es de código abierto, lo que facilitó el desarrollo al permitir consultar el código fuente para revisar fallos o comprender cómo se crean ciertos elementos. Como principal desventaja se encuentra que no cuenta con una documentación del todo completa, además que cada versión renueva muchos elementos por lo que tutoriales, guías o soluciones a problemas pasados cambian completamente de un año a otro.
 
 
 Blockly opera del lado del cliente y ofrece un editor dentro de la aplicación, permitiendo a los usuarios intercalar bloques que representan instrucciones de programación. Estos bloques se traducen directamente en código según las especificaciones del desarrollador. Para los usuarios, el proceso es simplemente arrastrar y soltar bloques, mientras que Blockly se encarga de generar el código correspondiente. Luego, la aplicación puede ejecutar acciones utilizando el código generado.
@@ -39,18 +39,3 @@ Para que el usuario pueda usar un bloque correctamente, son necesarios tres paso
 La definición de la apariencia y la inclusión en la toolbox son tareas bastante directas. Sin embargo, la generacion de código requiere la presencia de un intérprete que genere código a partir del texto que devuelve la función. En caso de querer generar código para un lenguaje no soportado por defecto, el desarrollador necesitará crear este intérprete.
 
 En el caso de este proyecto, por optimización se decidió que la definición de partículas se diera a traves de JSON, y que ese JSON se parseara a código Rust. Debido a que JSON no requiere especificar la ejecución de nada, solo definir el texto de una manera correcta, esta implementación no resultó compleja.
-
-
-La apariencia de Blockly en nuestra aplicación es la siguiente: 
-
-#figure(
-  image("../images/InterfazPixelCreator.png", width: 75%),
-  caption: [
-    interfaz Blockly pixel creator
-  ],
-)<blockly_rust>
-
-La figura @blockly_rust muestra la apariencia visual de nuestra aplicación.Esta es igual a la apariencia de un proyecto de Blockly presentada anteriormente. Como elementos particulares, se encuentran 3 botones en la zona inferior derecha con el siguiente comportamiento ordenado de arriba a abajo: centrar la pantalla, aumentar el zoom, disminuir el zoom. Además, los bloques al moverlos se colapsan sobre una grilla definida por los puntos visibles en el workspace.
-
-Cada partícula nueva crea un workspace nuevo e independiente del resto. Este workspace es creado con un bloque por defecto que define atributos básicos para la particula como el nombre, el color o el rango de transparencia aleatoria que puede tener cada instancia de partícula creada. Todo bloque que no se encuentre contenido dentro de este bloque no será procesado por el intérprete de JSON.
-

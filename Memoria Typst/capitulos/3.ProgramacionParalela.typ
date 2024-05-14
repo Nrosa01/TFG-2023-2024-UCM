@@ -60,7 +60,7 @@ Debido a que la implementacion de CUDA fue un punto de inflexión en el desarrol
 
 Un programa CUDA puede ser dividido en 3 secciones @ComputerOrganizationWilliam:
 - Código destino a procesarse en el Host (CPU).
-- Codigo destinado a ser procesado en el Dispositivo (GPU).
+- Código destinado a ser procesado en el Dispositivo (GPU).
 - Código que maneja la transferencia de datos entre el Host y el dispositivo. 
 
 El código destinado a ser procesado por la GPU se conoce como kernel. Un kernel está diseñado para contener la menor cantidad de código condicional posible. Esto se debe a que la GPU está optimizada para ejecutar un mismo conjunto de instrucciones en múltiples datos de manera simultánea. Cuando hay muchas ramificaciones condicionales (como if-else), puede haber una divergencia en la ejecución de los hilos, lo que disminuye la eficiencia del paralelismo y puede resultar en un rendimiento inferior.

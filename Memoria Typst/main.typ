@@ -104,7 +104,7 @@
 
 #pagebreak(weak: true)
 
-= Programación en GPU's
+= Programación en GPUs
 
 #include "capitulos/3.ProgramacionParalela.typ"
 

@@ -106,11 +106,6 @@ Con esto el sistema funciona satisfactoriamente, es suficientemente rápido y f�
 
 Finalmente, se explora la posibilidad de tener un sistema más eficiente manteniendo la flexibilidad. Para ello, se implementó una versión en Rust con Macroquad.
 
-// #pagebreak(weak: true)
-// = Blockly
-
-// #include "5.1.Blockly.typ"
-// #pagebreak(weak: true)
 
 == Simulador en Rust con Macroquad
 
