@@ -652,3 +652,112 @@
           0, 0, 0, 0, 1,
           0, 0, 1, 1, 1),
 )
+
+#let sand_simulator_lr_01 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0),
+)
+
+#let sand_simulator_lr_02 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 1, 0, 0, 0,
+          0, 1, 0, 0, 0,
+          0, 1, 0, 0, 0,
+          0, 0, 1, 0, 0),
+)
+#let sand_simulator_lr_03 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          1, 0, 0, 0, 0,
+          1, 0, 0, 0, 0,
+          0, 1, 1, 0, 0),
+)
+#let sand_simulator_lr_04 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 1, 0, 0, 0,
+          1, 1, 1, 0, 0),
+)
+
+
+#let sand_simulator_01 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 0, 0, 0),
+)
+
+#let sand_simulator_02 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0),
+)
+#let sand_simulator_03 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 1, 1, 0, 0),
+)
+#let sand_simulator_04 = (
+  caption: "",
+  caption_alignment: ttb,
+  hspace: 15pt,
+  transition: " ",
+  columns: 5,
+  cellsize: gameOfLifeStructuresCellSize,
+  data:  (0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0,
+          0, 0, 1, 0, 0,
+          0, 1, 1, 1, 0),
+)
