@@ -110,9 +110,13 @@
 
 #pagebreak(weak: true)
 
-= Plug-ins y lenguajes de scripting
+// = Plug-ins y lenguajes de scripting
 
-#include "capitulos/4.PluginsYScripting.typ"
+// #include "capitulos/4.PluginsYScripting.typ"
+
+= Estrategias para definir comportamiento en motores de videojuegos
+
+#include "capitulos/4.PluginsYScriptingV2.typ"
 
 #pagebreak(weak: true)
 
