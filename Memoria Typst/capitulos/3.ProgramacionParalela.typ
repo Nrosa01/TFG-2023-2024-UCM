@@ -27,7 +27,7 @@ Este apartado se centra en explicar las diferencias de arquitectura entre una CP
 
 La tarea de renderizado requería de un hardware diferente al presente en la CPU debido a la gran cantidad de cálculos matemáticos que requiere. Desde transformaciones geométricas hasta el cálculo de la iluminación y la aplicación de texturas, todas estas tareas se basan en manipulaciones matemáticas haciendo uso de vectores y matrices. Para optimizar el proceso de renderizado, es esencial reducir el tiempo necesario para llevar a cabo estas operaciones @GPGP-Architecture.
 
-Por lo tanto, surge la GPU como co-procesador con una arquitectura SIMD (single instruction multiple data) cuya función es la de facilitar a la CPU el procesado de tareas relacionadas con lo gráfico, como renderizar imágenes, videos, animaciones, etc.@ComputerOrganizationPatterson.
+Por lo tanto, surge la GPU como co-procesador con una arquitectura SIMD (single instruction multiple data) cuya función es la de facilitar a la CPU el procesado de tareas relacionadas con lo gráfico, como renderizar imágenes, videos, animaciones, etc @ComputerOrganizationPatterson.
 
 Al ser el objetivo de la GPU el procesar tareas de manera paralela, se puede observar una gran diferencia en cuanto a la distribución de espacio físico (recuento de transistores) dentro del chip con respecto a la CPU, que esta diseñada para procesar las instrucciones secuencialmente @ComputerOrganizationWilliam.
 
@@ -39,7 +39,6 @@ Al ser el objetivo de la GPU el procesar tareas de manera paralela, se puede obs
 )
 
 Una GPU dedica la mayor cantidad de espacio a alojar núcleos para tener la mayor capacidad de paralelización posible, mientras que la CPU dedica, la mayoria de su espacio en chip a diferentes niveles de caché y circuitos dedicados a la logica de control @ComputerOrganizationWilliam.
-
 
 La CPU necesita estos niveles de caché para intentar minimizar al máximo los accesos a memoria principal, los cuales ralentizan mucho la ejecución. De igual manera, al estar diseñados los núcleos CPU para ser capaces de ejecutar cualquier tipo de instruccion, requieren lógica de control para gestionar los flujos de datos, controlar el flujo de instrucciones, entre otras funciones.
 

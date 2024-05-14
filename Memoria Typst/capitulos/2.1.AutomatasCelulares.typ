@@ -16,6 +16,7 @@ Finalmente, para definir completamente un autómata celular, se requiere una "re
 
 Para ilustrar mejor el concepto de autómata celular se muestra un ejemplo a continuación. Este es un automáta celular de 2 dimensiones. Cada celda puede tener dos posible estados: `Apagada` o `Encendida`. La regla de este sistema es que si la celda está `Apagada` y cualquier de sus vecinos está `Encendida` entonces pasa a estar `Encendida` en la siguiente iteración. Por el contrario, si la celda está `Encendida` y cualquiera de sus vecinos está `Apagado` entonces pasará al estado `Apagado`. En resumen, los estados alternan periódicamente. 
 
+#pagebreak()
 A continuación se muestra un ejemplo de este sistema con 3 iteraciones:
 
 #grid_example("Ejemplo de autómata celular sencillo", (state_01_ex1, state_02_ex1, state_03_ex1))

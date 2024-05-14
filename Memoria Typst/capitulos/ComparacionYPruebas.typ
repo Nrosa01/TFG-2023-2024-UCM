@@ -1,6 +1,6 @@
 #import "@preview/subpar:0.1.0"
 
-Una vez entendidos los automátas celulares y las implementaciones realizadas, se procede a evaluar y compararlas de la siguiente forma:
+Una vez entendidos los simuladores de arena y las implementaciones realizadas, se procede a evaluar y compararlas de la siguiente forma:
 
 - Por un lado, una evaluación de rendimiento en cada una de las implementaciones, tanto en CPU como en GPU. 
 - Por el otro, una evaluación de usabilidad. Para esta se evaluará la capacidad de los usuarios de expandir el sistema dadas unas instrucciones.

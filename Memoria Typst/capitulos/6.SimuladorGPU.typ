@@ -2,7 +2,7 @@
 #import "../data/gridexamples.typ": *
 #import "../data/data.typ": *
 
-Ejecutar una simulación de partículas en la GPU supone un problema. Como se explicó en la @simuladoresArena, y se mencionó en la @SimuladorCPU, los simuladores de arena de por sí no son paralelizables, ya que son dependientes del orden de ejecución y cada celda puede potencialmente modificar al resto de celdas de la matriz. Sin embargo, es posible, reescribiendo las condiciones de evolución de las partículas, transformar un simulador de arena en un autómata celular. Para ello, hay que volver del concepto de partícula al de celda. Esto supone que cada celda tiene que poder conocer su próximo estado mediante reglas locales con sus vecinas, y cada celda solo se modificará a sí misma.
+Ejecutar una simulación de partículas en la GPU supone un desafío. Como se explicó en la @simuladoresArena, y se mencionó en la @SimuladorCPU, los simuladores de arena de por sí no son paralelizables, ya que son dependientes del orden de ejecución y cada celda puede potencialmente modificar al resto de celdas de la matriz. Sin embargo, es posible, reescribiendo las condiciones de evolución de las partículas, transformar un simulador de arena en un autómata celular. Para ello, hay que volver del concepto de partícula al de celda. Esto supone que cada celda tiene que poder conocer su próximo estado mediante reglas locales con sus vecinas, y cada celda solo se modificará a sí misma.
 
 Tomando de nuevo el ejemplo de la @simuladoresArena de simulador básico con un solo tipo de partícula, la de arena, se va a mostrar como se puede convertir este simulador en un autómata celular con un comportamiento similar. Cada celda de este autómata celular solo tiene dos estados, vacío y arena.
 
@@ -33,7 +33,7 @@ Tanto la partícula de arriba a la izquierda como la de arriba a la derecha pued
 
 Esta implementación, a cambio de ser la más rápida en ejecución, como ya se verá en el capítulo de comparaciones, no aporta flexibilidad de ampliación alguna al usuario, ya que el código de lógica de movimiento se ejecuta mediante compute shaders escritos en .GLSL, lo cual es una tarea que puede ser complicada incluso para programadores que no tengan muchos conocimientos de informática gráfica y programacion de GPUs. A su vez, otro problema que presenta esta implementación es que el añadir partículas e interacciones entre ellas requiere mucho mas trabajo que sus contrapartes en CPU, ya que requiere transformar las normas de movimiento y de interacciones entre partículas a reglas locales de celdas. La dificultad que presenta ampliar este sistema ha hecho que actualmente solo tenga implementada la partícula de arena.
 
-Se utilizó Vulkano @vulkano, una librería hecha en Rust que actúa como wrapper de Vulkan @vulkan como librería gráfica para renderizar partículas debido a la flexibilidad y rendimiento que aporta el tener control sobre el pipeline gráfico a la hora del renderizado. 
+Se utilizó Vulkano @vulkano, una librería hecha en Rust que actúa como wrapper de Vulkan @vulkan, como librería gráfica para renderizar partículas debido a la flexibilidad y rendimiento que aporta el tener control sobre el pipeline gráfico a la hora del renderizado. 
 Se hizo uso de Bevy @bevy, motor de videojuegos hecho en Rust, para implementar mecánicas básicas como el bucle principal de juego o procesamiento de input y de Egui @egui para crear la interfaz. 
 
 
