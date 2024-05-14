@@ -1,4 +1,5 @@
-== Simuladores de arena
+== Simuladores de arena <simuladoresArena>
+
 En este capítulo, se hablará de manera resumida acerca de qué son los simuladores de partículas de manera general así como sus múltiples aplicaciones a diferentes sectores. Mas tarde, se presentan una serie de antecedentes que se han tomado de base para el desarrollo del proyecto.
 
 === Introducción a la simulacion de partículas
