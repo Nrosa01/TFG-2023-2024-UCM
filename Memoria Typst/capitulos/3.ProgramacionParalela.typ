@@ -1,6 +1,6 @@
 
 
-La GPU (graphics processing unit) es un procesador originalmente diseñado para manejar y acelerar el procesamiento de tareas gráficas, como puede ser el mostrar imágenes o videos en pantalla. Para facilitar la aceleración de estas tareas, se crearon los shaders, pequeños programas gráficos destinados a ejecutarse en la GPU como parte del pipeline gráfico. El pipeline gráfico es el conjunto de operaciones secuenciales que finalmente formarán la imagen a mostrar en pantalla. La denominación pipeline hace referencia a que las operaciones que lo componen se ejecutan de manera secuencial y cada operación recibe una entrada de la fase anterior y devuelve una salida que recibirá la siguiente fase como entrada, hasta completar la imagen. @Real-Time-Rendering
+La GPU (graphics processing unit) es un procesador originalmente diseñado para manejar y acelerar el procesamiento de tareas gráficas, como puede ser el mostrar imágenes o vídeos en pantalla. Para facilitar la aceleración de estas tareas, se crearon los shaders, pequeños programas gráficos destinados a ejecutarse en la GPU como parte del pipeline gráfico. El pipeline gráfico es el conjunto de operaciones secuenciales que finalmente formarán la imagen a mostrar en pantalla. La denominación pipeline hace referencia a que las operaciones que lo componen se ejecutan de manera secuencial y cada operación recibe una entrada de la fase anterior y devuelve una salida que recibirá la siguiente fase como entrada, hasta completar la imagen. @Real-Time-Rendering
 
 El pipeline gráfico comienza con la representación de objetos mediante vértices. Cada vértice contiene información como su posición, normal, color y coordenadas de textura.
 
@@ -27,7 +27,7 @@ Este apartado se centra en explicar las diferencias de arquitectura entre una CP
 
 La tarea de renderizado requería de un hardware diferente al presente en la CPU debido a la gran cantidad de cálculos matemáticos que requiere. Desde transformaciones geométricas hasta el cálculo de la iluminación y la aplicación de texturas, todas estas tareas se basan en manipulaciones matemáticas haciendo uso de vectores y matrices. Para optimizar el proceso de renderizado, es esencial reducir el tiempo necesario para llevar a cabo estas operaciones @GPGP-Architecture.
 
-Por lo tanto, surge la GPU como co-procesador con una arquitectura SIMD (single instruction multiple data) cuya función es la de facilitar a la CPU el procesado de tareas relacionadas con lo gráfico, como renderizar imágenes, videos, animaciones, etc @ComputerOrganizationPatterson.
+Por lo tanto, surge la GPU como co-procesador con una arquitectura SIMD (single instruction multiple data) cuya función es la de facilitar a la CPU el procesado de tareas relacionadas con lo gráfico, como renderizar imágenes, vídeos, animaciones, etc @ComputerOrganizationPatterson.
 
 Al ser el objetivo de la GPU el procesar tareas de manera paralela, se puede observar una gran diferencia en cuanto a la distribución de espacio físico (recuento de transistores) dentro del chip con respecto a la CPU, que esta diseñada para procesar las instrucciones secuencialmente @ComputerOrganizationWilliam.
 
@@ -47,7 +47,7 @@ Sin embargo, la GPU al estar dedicada principalmente a operaciones matemáticas 
 La gran cantidad de cores presentes en una GPU, están agrupados en estructuras de hardware llamados SM (Streaming Multiprocessors) en NVIDIA y CP (Compute Units) en AMD. NVIDIA y AMD son dos de los principales fabricantes de tarjetas gráficas, cada uno con su propia arquitectura y tecnologías específicas. Además de núcleos de procesamiento, estas agrupaciones incluyen normalmente una jerarquía básica de memoria con una cache L1, una memoria compartida entre núcleos, una caché de texturas, un programador de tareas y registros para almacenar datos. Su tarea principal es ejecutar programas SIMT (single-instruction multiple-thread) correspondientes a un kernel, asi como manejar los hilos de ejecución, liberándolos una vez que han terminado y ejecutando nuevos hilos para reemplazar los finalizados. @GPGP-Architecture
 
 #figure(
-  image("../images/SM2.png", width: 75%),
+  image("../images/SM2.png", width: 60%),
   caption: [
     Streaming Multiprocessor @ComputerOrganizationWilliam
   ],

@@ -2,7 +2,7 @@ Este apartado tiene como objetivo explicar qué es Blockly así como su funciona
 
 Blockly es una biblioteca perteneciente a Google lanzada en 2012 que permite a los desarrolladores la generación automática de código en diferentes lenguajes de programación mediante la creación de bloques personalizados. Fue diseñado inicialmente para generar código en JavaScript, pero debido a su creciente demanda, se ha adaptado para admitir de manera nativa la generación de código en una amplia variedad de lenguajes de programación: JavaScript, Python, PHP, Lua y Dart. 
 
-Esta biblioteca es cada vez más conocida y usada en grandes proyectos. Actualmente se emplea en algunos como ‘App Inventor’@app_inventor del MIT@MIT,para crear aplicaciones para Android, ‘Blockly Games’@blockly_games, que es un conjunto de juegos educativos para enseñar conceptos de programación que también pertenece a Google, ‘Scratch’@scratch, web que permite a jóvenes crear historias digitales, juegos o animaciones o Code.org@code.org para enseñar conceptos de programación básicos. 
+Esta biblioteca es cada vez más conocida y usada en grandes proyectos. Actualmente se emplea en algunos como ‘App Inventor’ @app_inventor del MIT @MIT, para crear aplicaciones para Android, ‘Blockly Games’ @blockly_games, que es un conjunto de juegos educativos para enseñar conceptos de programación que también pertenece a Google, ‘Scratch’ @scratch, web que permite a jóvenes crear historias digitales, juegos o animaciones o Code.org @code.org para enseñar conceptos de programación básicos. 
 
 //explicar por que se queBlockly es la biblioteca mas extendida para este comportamiento ?
 //y que fallos me permite revisar el tener acceso al codigo fuente

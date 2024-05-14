@@ -104,6 +104,7 @@ Para la realización de la prueba de Lua, los parámetros registrados son los si
 - Necesitó ayuda con errores de ejecución: Se considera positivo si el usuario necesitó asistencia del probador para solucionar la ejecución de una partícula que provocase que el programa crashee.
 - Terminó la prueba: Se considera positivo si el usuario terminó la prueba en menos, negativo si por frustración u otras razones no la terminó.
 
+#pagebreak()
 Los resultados son los siguientes:
 
 #figure(image("../images/pruebaUsuarioLua.png", width: 50%), caption: [

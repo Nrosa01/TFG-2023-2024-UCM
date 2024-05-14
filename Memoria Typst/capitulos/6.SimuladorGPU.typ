@@ -13,7 +13,7 @@ La partícula de arena necesita tener el siguiente comportamiento:
 
 Ahora, tomando cada celda como entidad aislada, se puede lograr un comportamiento similar de la siguiente forma:
 
-- Si la celda es una partícula vacía , comprueba si encima suyo hay una partícla de arena, en cuyo caso, la celda se convierte en una partícula de arena. 
+- Si la celda es una partícula vacía, comprueba si encima suyo hay una partícla de arena, en cuyo caso, la celda se convierte en una partícula de arena. 
 
 - Si la celda es una partícula de arena, solo existen dos opciones:
   - La celda inmediatamente inferior es vacía, por lo tanto puede caer. La celda actual se convierte en vacía.
@@ -23,7 +23,7 @@ Ahora, tomando cada celda como entidad aislada, se puede lograr un comportamient
 
 Para realizar movimientos diagonales, se llevan a cabo las mismas comprobaciones que para el movimiento de caída vertical. Sin embargo, en lugar de verificar las celdas ubicadas arriba y abajo, se realizan comprobaciones en las direcciones arriba derecha, abajo izquierda y arriba izquierda, abajo derecha respectivamente.
 
-Desde el punto de vista de desarrollo, para poder ejecutar estas instrucciones de movimiento en la GPU, es necesario programar estas reglas de movimiento dentro de un compute shader. Éste recibe como input el estado de la simulación actual y devuelve como output el estado de la simulación tras realizar uno de los tres movimientos. 
+Desde el punto de vista de desarrollo, para poder ejecutar estas instrucciones de movimiento en la GPU, es necesario programar las reglas de movimiento dentro de un compute shader. Éste recibe como input el estado de la simulación actual y devuelve como output el estado de la simulación tras realizar uno de los tres movimientos. 
 
 Cada comprobación de movimiento se realiza de manera separada, es decir, se ejecuta el compute shader de movimiento hacia abajo, y el output de éste lo procesa el compute shader de movimiento diagonal. Es necesario, a su vez, separar la lógica de movimiento abajo derecha y abajo izquierda ya que no sería posible realizar el movimiento hacia ambas diagonales en un solo paso de simulación. Dado el siguiente estado de la matriz:
 
