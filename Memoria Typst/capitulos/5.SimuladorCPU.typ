@@ -1,6 +1,7 @@
 #import "@preview/sourcerer:0.2.1": code
 #import "../utilities/gridfunc.typ": *
 #import "../data/gridexamples.typ": *
+#import "@preview/subpar:0.1.0"
 
 Este trabajo trata sobre simuladores de arena y, como se mencionó en la @simuladoresArena, los simuladores de arena no son paralelizables debido a que cada celda puede modificar el estado de las demás. En este capítulo se muestran distintas implementaciones de simuladores de arena que se ejecutan en la CPU para poder compararlos.
 
@@ -19,28 +20,32 @@ Esta implementación ejecuta una lógica directa en un solo hilo. Debido a esto 
 
 == Simulador en Lua con LÖVE
 
-LÖVE es un framework de desarrollo de videojuegos en Lua orientado a juegos 2D. Permite dibujar gráficos en pantalla y gestionar la entrada del usuario sin tener que preocuparase de la plataforma en la que se ejecuta. LÖVE usa LuaJIT, por lo que es posible alcanzar un rendimiento muy alto sin sacrificar flexibilidad.
+LÖVE @akinlaja-2013 es un framework de desarrollo de videojuegos en Lua orientado a juegos 2D. Permite dibujar gráficos en pantalla y gestionar la entrada del usuario sin tener que preocuparase de la plataforma en la que se ejecuta. LÖVE usa LuaJIT, por lo que es posible alcanzar un rendimiento muy alto sin sacrificar flexibilidad.
 
-Para mejorar aún más el rendimiento, esta implementación se basa de la librería FFI de Lua. FFI significa Foreign Function Interface, es una librería que permite a Lua interactuar con código C de forma nativa. Además, al poder declarar structs en C, es posible acceder a los datos de forma más rápida que con las tablas de Lua y consumir menos memoria.
+Para mejorar aún más el rendimiento, esta implementación se basa de la librería FFI de LuaJit. Esta permite a Lua interactuar con código de C de forma nativa. Además, al poder declarar structs en C, es posible acceder a los datos de forma más rápida que con las tablas de Lua y consumir menos memoria.
 
-#code(
-  lang: "Lua",
-  ```lua
--- Particle.lua
+Este sistema también usa la técnica de clock para gestionar la ejecución de las particulas. Sin embargo, a diferencia del anterior, el orden en que se actualizan las particulas cambia en un ciclo de 2 fotogramas. Primero se actualiza la matriz de derecha a izquierda y de arriba a abajo, y luego de izquierda a derecha y de abajo a arriba. Esto se debe a que si siempre se actualizan las partículas de izquierda a derecha o viceversa, el sistema presentará un sesgo en la dirección en la que se actualizan las partículas que provoca que el resultado tras varias iteraciones no sea el esperado. Debido a que este efecto se debe a una acumulación de resultados a lo largo de distintas generaciones, se omitirá una explicación detallada. La @luasesgo muestra la diferencia entre actualizar las partículas variando o no el orden de actualización.
 
-ffi.cdef [[
-typedef struct { uint8_t type; bool clock; } Particle;
-]]
-
-local Particle = ffi.metatype("Particle", {})
-```
+#subpar.grid(
+  figure(image("../images/luasesgo2.png"), caption: [
+    Sin variar el orden de actualización
+  ]), <luasesgo1>,
+  figure(image("../images/luasesgo1.png"), caption: [
+    Variando el orden de actualización
+  ]), <b>,
+  gap: 15pt,
+  columns: (1fr, 1fr),
+  caption: [Diferencia entre variar y no el orden de actualización al procesar partículas],
+  label: <luasesgo>,
 )
 
-Este sistema también usa la técnica de clock para gestionar la ejecución de las particulas. Sin embargo, a diferencia del anterior, el orden en que se actualizan las particulas cambia en un ciclo de 4 fotogramas. Esto permite conseguir un resultado visual más uniforme sin sacrificar rendimiento.
+#v(5pt)
 
-Para facilitar la extensión y usabilidad de esta versión, se creó un API que permite definir partículas en Lua de forma externa. Una particula está definida por su nombre, su color y su función a ejecutar. Una vez hecho esto, el usaurio solo debe arrastrar su archivo a la ventana de juego para cargar su plugin.
+En ambos casos el código para simular la particula de arena es el mismo. Pero puede observarse en la @luasesgo1 como las partículas tienden a ir primero hacia la derecha.
 
-Sin embargo, simular partículas es un proceso intensivo. Además, las particulas no tienen acceso a toda la simulación, debido a esto, se optimizó mediante la implementación de multihilo.
+Para facilitar la extensión y usabilidad de esta versión, se creó un API que permite definir partículas en Lua de forma externa. Una particula está definida por su nombre, su color y una función a ejecutar. Una vez hecho esto, el usaurio solo debe arrastrar su archivo a la ventana de juego para cargar su "mod".
+
+Sin embargo, simular tantas partículas es un proceso costoso. Además, las particulas no tienen acceso a toda la simulación, debido a esto, se optimizó mediante la implementación de multihilo.
 
 === Multithreading en Lua
 
