@@ -11,6 +11,7 @@ A continuación se detalla cada implementación, profundizando en sus rasgos par
 
 == Simulador en C++  
 
+#text(red)[Este apartado hay que rehacerlo, pero para ello es necesario hablar en la parte de simuladores de arena de como funciona el procesamiento secuencial de las partículas. Y también hay que hablar de la técnica de doble buffer en AF para no tener que introducirla luego en el apartaod de multithreading en lua]
 
 El primer simulador fue desarrollado en C++ con OpenGL y GLFW. Este simulador sirve como base comparativa de las siguientes implementaciones. Este sistema posee 6 partículas: Arena, Agua, Aire, Gas, Roca y Ácido. En este sistema las partículas están programadas en el sistema y no son modificables de forma externa. Cada partícula tiene una serie de propiedades: color, densidad, granularidad, id y movimiento. El color es el color de la partícula, la densidad es un valor númerico que indica la pesadez relativa respecto otras partículas, la granularidad es un valor que modifica ligeramente el color de la partícula, la id es un valor que indica el tipo de partícula y el movimiento es una serie de valores que describe el movimiento de la partícula. Estos rasgos son particulares de esta implementación y no se repiten en las siguientes a excepción del identificador de la particula, que es común a todas las implementaciones.
 
@@ -48,6 +49,8 @@ Para facilitar la extensión y usabilidad de esta versión, se creó un API que 
 Sin embargo, simular tantas partículas es un proceso costoso. Además, las particulas no tienen acceso a toda la simulación, debido a esto, se optimizó mediante la implementación de multihilo.
 
 === Multithreading en Lua
+
+#text(red)[Para poder hacer este apartado en condiciones necesito haber hablado antes de las condiciones de carrera en el apartado de CPU.]
 
 Si bien Lua es un lenguaje muy sencillo y ligero, tiene ciertas carencias, una de ellas es el multithreading. Lua no soporta multithreading de forma nativa. La alternativa a esto es instanciar una máquina virtual de Lua para cada hilo, esto es exactamente lo que love.threads hace. LÖVE permite crear hilos en Lua, pero además de esto, permite compartir datos entre hilos mediante `love.bytedata`, una tabla especial que puede ser enviada entre hilos por referencia. Además de esto, LÖVE provee canales de comunicación entre hilos, que permiten enviar mensajes de un hilo a otro y sincronizarlos. Esto permitió enviar trabajo a los hilos bajo demanda.
 
@@ -113,6 +116,9 @@ Finalmente, se explora la posibilidad de tener un sistema más eficiente manteni
 
 
 == Simulador en Rust con Macroquad
+
+
+#text(red)[Para poder mencionar Vue, Blockly y GitHub Pages necesito un capitulo de estado del arte para explicar dichas tecnologías y luego simplemente referenciarlas aquí.]
 
 Rust es un lenguaje de programación de propósito general con características de lenguajes funcionales y orientados a objetos. Es un lenguaje con características de bajo y alto nivel, es decir, permite manipular la memoria directamente pero al mismo tiempo permite programar con atajos y abstracciones que ocultan lógica subyacente para simplificar la tarea del programador.
 
