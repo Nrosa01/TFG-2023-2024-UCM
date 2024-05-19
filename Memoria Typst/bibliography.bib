@@ -452,3 +452,27 @@ incollection{von2017general,
 	publisher = {Packt Publishing Ltd},
 	title = {LÖVE2d for Lua Game Programming},
 }
+
+@inproceedings{workStealing,
+author = {Chen, Shimin and Gibbons, Phillip B. and Kozuch, Michael and Liaskovitis, Vasileios and Ailamaki, Anastassia and Blelloch, Guy E. and Falsafi, Babak and Fix, Limor and Hardavellas, Nikos and Mowry, Todd C. and Wilkerson, Chris},
+title = {Scheduling threads for constructive cache sharing on CMPs},
+year = {2007},
+isbn = {9781595936677},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1248377.1248396},
+doi = {10.1145/1248377.1248396},
+abstract = {In chip multiprocessors (CMPs), limiting the number of offchip cache misses is crucial for good performance. Many multithreaded programs provide opportunities for constructive cache sharing, in which concurrently scheduled threads share a largely overlapping working set. In this paper, we compare the performance of two state-of-the-art schedulers proposed for fine-grained multithreaded programs: Parallel Depth First (PDF), which is specifically designed for constructive cache sharing, and Work Stealing (WS), which is a more traditional design. Our experimental results indicate that PDF scheduling yields a 1.3--1.6X performance improvement relative to WS for several fine-grain parallel benchmarks on projected future CMP configurations; we also report several issues that may limit the advantage of PDF in certain applications. These results also indicate that PDF more effectively utilizes off-chip bandwidth, making it possible to trade-off on-chip cache for a larger number of cores. Moreover, we find that task granularity plays a key role in cache performance. Therefore, we present an automatic approach for selecting effective grain sizes, based on a new working set profiling algorithm that is an order of magnitude faster than previous approaches. This is the first paper demonstrating the effectiveness of PDF on real benchmarks, providing a direct comparison between PDF and WS, revealing the limiting factors for PDF in practice, and presenting an approach for overcoming these factors.},
+booktitle = {Proceedings of the Nineteenth Annual ACM Symposium on Parallel Algorithms and Architectures},
+pages = {105–115},
+numpages = {11},
+keywords = {working set profiling, work stealing, thread granularity, scheduling algorithms, parallel depth first, constructive cache sharing, chip multiprocessors},
+location = {San Diego, California, USA},
+series = {SPAA '07}
+}
+
+@online{gdcNoita,
+  title = {https://www.gdcvault.com/play/1025695/Exploring-the-Tech-and-Design},
+  author = {GDC Vault},
+  url = {https://www.gdcvault.com/play/1025695/Exploring-the-Tech-and-Design},
+}

@@ -375,13 +375,13 @@
   data: angton,
 )
 
-#let luaimpl_ex1 = (
+#let luaimpl_ex0 = (
   caption: " ",
   caption_alignment: ttb,
   hspace: lagnton_hspace,
   transition: " ",
   columns: 4,
-  color_map: (white, black, blue, red),
+  color_map: (white, green, black, blue, red),
   cellsize: lagnton_cellsize,
   data:  (2, 0, 2, 0,
           3, 1, 3, 1,
@@ -389,16 +389,62 @@
           3, 1, 3, 1),
 )
 
+#let luaimpl_ex1 = (
+  caption: " ",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 4,
+  color_map: (white, green, purple, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (1, 0, 1, 0,
+          0, 0, 0, 0,
+          1, 0, 1, 0,
+          0, 0, 0, 0),
+)
+
 #let luaimpl_ex2 = (
   caption: " ",
   caption_alignment: ttb,
+  hspace: lagnton_hspace,
   transition: " ",
-  columns: 2,
-  color_map: (white, black, blue, red),
+  columns: 4,
+  color_map: (white, green, purple, blue, red),
   cellsize: lagnton_cellsize,
-  data:  (2, 0,
-          3, 1),
+  data:  (0, 2, 0, 2,
+          0, 0, 0, 0,
+          0, 2, 0, 2,
+          0, 0, 0, 0),
 )
+
+#let luaimpl_ex3 = (
+  caption: " ",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 4,
+  color_map: (white, green, purple, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (0, 0, 0, 0,
+          3, 0, 3, 0,
+          0, 0, 0, 0,
+          3, 0, 3, 0),
+)
+
+#let luaimpl_ex4 = (
+  caption: " ",
+  caption_alignment: ttb,
+  hspace: lagnton_hspace,
+  transition: " ",
+  columns: 4,
+  color_map: (white, green, purple, blue, red),
+  cellsize: lagnton_cellsize,
+  data:  (0, 0, 0, 0,
+          0, 4, 0, 4,
+          0, 0, 0, 0,
+          0, 4, 0, 4),
+)
+
 
 #let luaimpl_problem1_1_1 = (
   caption: "",
@@ -420,10 +466,10 @@
   columns: 4,
   color_map: (white, black, blue, red),
   cellsize: lagnton_cellsize,
-  data:  (0, 0, 0, 0,
-          0, 0, 0, 0,
+  data:  (0, 0, 1, 0,
           0, 0, 1, 0,
-          0, 0, 1, 0),
+          0, 0, 0, 0,
+          0, 0, 0, 0),
 )
 
 #let luaimpl_problem1_1_3 = (
@@ -433,10 +479,10 @@
   columns: 4,
   color_map: (white, black, blue, red),
   cellsize: lagnton_cellsize,
-  data:  (0, 0, 1, 0,
-          0, 0, 1, 0,
+  data:  (0, 0, 0, 0,
           0, 0, 0, 0,
-          0, 0, 0, 0),
+          0, 0, 0, 0,
+          0, 0, 1, 0),
 )
 
 #let luaimpl_problem1_1_4 = (
@@ -448,8 +494,8 @@
   cellsize: lagnton_cellsize,
   data:  (0, 0, 0, 0,
           0, 0, 0, 0,
-          0, 0, 0, 0,
-          0, 0, 1, 0),
+          0, 0, 1, 0,
+          0, 0, 0, 0),
 )
 
 #let luaimpl_problem1_1_5 = (
@@ -461,19 +507,6 @@
   cellsize: lagnton_cellsize,
   data:  (0, 0, 1, 0,
           0, 0, 0, 0,
-          0, 0, 0, 0,
-          0, 0, 0, 0),
-)
-
-#let luaimpl_problem1_1_6 = (
-  caption: "",
-  caption_alignment: ttb,
-  transition: "",
-  columns: 4,
-  color_map: (white, black, blue, red),
-  cellsize: lagnton_cellsize,
-  data:  (0, 0, 0, 0,
-          0, 0, 1, 0,
           0, 0, 0, 0,
           0, 0, 0, 0),
 )
