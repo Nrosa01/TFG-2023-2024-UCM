@@ -1,4 +1,34 @@
+En esta sección se hablará sobre qué es la programación paralela, su funcionamiento y usos tanto en CPU como en GPU.
 
+La programación paralela es una técnica de programación que consiste en dividir un problema en tareas más pequeñas y ejecutarlas simultáneamente en múltiples procesadores o núcleos de procesamiento. Esto permite aprovechar el poder de cómputo del hardware y acelerar la ejecución de programas.
+
+Sin embargo, debido a las particularidades de cada tipo de hardware, la forma en que funciona y se aplica varía en función de si se quiere usar la CPU o la GPU.
+
+Cabe destacar que independientemente del hardware utilizado, la paralelización de un problema no incrementa el rendimiento de manera lineal con el número de núcleos utilizados, el incremento de rendimiento tiene un límite.
+
+La ley de Amdahl @ComputerOrganizationPatterson es un principio importante en la programación paralela que establece que el rendimiento máximo que se puede lograr al paralelizar un programa está limitado por la fracción secuencial del código. En otras palabras, aunque se pueda paralelizar una parte del código, siempre habrá una porción que debe ejecutarse de forma secuencial y que limitará el rendimiento general del programa.
+
+La ley de Amdahl se expresa mediante la siguiente fórmula:
+
+#set align(center)
+
+
+$ "Mejora Total" = 1 / ((1 - P) + (P / N)) $
+
+
+#set align(left)
+
+Donde:
+
+- `Mejora Total` es la mejora en el rendimiento del programa al paralelizarlo.
+- `P` es la fracción del código que se puede paralelizar.
+- `N` es el número de núcleos de procesamiento (hilos) disponibles.
+
+Esta fórmula muestra que, a medida que aumenta el número de procesadores o hilos (N), el rendimiento total mejora, pero solo hasta cierto punto. La fracción secuencial del código (1 - P) siempre limitará el rendimiento máximo que se puede lograr.
+
+#text(red)[La intro que he hecho es mejorable, pero es un apaño temporal para no tener directamente un subapartado sin nada de texto. Como ahora este capítulo es de programación paralela y no solo de GPU considero mejor hacerlo así. Podría hacerse un capítulo separado para GPU y CPU pero dado que de CPU se hablará menos creo que es mejor dejarlo aquí complementando al de GPU como se sugirió en las notas. Además de que no he revisado el apartado de GPU, estoy escribiendo mi parte para poder hacer los demás apartados, seguramente nos falte ponernos de acuerdo en este apartado y redactarlo mejor entre los dos, pero en principio la información que tenemos debería ser la adecuada y solo falta presentarla de forma correcta.]
+
+== Programación paralela en GPU
 
 La GPU (graphics processing unit) es un procesador originalmente diseñado para manejar y acelerar el procesamiento de tareas gráficas, como puede ser el mostrar imágenes o vídeos en pantalla. Para facilitar la aceleración de estas tareas, se crearon los shaders, pequeños programas gráficos destinados a ejecutarse en la GPU como parte del pipeline gráfico. El pipeline gráfico es el conjunto de operaciones secuenciales que finalmente formarán la imagen a mostrar en pantalla. La denominación pipeline hace referencia a que las operaciones que lo componen se ejecutan de manera secuencial y cada operación recibe una entrada de la fase anterior y devuelve una salida que recibirá la siguiente fase como entrada, hasta completar la imagen. @Real-Time-Rendering
 
@@ -17,13 +47,13 @@ Aunque la funcionalidad inicial de la GPU se limitaba al apartado gráfico, los 
 Una de estas extensiones fue la creación de "compute shaders" @compute_shaders que son programas diseñados para ejecutarse en la GPU, pero, a diferencia de los shaders, no están directamente relacionados con el proceso de renderizado de imágenes, por lo que se ejecutan fuera del pipeline gráfico. Los "compute shaders" se emplean para realizar cálculos destinados a propósitos que se benefician de la ejecución masivamente paralela ofrecida por la GPU. Son ideales para tareas como simulaciones físicas, procesamiento de datos masivos o aprendizaje automático.
 
 
-== Arquitectura GPU
+=== Arquitectura GPU
 
 Para lograr el procesamiento de shaders de la manera más eficiente, la GPU se diseñó con una arquitectura hardware y software que permite la paralelización de cálculos en el procesamiento de vértices y píxeles independientes entre sí.
 
 Este apartado se centra en explicar las diferencias de arquitectura entre una CPU y una GPU a nivel de hardware, así como en explicar cómo este hardware interactúa con el software destinado a la programación de GPUs.
 
-=== Hardware
+==== Hardware
 
 La tarea de renderizado requería de un hardware diferente al presente en la CPU debido a la gran cantidad de cálculos matemáticos que requiere. Desde transformaciones geométricas hasta el cálculo de la iluminación y la aplicación de texturas, todas estas tareas se basan en manipulaciones matemáticas haciendo uso de vectores y matrices. Para optimizar el proceso de renderizado, es esencial reducir el tiempo necesario para llevar a cabo estas operaciones @GPGP-Architecture.
 
@@ -53,7 +83,7 @@ La gran cantidad de cores presentes en una GPU, están agrupados en estructuras 
   ],
 )
 
-=== Software 
+==== Software 
 
 Debido a que la implementacion de CUDA fue un punto de inflexión en el desarrollo de GPUs y asentó las bases de lo que hoy es la computación de propósito general en unidades de procesamiento gráfico, se explicará cómo se enlaza el software al hardware ya explicado haciendo uso de CUDA. Todos los conceptos son extrapolables a otras APIs de desarrollo como pueden ser SYCL o OpenMP.
 
@@ -77,3 +107,18 @@ El "scheduler global" en una GPU tiene la función principal de coordinar y prog
 A la hora de ejecutar el kernel, este scheduler crea warps, sub-bloques de un cierto número de hilos consecutivos sobre los que se llevara a cabo la ejecución, que luego serán programados para ejecutar por el scheduler de cada SM. 
 Es totalmente imprescindible que estos bloques de hilos puedan ser ejecutados de manera totalmente independiente y sin dependencias entre ellos, ya que a partir de aquí el programador de tareas es el que decide que y cuando se ejecuta. Los hilos dentro del bloque pueden cooperar compartiendo datos y sincronizando su ejecución para coordinar los accesos a datos mediante esperas, mediante una memoria compartida a nivel de bloque. El número de hilos dentro de un bloque esta limitado por el tamaño del SM, ya que todos los hilos dentro de un bloque necesitan residir en el mismo SM para poder compartir recursos de memoria.
 
+== Programación paralela en CPU
+
+La CPU (central processing unit) es el procesador principal de un ordenador y se encarga de ejecutar las instrucciones de los programas. A diferencia de la GPU, la CPU está diseñada para ejecutar instrucciones secuencialmente, es decir, una instrucción tras otra. Sin embargo, la CPU también puede ejecutar tareas en paralelo, pero de una manera diferente a la GPU.
+
+La programación paralela en CPU se basa en la creación de hilos de ejecución, que son unidades de procesamiento independientes que pueden ejecutar tareas simultáneamente. Debido a que los hilos pueden compartir memoria, es posible tanto resolver varios problemas a la vez como dividir un problema en tareas más pequeñas y ejecutarlas en paralelo.
+
+Este acceso compartido a memoria incurre en una serie de problemas que se deben tener en cuenta a la hora de programar en paralelo en CPU. Los problemas mostrados a continuación no siguen un orden de importancia, ya que todos ellos son igual de importantes: Condiciones de carrera, interbloqueos y problemas de inanición.
+
+Las condiciones de carrera se dan cuando dos o más hilos intentan acceder y modificar el mismo recurso al mismo tiempo. Esto puede llevar a resultados inesperados y errores en el programa. Para evitar condiciones de carrera, se desarrollaron lo que se conoce como mecanismos de sincronización, como los semáforos o los mutex.
+
+Un mutex es un recurso compartido entre hilos que permite controlar el acceso a una sección crítica del código. Cuando un hilo adquiere un mutex, ningún otro hilo puede acceder a la sección crítica (usualmente un recurso compartido) hasta que el primer hilo libere el mutex. Esto evita que se produzcan condiciones de carrera y garantiza que solo un hilo pueda acceder a la sección crítica en un momento dado.
+
+Los interbloqueos y problemas de inanición son problemas resultantes del uso incorrecto de los mecanismos de sincronización. Un interbloqueo ocurre cuando dos o más hilos se bloquean mutuamente, es decir, cada hilo espera a que otro hilo libere un recurso que necesita, lo que resulta en que ninguno de los hilos pueda avanzar. La inanición, por otro lado, ocurre cuando un hilo es incapaz de avanzar debido a que otros hilos tienen prioridad sobre él, lo que resulta en que el hilo "hambriento" no pueda completar su tarea al no recibir acceso a los recursos necesarios.
+
+#text(red)[No estoy seguro de si debería añadir algo más aquí.No he querido ir a cosas más técnicas como que problemas de sincronización de caché y demás ya que los lenguajes de alto nivel se encargan de estas cosas y no es algo que nos afectara en el desarrollo del proyecto (a diferencia de los 3 problemas expuestos que sí los padecimos)]

@@ -104,7 +104,7 @@
 
 #pagebreak(weak: true)
 
-= Programación en GPUs
+= Programación paralela
 
 #include "capitulos/3.ProgramacionParalela.typ"
 
@@ -119,10 +119,6 @@
 #include "capitulos/4.PluginsYScriptingV2.typ"
 
 #pagebreak(weak: true)
-
-= CPU y Multithreading
-
-#include "capitulos/3.5.ProgramaciónParalelaCPU.typ"
 
 #pagebreak(weak: true)
 
