@@ -9,15 +9,39 @@ Para poder realizar la comparativa, se han realizado 3 simuladores diferentes ba
 
 A continuación se detalla cada implementación, profundizando en sus rasgos particulares.
 
-== Simulador en C++  
+== Generalidades
 
-#text(red)[Este apartado hay que rehacerlo, pero para ello es necesario hablar en la parte de simuladores de arena de como funciona el procesamiento secuencial de las partículas. Y también hay que hablar de la técnica de doble buffer en AF para no tener que introducirla luego en el apartaod de multithreading en lua]
+En todas las implementaciones, una partícula es una estructura de datos con al menos dos propiedades: id y clock. La propiedad `id` es un valor que indica el tipo de partícula, mientras que `clock` es un valor que alterna entre 0 y 1 en cada iteración. Esto permite que una partícula no sea procesada dos veces en la misma generación. Es decir, si una partícula de arena se mueve "hacia abajo" y la actualización del simulador procesa las partículas de arriba a abajo, la partícula de arena que se movió hacia abajo volverá a ser procesada dentro de la misma generación. Para evitar este problema, se usa el valor `clock` para marcar si una partícula fue procesada en la generación actual. Para evitar tener que resetear el valor de `clock` de todas las partículas en cada generación, se alterna entre 0 y 1 en cada iteración y se compara con el valor clock del sistema, que también alterna entre 0 y 1 en cada iteración.
+
+== Simulador en C++
 
 El primer simulador fue desarrollado en C++ con OpenGL y GLFW. Este simulador sirve como base comparativa de las siguientes implementaciones. Este sistema posee 6 partículas: Arena, Agua, Aire, Gas, Roca y Ácido. En este sistema las partículas están programadas en el sistema y no son modificables de forma externa. Cada partícula tiene una serie de propiedades: color, densidad, granularidad, id y movimiento. El color es el color de la partícula, la densidad es un valor númerico que indica la pesadez relativa respecto otras partículas, la granularidad es un valor que modifica ligeramente el color de la partícula, la id es un valor que indica el tipo de partícula y el movimiento es una serie de valores que describe el movimiento de la partícula. Estos rasgos son particulares de esta implementación y no se repiten en las siguientes a excepción del identificador de la particula, que es común a todas las implementaciones.
 
-Es importante no procesar una misma partícula dos veces. Tanto en esta como en las demás implementaciones, la matriz de partículas se representa como un array bidimensional. Además, en este simulador se actualizar de "arriba a abajo y de izquierda a derecha". Es decir, se procesa primero la primera fila, luego la segunda, y así sucesivamente. Dentro de cada fila, se procesa de izquierda a derecha. Esto provoca que si una partícula se "mueve" hacia abajo, se procesará de nuevo en la siguiente iteración. Para evitar este problema, cada particula tiene un valor llamado clock que tiene dos posibles estados y alterna en cada iteración. Cuando una partícula "se mueve", cambia su valor de clock y no vuelve a ser procesada. Puede pensarse como un marcador que al cambiar indica que dicha partícula fue procesada para la generación actual y no debe volver a procesarse. Es necesario definir que significa que una partícula "se mueva". Esto es una ilusión visual, el sistema ejecuta una transformación de la matriz de partículas en base a unas reglas en pasos discretos de tiempo. Se define "moverse" el proceso por el cual una particula se borra de una celda para escribirse en otra. Esto provoca la sensación de movimiento.
+Este sistema es limitado, pues los comportamientos de las partículas dependen de estos parámetros y el sistema que las procesa. Con todo, esto permite generar variaciones de partículas con facilidad. El valor del movimiento permite crear los tipos de movimientos más comunes (arena, agua, lava, gas, etc). La densidad permite controlar que partícula puede intercambiarse por otra sin tener que controlarlo manualmente para cada partícula... Al ser un sistema cerrado, se da lugar a un sistema más rápido y eficiente que los siguientes ya que el compilador puede optimizar el código de forma más eficiente.
 
-Esta implementación ejecuta una lógica directa en un solo hilo. Debido a esto es la base para comparar el rendimiento de las siguientes implementaciones. La siguiente versión a implementar fue desarrollada usando LuaJIT en el framework LÖVE.
+La @simuladorcplusplus muestra la interacción entre partículas en este simulador en un mundo de $100*100$ celdas.
+
+#subpar.grid(
+  figure(image("../images/simuladorcplusplus.png"), caption: [
+    Antes de que la arena llegue al agua
+  ]),
+  figure(image("../images/simuladorcplusplus2.png"), caption: [
+    Arena hundiéndose en el agua
+  ]),
+  gap: 15pt,
+  columns: (1fr, 1fr),
+  caption: [Interacción entre partículas en el simulador de C++],
+  label: <simuladorcplusplus>,
+)
+
+Esta implementación ejecuta una lógica directa en un solo hilo. Debido a esto es la base para comparar el rendimiento de las siguientes implementaciones.
+
+Para poder mostrar el estado de la simulación de forma visual, se escribe en un buffer el color de cada partícula después de cada paso de simulación. Este buffer se envía a la GPU para ser renderizado en pantalla. 
+
+#text(red)[Esto lo cuento aquí porque en Lua y Rust lo hago distinto y no hay ningún libro o consenso al respecto de como hacerlo, es una decisión nuestra por lo cual no quería meterlo en estado del arte. En Lua es similar pero en multihilo, y en Rust el buffer se modifica al modificar una particula porque en esa simulación nos dimos cuenta de que actualizar el buffer cada vez que editas una partícula es más eficiente que hacerlo al final de la generación. ¿Es injusto de cara a la comparación? Quizás, pero que hacemos si no, ¿no lo contamos? Porque la versión de C++  no se ha tocado desde diciembre y por como está implementada sería un poco complicado porque la clase que ejecuta la lógica está totalmente separada de la clase que renderiza. La alternativa sería evitar hablar de este tema directamente o modificar la simulación en C++... Por ahora nos estamos centrando en pulir la memoria y si hay tiempo quizás podemos cambiar la versión de C++ y volver a ejecutar las pruebas de rendimiento.
+
+Por otro lado, en las notas mencionas que no contamos suficiente en este apartado, pero es que no hay más, esta es una implementación simple, cerrada y eficiente que sirvió de base a las demás, pero más allá de que tiene una serie de parámetros que ya se han mencionado no tiene nada más destacable que contar, la chicha está en las otras implementaciones. (que en esas hay mucho más de lo que parece)]
+
 
 == Simulador en Lua con LÖVE
 
