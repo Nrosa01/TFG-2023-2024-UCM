@@ -27,7 +27,7 @@ La planificación de trabajo se realizó mayormente entre los autores del TFG, a
 
 - Investigación preliminar sobre los conceptos fundamentales de los autómatas celulares y los simuladores de arena, así como decidir y discutir qué librerias y que software se utilizará.
 
-- Implementación del Simulador en C++, haciendo uso de OpenGL y GLFW: el objetivo de este simulador era tener una base referencial sobre la que apoyarnos a la hora de desarrollar el resto de simuladores, además de permitirnos aplicar de manera un poco mas laxa los conocimientos aprendidos en la fase preliminar de investigación sobre autómatas celulares. 
+- Implementación del Simulador en C++, haciendo uso de OpenGL y GLFW: el objetivo de este simulador era tener una base referencial sobre la que apoyarnos a la hora de desarrollar el resto de simuladores, además de permitirnos aplicar de manera un poco más laxa los conocimientos aprendidos en la fase preliminar de investigación sobre autómatas celulares. 
 
 - Desarrollo de Simulador en LUA con LÖVE: el objetivo de esta implementación era aplicar la funcionalidad del sistema anterior añadiendo capacidad de adición de parículas personalizadas por parte del usuario, además de añadir capacidad de multithreading para mejorar el rendimiento.
 

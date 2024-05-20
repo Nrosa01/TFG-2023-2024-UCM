@@ -59,7 +59,7 @@ aun no tenemos una base de capitulos asi que me voy a ahorrar el "resumirlos"
 
 La primera aparición de un videojuego/simulador perteneciente al hoy subgenero de simuladores de arena data del 2005 con la creación del juego "World of Sand" por Dofi Blog. Este juego permitía a los usuarios manipular varios elementos como arena, agua, fuego, etc, y observar cómo interactuaban entre sí. Sin embargo, es importante destacar que podría haber proyectos similares anteriores que no hayan recibido la misma atención.
 
-Desde entonces se han llevado a cabo numerosas iteraciones de la misma idea; darle a un usuario la capacidad de hacer interaccionar diferentes materiales de la manera mas libre posible.
+Desde entonces se han llevado a cabo numerosas iteraciones de la misma idea; darle a un usuario la capacidad de hacer interaccionar diferentes materiales de la manera más libre posible.
 
 Con el paso de los años, por motivos obvios como el simple avance de la capacidad del hardware, las iteraciones de la idea han ido mejorando poco a poco, siendo algunas iteraciones de este concepto: wxSand, This is Sand, The powder toy, the sandbox, sandspiel y por último, nuestra inspiracion inicial para desarrollar este proyecto, Noita.
 
@@ -71,7 +71,7 @@ Nuestro objetivo inicial con este proyecto fue el crear un simulador físico y q
 
 (Además de hablar de videojuegos aqui hay que hacer mencion a papers, charlas, libros etc los cuales ya estaban establecidos cuando hemos empezado y de los cuales hemos tomado inspiracion o dirección)
 
-Algunas de las demostraciones mas notables de simuladores de partículas son:
+Algunas de las demostraciones más notables de simuladores de partículas son:
 
 ### Noita
 
@@ -169,7 +169,7 @@ Las CPUs son muy complejas y apenas se ha cubierto lo más básico de esta. A me
 
 La GPU, de siglas provenientes del inglés con el significado "Graphics processing unit", es un componente fundamental de cualquier ordenador, encargado del procesamiento de tareas que impliquen elementos gráficos. En específico, la GPU está especializada en la realizacion de cálculos matemáticos de la manera más rápida posible, paralelizando los cálculos en sus cientos o miles de núcleos.
 
-La arquitectura de la GPU se presta especialmente bien a aplicaciones que pueden dividirse en tareas más pequeñas y cuyo resultado es independiente del procesamiento de otras tareas. Cada núcleo de la GPU puede trabajar en un pequeño fragmento de datos de manera independiente, acelerando en gran medida la velocidad del procesamiento total. Este enfoque de paralelización masiva es el motivo por los que las GPUs son tan efectivas en tareas gráficas y en otras aplicaciones que implican el procesamiento de grandes cantidades de datos, como pueden ser la edición de video o, de manera mas actual, el machine learning o aprendizaje automatico.
+La arquitectura de la GPU se presta especialmente bien a aplicaciones que pueden dividirse en tareas más pequeñas y cuyo resultado es independiente del procesamiento de otras tareas. Cada núcleo de la GPU puede trabajar en un pequeño fragmento de datos de manera independiente, acelerando en gran medida la velocidad del procesamiento total. Este enfoque de paralelización masiva es el motivo por los que las GPUs son tan efectivas en tareas gráficas y en otras aplicaciones que implican el procesamiento de grandes cantidades de datos, como pueden ser la edición de video o, de manera más actual, el machine learning o aprendizaje automatico.
 
 Si bien esta arquitectura facilita en gran medida ciertas tareas, transmite una carga al programador, que es la de pensar y cuidar el orden y la forma en la que se realizarán ciertas tareas para asegurarse de obtener el resultado deseado y hacerlo de manera óptima. En caso de no cumplir con estas condiciones, el resultado puede ser nefasto, ya que la GPU al ser un componente tan especializado en la realización de una tarea, no dispone de la facilidad de manejo de errores que puede tener una CPU, por lo que hay que ser cuidadoso con su utilización.
 
@@ -207,12 +207,11 @@ A continuación vermos una serie de simulaciones y/o juegos en los que se basa n
 
 # Conclusiones
 
-
 ## Cositas
 
 Simulación original en C++ y OpenGL, 800*800 a 60 fps
 Simulación en LUA y LOVE, 800*800 a 60 fps multihilo
-Simulación en Rust y Vulkano, 1000*1000 a 60 fps multihiloS
+Simulación en Rust y Vulkano, 1000\*1000 a 60 fps multihiloS
 DLL llamada simple vs Lua vs LuaJit
 
 Hablar de automatas celulares, luego simulaciones de arena
@@ -232,7 +231,7 @@ Hablar de automatas celulares, luego simulaciones de arena
 - Multithreading
 - Cache
 
-3.2. GPU
+  3.2. GPU
 
 4. Plug-ins y lenguajes de script
 
