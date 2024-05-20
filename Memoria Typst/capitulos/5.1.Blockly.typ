@@ -4,13 +4,6 @@ Blockly es una biblioteca perteneciente a Google lanzada en 2012 que permite a l
 
 Esta biblioteca es cada vez más conocida y usada en grandes proyectos. Actualmente se emplea en algunos como ‘App Inventor’ @app_inventor del MIT @MIT, para crear aplicaciones para Android, ‘Blockly Games’ @blockly_games, que es un conjunto de juegos educativos para enseñar conceptos de programación que también pertenece a Google, ‘Scratch’ @scratch, web que permite a jóvenes crear historias digitales, juegos o animaciones o Code.org @code.org para enseñar conceptos de programación básicos. 
 
-//explicar por que se queBlockly es la biblioteca más extendida para este comportamiento ?
-//y que fallos me permite revisar el tener acceso al codigo fuente
-//tampoco es una biblioteca reciente aunque las carencias en documentacion y demas si que estan ahi
-
-El motivo de la utilización de Blockly como biblioteca para desarrollar el comportamiento deseado fue que es la biblioteca más extendida para realizar este tipo de comportamiento. No existe mucho software que permita generar código personalizado utilizando tus propios bloques. Además, tiene otras ventajas como que es de código abierto, lo que facilitó el desarrollo al permitir consultar el código fuente para revisar fallos o comprender cómo se crean ciertos elementos. Como principal desventaja se encuentra que no cuenta con una documentación del todo completa, además que cada versión renueva muchos elementos por lo que tutoriales, guías o soluciones a problemas pasados cambian completamente de un año a otro.
-
-
 Blockly opera del lado del cliente y ofrece un editor dentro de la aplicación, permitiendo a los usuarios intercalar bloques que representan instrucciones de programación. Estos bloques se traducen directamente en código según las especificaciones del desarrollador. Para los usuarios, el proceso es simplemente arrastrar y soltar bloques, mientras que Blockly se encarga de generar el código correspondiente. Luego, la aplicación puede ejecutar acciones utilizando el código generado.
 
 
