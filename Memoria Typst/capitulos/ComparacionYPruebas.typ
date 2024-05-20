@@ -5,7 +5,7 @@ Una vez entendidos los simuladores de arena y las implementaciones realizadas, s
 - Por un lado, una evaluación de rendimiento en cada una de las implementaciones, tanto en CPU como en GPU. 
 - Por el otro, una evaluación de usabilidad. Para esta se evaluará la capacidad de los usuarios de expandir el sistema dadas unas instrucciones.
 
-== Comparación de rendimiento
+== Comparación de rendimiento <ComparacionRendimiento>
 
 Para asegurar que la comparación sea justa, todas las pruebas se han realizado en el mismo hardware en 2 equipos distintos. Además, para medir el rendimiento se aumentará el número de partículas simuladas por segundo hasta que ninguno de los sistemas pueda ejecutar la simulación en tiempo real, esto es, 60 veces por segundo.
 
