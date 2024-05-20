@@ -168,6 +168,18 @@ enum Action
 
 y la siguiente función
 
+Antes que nada, lo que en C++ seria
+
+```cpp	
+auto lambda = [](API* api) { api->move(Direction::DOWN); };
+```
+
+en Rust sería
+
+```rust	
+let lambda = |api: &mut API| { api.move(Direction::DOWN); };
+```
+
 ```rust
 impl Action // Esto significa que las funciones de este bloque son del enum Action, porque sí, en rust puedes definir funciones para los enums.
 {
