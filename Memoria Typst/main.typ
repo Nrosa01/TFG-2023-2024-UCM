@@ -104,6 +104,12 @@
 
 #pagebreak(weak: true)
 
+= Tecnologías web
+
+#include "capitulos/tecnologiasWeb.typ"
+
+#pagebreak(weak: true)
+
 = Programación paralela
 
 #include "capitulos/3.ProgramacionParalela.typ"
