@@ -7,3 +7,6 @@
 [submodule "pixel-creator"]
 	path = pixel-creator
 	url = https://github.com/Nrosa01/pixel-creator
+[submodule "compute_shader_sandsim"]
+	path = compute_shader_sandsim
+	url = https://github.com/Jonandra/compute_shader_sandsim
