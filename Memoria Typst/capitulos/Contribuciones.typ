@@ -21,7 +21,7 @@ Existen 3 aportaciones principales de Nicolás al proyecto:
   - Diseño e implementación del API para la creación de partículas y sus interacciones.
   - Sistema de eventos implementado con Beholder para disminuir la dependencias entre componentes.
   - Implementación de un sistema de multithreading para mejorar el rendimiento del simulador.
-  - Implementación de un algoritmo para encontrar el mayor número de hilos y tamaño de chunk en función del tamaño del canvas y la cantidad de núcleos de la CPU que permita aprovechar la mayor cantidad de hilos simultáneos sin incurrir en condiciones de carrera.
+  - Implementación de un algoritmo para encontrar el mayor número de hilos y tamaño de chunk en función del tamaño de la matriz de la simulación y la cantidad de núcleos de la CPU que permita aprovechar la mayor cantidad de hilos simultáneos sin incurrir en condiciones de carrera.
   - Sincronización del trabajo entre los hilos aplicando una implementación propia de la técnica "work stealing" en base al uso de canales.
   - Implementación de un sistema de doble buffer para evitar condiciones de carrera y asegurar la consistencia de los datos.
   - Elaboración de la documentación del API del sistema de partículas.

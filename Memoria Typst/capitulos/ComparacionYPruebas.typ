@@ -7,9 +7,9 @@ Una vez entendidos los simuladores de arena y las implementaciones realizadas, s
 
 == Comparación de rendimiento <ComparacionRendimiento>
 
-Para asegurar que la comparación sea justa, todas las pruebas se han realizado en el mismo hardware en 2 equipos distintos. Además, para medir el rendimiento se aumentará el número de partículas simuladas por segundo hasta que ninguno de los sistemas pueda ejecutar la simulación en tiempo real, esto es, 60 veces por segundo.
+Para asegurar que la comparación sea justa, todas las pruebas se han realizado en el mismo hardware en 2 equipos distintos. Además, para medir el rendimiento se aumentará el número de partículas simuladas por segundo hasta que ninguno de los sistemas pueda ejecutar la simulación en tiempo real, esto es, 60 veces por segundo. La simulación siempre se lleva a cabo en una matriz cuadrada de $N*N$ celdas. El tamaño de la simulación será mostrado en cada gráfica de rendimiento.
 
-Las características de los equipos son las siguientes:
+Las características de los equipos usados para las pruebas son las siguientes:
 #v(10pt)
 
 #set align(center)
@@ -65,7 +65,7 @@ A continuación se muestran los resultados obtenidos en las pruebas de rendimien
 
 Esta solo se usó una partícula de arena, ya que todos los simuladores la implementaban. La implementación de esta es lo más similar posible en todos los simuladores, para que la comparación sea justa. Como puede observarse en la @full, la diferencia entre simular en la GPU y la CPU es considerablemente grande.
 
-A continuación se muestra una segunda prueba, realizada solo entre las implementaciones en CPU. Esto permite observar la diferencia de rendimiento entre los distintos simuladores en CPU mejor que en la gráfica anterior. Además, dado que las implementaciones en CPU tienen más partículas, se ha optado por usar una partícula. Esta partícula tiene la peculiaridad de que necesita comprobar el estado de todos sus vecinos para buscar agua que transformar en planta. Esta búsqueda incurre en un coste computacional mayor que el de la arena, que solo necesita comprobar el estado de sus vecinos para caer.
+A continuación se muestra una segunda prueba, realizada solo entre las implementaciones en CPU. Esto permite observar la diferencia de rendimiento entre los distintos simuladores en CPU mejor que en la gráfica anterior. Además, dado que las implementaciones en CPU tienen más tipos de partículas, se ha optado por usar una partícula compleja común a todas, la particula de `planta`. Esta partícula tiene la peculiaridad de que necesita comprobar el estado de todos sus vecinos para buscar agua que transformar en planta. Esta búsqueda incurre en un coste computacional mayor que el de la arena, que solo necesita comprobar el estado de sus vecinos para caer.
 
 #subpar.grid(
   figure(image("../images/compc3.png"), caption: [
@@ -92,9 +92,7 @@ La tarea pedida consistía en crear 4 particulas: Arena, Agua, Gas y Lava. La ar
 
 Para la realización de dicha tarea, se explicó que es un simulador de arena y como usarlo. Para esto, se enseña en tiempo real como crear una partícula básica que va hacia abajo sin comprobar nada, además de mencionar como podría hacer la comprobación de detectar una particula en una dirección. Además, se muestra la solución a los usuarios, sin mostrar el código o los bloques, se les enseña las particulas y su comportamiento de forma visual para que tengan una referencia respecto al objetivo a lograr.
 
-Junto con esta memoria se adjuntan los documentos con los guiones realizados para la ejecución de estas pruebas, así como un documento adicional con documentación del simulador de Lua que fue entregado a los usuarios para que pudieran realizar la prueba.
-
-No todas las personas pudieron realizar la prueba de Lua debido a falta de conocimientos o indisposición. Sin embargo otros usuarios que no poseen un perfil técnico accederion e incluso pudieron realizarla. Para minimizar el sesgo, un grupo de usuarios primero realizó la prueba con Blockly y otro con Rust web.
+No todas las personas pudieron realizar la prueba de Lua debido a falta de conocimientos o indisposición. Sin embargo otros usuarios que no poseen un perfil técnico accedieron y la realizaron. Para minimizar el sesgo, un grupo de usuarios primero realizó la prueba con Lua y otro con Rust web.
 
 Para la realización de la prueba de Lua, los parámetros registrados son los siguientes:
 
@@ -111,10 +109,12 @@ Los resultados son los siguientes:
     Resultados de las pruebas con usuarios para la prueba de Lua
   ])
 
-Todos los usuarios fueron capaces de crear las partículas deseadas de una manera rápida, aunque no de la más efectiva en la mayoría de casos. Prácticamente ningún usuario hizo uso de la función 'isEmpty' sin sugerencia previa del probador, la mayoría aprovechaba para reutilizar la lógica creada en la partícula de arena, lo que provocaba que usasen la función 'check_neighbour_multiple' de una forma incorrecta, ya que lo empleaban para hacer comprobaciones con un solo tipo de partícula. 
-Todos los usuarios tuvieron errores de ejecución. Las causas más comunes son: falta de escribir 'api:' para llamar a funciones de programación de partículas, errores de escritura a la hora de hacer uso de estas mismas funciones, y olvidos de hacer uso de 'end' para cerrar claúsulas condicionales 'if'. La mayoría de participantes pudo implementar aleatoriedad en el movimiento de manera satisfactoria sin ayuda del probador.
-Como particularidad, un usuario el cual realizó la prueba de Blockly antes que la de Lua, a la hora de implementar aleatoriedad, buscó hacer uso de una funcionalidad 'randomTransformation(horizontalReflection)' inexistente en esta simulación. No se detectó ningún sesgo de este tipo por parte de los participantes que realizaron la prueba de Lua y después la de Blockly.
+Todos los usuarios fueron capaces de crear las partículas deseadas de una manera rápida, aunque no de la más efectiva en la mayoría de casos. Prácticamente ningún usuario hizo uso de la función 'isEmpty' sin sugerencia previa del supervisor, la mayoría aprovechaba para reutilizar la lógica creada en la partícula de arena, lo que provocaba que usasen la función 'check_neighbour_multiple' de una forma incorrecta, ya que lo empleaban para hacer comprobaciones con un solo tipo de partícula. 
+Todos los usuarios tuvieron errores de ejecución. Las causas más comunes son: falta de escribir 'api:' para llamar a funciones de programación de partículas, errores de escritura a la hora de hacer uso de estas mismas funciones, y olvidos de hacer uso de 'end' para cerrar claúsulas condicionales 'if'. La mayoría de participantes pudieron implementar aleatoriedad en el movimiento de manera satisfactoria sin ayuda del probador.
 
+De estos 5 usuarios, 3 realizaron esta prueba antes que la de Blockly. Estos usuarios entendieron más rápido el sistema de bloques y el como se debía realizar la comprobación de partículas vecinas.
+
+Como particularidad, uno de estos usuarios, a la hora de implementar aleatoriedad, buscó hacer uso de una funcionalidad 'randomTransformation(horizontalReflection)' inexistente en esta simulación. No se detectó ningún sesgo de este tipo por parte de los participantes que realizaron la prueba de Lua y después la de Blockly.
 
 Respecto la prueba de Blockly, los parámetros registrados son los siguientes:
 
@@ -131,6 +131,18 @@ Los resultados son los siguientes:
     Resultados de las pruebas con usuarios
   ])
 
-Además de estos datos cuantitativos, se han recogido datos cualitativos. Estos datos se han recogido durante la prueba mediante anotaciones de los observadores. Los resultados de estas anotaciones son los siguientes:
+Además de estos datos cuantitativos, se han recogido datos cualitativos. Estos datos se han recogido durante la prueba mediante anotaciones de los supervisores. Los resultados de estas anotaciones son los siguientes:
 
-La mayoría de usuarios presentan problemas al inicio para usar el bloque que representa una partícula, pues a pesar de la explicación y el ejemplo mostrado, la mayoría olvida el funcionamiento de este bloque. Salvo una excepción, todos los usuarios tuvieron problemas para entender el bloque foreach, siendo el bloque que más ayuda necesitó. Por otro lado, se observó que tras una única explicación, los usuarios pueden navegar la interfaz con facilidad y no presentan problemas para añadir, eliminar partículas, poner la simulación en pausa y en general, usar los controles básicos del simulador. Sin embargo, a pesar de que entendían los elementos de la interfaz y su función, hubo uno que causó cierta fricción cognitiva: El botón de añadir partícula. Los usuarios lo pulsaban y procedían a editar bloques en el espacio actual, que no había cambiado, pues los usuarios parecían asumir que añadir una nueva particula la seleccione automáticamente.
+La mayoría de usuarios presentan problemas al inicio para usar el bloque que representa una partícula, pues a pesar de la explicación y el ejemplo mostrado, la mayoría olvida el funcionamiento de este bloque. Salvo una excepción, todos los usuarios tuvieron problemas para entender el bloque foreach, siendo el bloque que más ayuda necesitó. Por otro lado, se observó que tras una única explicación, los usuarios pueden navegar la interfaz con facilidad y no presentan problemas para añadir, eliminar partículas, poner la simulación en pausa y en general, usar los controles básicos del simulador. Sin embargo, a pesar de que entendían los elementos de la interfaz y su función, hubo uno que causó cierta fricción cognitiva: El botón de añadir partícula. Los usuarios lo pulsaban y procedían a editar bloques en el espacio actual, que no había cambiado, pues los usuarios parecían asumir que añadir una nueva particula la selecciona automáticamente.
+
+Dos usuarios realizaron esta prueba antes que la de Lua. Estos usuarios tuvieron los problemas comunes que el resto de usuarios (no cerrar claúsulas if con un end, no usar 'api:'), sin embargo estos dos usuarios sí usaron el método 'isEmpty' sin sugerencia previa. Ambos pudieron realizar la tarea con mayor soltura que los usuarios que realizaron la prueba de Lua antes.
+
+Una vez concluidas las pruebas, se procedió al análisis de los resultados obtenidos. A diferencia de las pruebas, no se hará una diferenciación entre rendimiento y usabilidad, sino que se decidió evaluar el valor que aporta cada simulador por separado. Finalmente se concluye con una vista global y se proponen mejoras para futuras versiones.
+
+Lo más destacable de las pruebas es la gran diferencia de rendimiento entre los simuladores implementados en CPU y el implementado en GPU. Sin embargo el coste de implementación y extensión es mucho mayor. En este simulador no se pudo probar la usabilidad con usuarios debido a que para ello se requería compilar el proyecto, lo cual requiere ciertas herramientas que muchos usuarios no están dispuestos a instalar. Una implementación en GPU puede resultar ideal cuando se requiere un alto rendimiento pero además el comportamiento que se trata de lograr es altamente específico y de una complejidad moderada. Una implementación de estas características puede resultar útil para la investigación de autómatas celulares en las que se requiera procesar una gran cantidad de partícula simultáneamente para buscar patrones de grandes dimensiones que no podrían ser detectados con una implementación en CPU. Podría resultar interesante la investigación de un sistema que permita generalizar reglas para crear autómatas celulares en la GPU de forma flexible. Esto no ha sido posible con simuladores de arena debido a que en estos, una partícula puede modificar las vecinas, sin embargo, en los autómatas celulares cada celda como mucho puede modificarse a sí misma, lo que podría simplificar la implementación.
+
+La implementación en C++ se realizó como una base para medir las demás. Esta permitió cuantificar la penalización de rendimiento que incurre la flexiblidad usar un lenguaje interpretado como Lua, aún en su versión JIT, así como usar WebAssembly. El desarrollo de simuladores de arena en C++ incurre en el mismo problema que la GPU, se requiere acceso al código y herramientas de desarrollo para poder extenderlo. 
+
+En cuanto a la implementacion en Lua, sorprende el rendimiento que puede lograr dada la flexibilidad que ofrece. Sin embargo, desarrollar interfaces es más complejo debido a la escasez de librerías para ello. Con suficiente trabajo, esta implementación tiene el potencial de ser la solución más balanceada de idónea para simuladores de arena en CPU, pues mediante el multihilo el rendimiento logrado resulta ser superior a lo esperado. 
+
+Por último, la implementación en Rust con Blockly destaca por resultar más lenta de lo esperado. La curva de aprendizaje mediante bloques resultó superior a la esperada, sin embargo, pasada esta, los usuarios parecen ser capaces de desarrollar particulas con facilidad sin requerir nociones de programación. Esta implementación resulta ser la más accesible debido a que simplemente requiere de un navegador, software que cualquier dispositivo inteligente actual posee. Debido a su rendimiento, esta implementación no es idónea para explorar simulaciones de una gran complejidad o tamaño. Esto podría paliarse mediante la implementación de multihilo, sin embargo, debido a las reglas de seguridad de memoria de Rust y la poca madurez de multihilo en WebAssembly, esta tarea resulta en una complejidad muy alta, existiendo la posibilidad de que no se pueda lograr. 
