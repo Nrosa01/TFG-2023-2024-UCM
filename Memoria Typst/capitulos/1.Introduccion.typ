@@ -23,22 +23,23 @@ Nuestro objetivo es encontrar un balance entre rendimiento y facilidad de extens
 
 == Plan de trabajo
 
-La planificación de trabajo se realizó mayormente entre los autores del TFG, apoyandonos en nuestro tutor mediante reuniones periódicas para ayudarnos a medir nuestro ritmo de trabajo. Al comienzo del proyecto se definieron una serie de tareas necesarias para considerar al desarrollo exitoso. Estas tareas se planificaron en este orden:
+La metodología de trabajo a usar será una variante de scrum ajustada a nuestras necesidades. Se elaborará un tablero de tareas en el que se reflejarán las tareas a realizar, el estado de cada tarea y el tiempo estimado para su realización. No habrá reuniones diarias pero se fijarán tareas a realizar cada semana, así como reuniones semanales para revisar el estado del proyecto y ajustar el tablero de tareas en consecuencia.
 
-- Investigación preliminar sobre los conceptos fundamentales de los autómatas celulares y los simuladores de arena, así como decidir y discutir qué librerias y que software se utilizará.
+Por otro lado, se planean reuniones cada dos semanas con el tutor para revisar el estado del proyecto y recibir feedback sobre el trabajo realizado, así como orientación al respecto de las tareas a realizar en el futuro.
 
-- Implementación del Simulador en C++, haciendo uso de OpenGL y GLFW: el objetivo de este simulador era tener una base referencial sobre la que apoyarnos a la hora de desarrollar el resto de simuladores, además de permitirnos aplicar de manera un poco más laxa los conocimientos aprendidos en la fase preliminar de investigación sobre autómatas celulares. 
+Respecto al trabajo, lo primero será realizar una investigación preliminar sobre los conceptos fundamentales de los autómatas celulares y los simuladores de arena, así como de sistemas ya existentes para entender cómo se han abordado problemas en el pasado. Se espera que esta investigación dure aproximadamente dos meses.
 
-- Desarrollo de Simulador en LUA con LÖVE: el objetivo de esta implementación era aplicar la funcionalidad del sistema anterior añadiendo capacidad de adición de parículas personalizadas por parte del usuario, además de añadir capacidad de multithreading para mejorar el rendimiento.
+Tras esto se planea la realización de 4 implementaciones: 
 
-- Desarrollo de Simulador con ejecución de lógica mediante GPU: el objetivo de esta implementación era tener una referencia a nivel de rendimiento sobre la que comparar el resto de implementaciones, así como explorar la viabilidad de programar el sistema al completo mediante GPU.
+- Simulación nativa base: Esta será la simulación usada de base para comparar las demás. Debe ser eficiente y sentar las bases de como se realiza el procesado de partículas. Esta implementación será difícil de ampliar debido a esto. Se espera realizar esta implementación en C o C++ debido a la familiaridad con el lenguaje. Se espera que esta implementación sea realizada entre un mes y un mes y medio.
 
-- Desarrollo de Simulador en Rust haciendo uso de Macroquad y Blockly para la creación de bloques personalizados: el objetivo de esta implementación era explorar la opción de crear una version cuya accesibilidad mayor para un perfil de usuario no técnico,además de un rendimiento potencialmente superior en comparación a la implementación de LUA.
+- Simulación en GPU: Esta implementación se realizará en un lenguaje de programación que permita la ejecución de código en GPU, como CUDA u OpenCL. El objetivo de esta implementación es explorar la viabilidad de realizar la simulación de partículas en GPU, así como comparar el rendimiento con las demás implementaciones. Se espera que esta implementación también sea difícil de ampliar. Se espera realizar esta implementación en un mes.
 
-- Realización de pruebas de usuario: comparar mediante los parámetros mencionados anteriormente @Objetivos[] . 
+- Simulación nativa ampliada con un lenguaje de script: Será necesario investigar y elegir un lenguaje de script que permita la ampliación de la simulación base de manera sencilla manteniendo el mayor rendimiento posible. Se espera realizar esta implementación entre uno y dos meses.
 
-- Análisis de los datos y comparativa entre los resultados obtenidos por las diferentes implementaciones.
+- Simulación accesible mediante lenguaje de programación visual: Se investigarán librerías y frameworks que permitan definir código o datos mediante programación visual. Se espera que esta implementación sea la más sencilla de ampliar y la más accesible para usuarios no técnicos. Se investigará la posibilidad de ejecutar esta simulación en la web para mayor accesibilidad. Se espera realizar esta implementación entre uno y dos meses.
 
-- Conclusiones y trabajo futuro: a partir del análisis de los datos previos, se extraen conclusiones y se explora el potencial para futuras expansiones del proyecto.
+Se considera la posibilidad de que se realicen más simuladores si la investigación da a conocer una posibilidad alternativa que aporte valor a la comparativa.
 
+Tras realizar las distintas implementaciones, se realizarán pruebas de usuario para comparar los resultados obtenidos por cada una de ellas. Se analizarán los datos obtenidos y se compararán los resultados para extraer conclusiones sobre las ventajas y desventajas de cada implementación. Se espera realizar estas pruebas en un periodo de dos a tres semanas.
 

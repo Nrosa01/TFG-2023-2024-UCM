@@ -22,20 +22,22 @@ Our goal is to find a balance between performance and extensibility that provide
 
 == Work plan
 
-Work planning was mostly carried out between the authors of the TFG, relying on our tutor through regular meetings to help us measure our work pace. At the beginning of the project, a series of tasks were defined as necessary for successful development. These tasks were planned in this order:
+The work methodology to be used will be a variant of Scrum tailored to our needs. A task board will be created to reflect the tasks to be performed, the status of each task, and the estimated time for their completion. There will be no daily meetings, but to-do tasks will be assigned weekly, along with weekly meetings to review the project status and adjust the task board accordingly.
 
-- Preliminary research on the fundamental concepts of cellular automata and sand simulators, as well as deciding and discussing which libraries and software will be used.
+Additionally, bi-weekly meetings with the supervisor are planned to review the project status and receive feedback on the work done, as well as guidance on future tasks.
 
-- Implementation of the Simulator in C++, using OpenGL and GLFW: the aim of this simulator was to have a reference base to support us when developing the rest of the simulators, as well as allowing us to apply in a slightly more lax way the knowledge learned in the preliminary research phase on cellular automata.
+Regarding the work, the first step will be to conduct preliminary research on the fundamental concepts of cellular automata and sand simulators, as well as existing systems to understand how problems have been approached in the past. This research is expected to take approximately two months.
 
-- Development of Simulator in LUA with LÖVE: the aim of this implementation was to apply the functionality of the previous system by adding the ability for the user to add custom particles, as well as adding multithreading capability to improve performance.
+After this, four implementations are planned:
 
-- Development of Simulator with logic execution through GPU: the aim of this implementation was to have a performance reference to compare the rest of the implementations, as well as to explore the viability of programming the entire system through GPU.
+- Base native simulation: This will be the simulation used as the baseline for comparing the others. It must be efficient and establish the foundations of particle processing. This implementation will be difficult to expand due to this. It is expected to be implemented in C or C++ due to familiarity with the language. This implementation is expected to take between one and one and a half months.
 
-- Development of Simulator in Rust using Macroquad and Blockly for the creation of custom blocks: the aim of this implementation was to explore the option of creating a version with greater accessibility for a non-technical user profile, as well as potentially superior performance compared to the LUA implementation.
+- GPU simulation: This implementation will be done in a programming language that allows GPU code execution, such as CUDA or OpenCL. The goal of this implementation is to explore the feasibility of performing particle simulation on the GPU and to compare its performance with the other implementations. This implementation is also expected to be difficult to expand. It is expected to be completed in one month.
 
-- User testing: compare using the parameters mentioned above @Objectives[].
+- Native simulation extended with a scripting language: It will be necessary to research and choose a scripting language that allows the base simulation to be easily extended while maintaining the highest possible performance. This implementation is expected to take between one and two months.
 
-- Analysis of the data and comparison between the results obtained by the different implementations.
+- Simulation accessible via visual programming language: Libraries and frameworks that allow code or data to be defined through visual programming will be investigated. This implementation is expected to be the easiest to expand and the most accessible for non-technical users. The possibility of running this simulation on the web for greater accessibility will be explored. This implementation is expected to take between one and two months.
 
-- Conclusions and future work: from the analysis of the previous data, conclusions are drawn and the potential for future project expansions is explored.
+The possibility of creating more simulators will be considered if the research reveals an alternative that adds value to the comparison.
+
+After completing the different implementations, user tests will be conducted to compare the results obtained from each. The data obtained will be analyzed, and the results will be compared to draw conclusions about the advantages and disadvantages of each implementation. These tests are expected to take two to three weeks.
