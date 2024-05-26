@@ -41,7 +41,7 @@ level:
 ```
 )
 
-Debido a que el motor debe contener el código necesario para poder interpretar estos ficheros, existe una gran dependencie con el motor y las opciones de extensibilidad sean limitadas. En este tipo de sistemas no es posible crear juegos radicalmente distintos con solo cambiar los datos debido a estas limitaciones.
+Debido a que el motor debe contener el código necesario para poder interpretar estos ficheros, existe una gran dependencia con el motor y las opciones de extensibilidad sean limitadas. En este tipo de sistemas no es posible crear juegos radicalmente distintos con solo cambiar los datos debido a estas limitaciones.
 
 == Librerías dinámicas
 
