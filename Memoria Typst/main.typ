@@ -93,10 +93,11 @@
 
 #pagebreak(weak: true)
 
+#counter(heading).update(0)
+
 = Introduction
 
 #include "capitulos/1.Introduction.typ"
-
 
 #pagebreak(weak: true)
 
@@ -149,6 +150,8 @@
 #include "capitulos/Conclusiones.typ"
 
 #pagebreak(weak: true)
+
+#counter(heading).update(n => n - 1)
 
 = Conclusions and future work
 
