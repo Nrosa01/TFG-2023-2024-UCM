@@ -66,7 +66,7 @@ A pesar de su aparente simplicidad, el Juego de la Vida es capaz de generar una 
 
 #grid_example("Estructuras estáticas en el juego de la vida", (game_of_life_block, game_of_life_hive, game_of_life_bread, game_of_life_boat, game_of_life_bath), vinit: 1pt, ref: "static_structures")
 
-Existen también patrones oscilatorios, que alternan entre dos o más configuraciones. Un ejemplo sencillo de esto es el "blinker", una formación lineal de tres células vivas que oscila entre una orientación horizontal y vertical. La @oscillatory_structures muestra un ejemeplo de estructura oscilatoria en el Juego de la Vida.
+Existen también patrones oscilatorios, que alternan entre dos o más configuraciones. Un ejemplo sencillo de esto es el "blinker", una formación lineal de tres células vivas que oscila entre una orientación horizontal y vertical. La @oscillatory_structures muestra un ejemplo de estructura oscilatoria en el Juego de la Vida.
 
 #grid_example("Blinker, estructura oscilatoria del juego de la vida", (game_of_life_blinker1, game_of_life_blinker2, game_of_life_blinker1), vinit: 1pt, ref: "oscillatory_structures")
 
@@ -98,7 +98,7 @@ A continuación se muestra la regla 30 @wolfram_30 de Wolfram tras ejecutar 15 i
 
 La "hormiga de Langton" @ca_karl_johannes @langtonOnline, es una máquina de Turing bidimensional de 4 estados, se describe de manera sencilla de la siguiente manera. Se considera un tablero cuadriculado donde cada casilla puede ser negra o blanca, y también puede contener una hormiga. Esta hormiga tiene cuatro direcciones posibles: norte, este, oeste y sur. Su movimiento sigue reglas simples: gira 90 grados a la derecha cuando está sobre una casilla negra, y 90 grados a la izquierda cuando está sobre una casilla blanca, tras lo cual 'avanza' en dicha dirección. Además, al 'dejar' una casilla, ésta cambia de color. El proceso comienza con una sola hormiga en una casilla blanca. Al principio, su movimiento parece caótico, pero después de un cierto número de pasos, se vuelve predecible, repitiendo un patrón cada cierto tiempo. En este punto, la parte del rastro de la hormiga que está en casillas negras crece de manera periódica, extendiéndose infinitamente por el tablero.
 
-En el autómata celular de la hormiga de Langton, se tienen 10 estados posibles. Estos se derivan de 2 colores de celda (blanco y negro), y la presencia de la hormiga. Cuando la hormiga está ausente, se consideran los 2 estados de color. Cuando la hormiga está presente, se consideran 4 direcciones posibles (norte, este, oeste y sur) para cada color de celda. Por lo tanto, se tienen 2 estados (colores) cuando la hormiga está ausente, y 2 (colores) \* 4 (direcciones) = 8 estados cuando la hormiga está presente. En total, se tienen 2 + 8 = 10 estados.
+En el autómata celular de la hormiga de Langton, se tienen 10 estados posibles. Estos se derivan de 2 colores de celda (blanco y negro), y la presencia de la hormiga. Cuando la hormiga está ausente, se consideran los 2 estados de color. Cuando la hormiga está presente, se consideran 4 direcciones posibles (norte, este, oeste y sur) para cada color de ceSlda. Por lo tanto, se tienen 2 estados (colores) cuando la hormiga está ausente, y 2 (colores) \* 4 (direcciones) = 8 estados cuando la hormiga está presente. En total, se tienen 2 + 8 = 10 estados.
 
 Cabe destacar que la hormiga no se mueve en sí misma, sino que cambia el estado de las celdas en las que se encuentra @ca_karl_johannes. Cuando la hormiga está en una celda, esa celda cambia de color y la hormiga desaparece. Sin embargo, una de las celdas adyacentes notará que la celda vecina tenía una hormiga orientada en su dirección, lo que provocará que su estado cambie para incluir la hormiga en la siguiente iteración.
 
@@ -106,7 +106,7 @@ Para una mejor comprensión, se pueden considerar dos celdas adyacentes: una cel
 
 #grid_example("Ejemplo simple de la hormiga de Langton", (langton_ant_01, langton_ant_02, langton_ant_03, langton_ant_04, langton_ant_05, langton_ant_06), vinit: 1pt)
 
-A partir de las 10000 generaciones aproximadamente, la hormiga de Langton muestra un comportamiento periódico que se repite en un ciclo de 104 generaciones. Este es el resultado en la generación 11000:
+A partir de las 10.000 generaciones aproximadamente, la hormiga de Langton muestra un comportamiento periódico que se repite en un ciclo de 104 generaciones. Este es el resultado en la generación 11.000:
 
 #grid_example("Ejemplo completo de la hormiga de Langton", (langton_ant_final,), vinit: 1pt)
 

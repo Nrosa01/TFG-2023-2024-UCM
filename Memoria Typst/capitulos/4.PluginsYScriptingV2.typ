@@ -10,7 +10,7 @@ En este capítulo se van a explorar tres posibilidades para desarrollar el siste
 
 Una opción es usar ficheros de definición de datos, archivos que como su nombre indican, solo contienen datos. Suelen ser representados con un formato legible (YAML, JSON...) puesto que están pensados para ser editados por humanos que además, pueden no ser programadores. Al implementar esta opción, los juegos resultantes son "dirigidos por datos" @sharvit-2022, debido a que en lugar de especificar el comportamiento del juego mediante código, se configura mediante estos ficheros. Esto permite separar el trabajo de los programadores de los diseñadores de niveles o de juego. 
 
-Un ejemplo sencillo de esto es un juego bullet hell. En lugar de especificar mediante código cada patrón, velocidad, tiempos, etc. Se puede definir un fichero que el motor carga durante la ejecución del juego y contiene todos los parámetros necesarios para crear las balas. A continuación muestra un ejemplo de un posible fichero de definición de datos para un juego bullet hell.
+Un ejemplo sencillo de esto es un juego _bullet hell_, un subgénero del _shoot'em up_ que se caracteriza por presentar una gran cantidad de proyectiles en pantalla. En lugar de especificar mediante código cada patrón, velocidad, tiempos, etc. se puede definir un fichero que el motor carga durante la ejecución del juego y contiene todos los parámetros necesarios para crear las balas. A continuación muestra un ejemplo de un posible fichero de definición de datos para un juego bullet hell.
 
 #code(
   lang: "YAML",

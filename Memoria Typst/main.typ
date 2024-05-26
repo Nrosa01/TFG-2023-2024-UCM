@@ -98,15 +98,7 @@
 
 #include "capitulos/2.1.AutomatasCelulares.typ"
 
-#pagebreak(weak: true)
-
 #include "capitulos/2.2.SimuladoresDeArena.typ"
-
-#pagebreak(weak: true)
-
-= Tecnologías web
-
-#include "capitulos/tecnologiasWeb.typ"
 
 #pagebreak(weak: true)
 

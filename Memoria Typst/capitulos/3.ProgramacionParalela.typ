@@ -26,8 +26,6 @@ Donde:
 
 Esta fórmula muestra que, a medida que aumenta el número de procesadores o hilos (N), el rendimiento total mejora, pero solo hasta cierto punto. La fracción secuencial del código (1 - P) siempre limitará el rendimiento máximo que se puede lograr.
 
-#text(red)[La intro que he hecho es mejorable, pero es un apaño temporal para no tener directamente un subapartado sin nada de texto. Como ahora este capítulo es de programación paralela y no solo de GPU considero mejor hacerlo así. Podría hacerse un capítulo separado para GPU y CPU pero dado que de CPU se hablará menos creo que es mejor dejarlo aquí complementando al de GPU como se sugirió en las notas. Además de que no he revisado el apartado de GPU, estoy escribiendo mi parte para poder hacer los demás apartados, seguramente nos falte ponernos de acuerdo en este apartado y redactarlo mejor entre los dos, pero en principio la información que tenemos debería ser la adecuada y solo falta presentarla de forma correcta. Por cierto, este mensaje es para Jonathan, esto debería haberse resuelto antes de enviarse a Pedro Pablo]
-
 == Programación paralela en GPU
 
 La GPU (graphics processing unit) es un procesador originalmente diseñado para manejar y acelerar el procesamiento de tareas gráficas, como puede ser el mostrar imágenes o vídeos en pantalla. Para facilitar la aceleración de estas tareas, se crearon los shaders, pequeños programas gráficos destinados a ejecutarse en la GPU como parte del pipeline gráfico. El pipeline gráfico es el conjunto de operaciones secuenciales que finalmente formarán la imagen a mostrar en pantalla. La denominación pipeline hace referencia a que las operaciones que lo componen se ejecutan de manera secuencial y cada operación recibe una entrada de la fase anterior y devuelve una salida que recibirá la siguiente fase como entrada, hasta completar la imagen. @Real-Time-Rendering
@@ -46,14 +44,11 @@ Aunque la funcionalidad inicial de la GPU se limitaba al apartado gráfico, los 
 
 Una de estas extensiones fue la creación de "compute shaders" @compute_shaders que son programas diseñados para ejecutarse en la GPU, pero, a diferencia de los shaders, no están directamente relacionados con el proceso de renderizado de imágenes, por lo que se ejecutan fuera del pipeline gráfico. Los "compute shaders" se emplean para realizar cálculos destinados a propósitos que se benefician de la ejecución masivamente paralela ofrecida por la GPU. Son ideales para tareas como simulaciones físicas, procesamiento de datos masivos o aprendizaje automático.
 
-
-=== Arquitectura GPU
-
 Para lograr el procesamiento de shaders de la manera más eficiente, la GPU se diseñó con una arquitectura hardware y software que permite la paralelización de cálculos en el procesamiento de vértices y píxeles independientes entre sí.
 
 Este apartado se centra en explicar las diferencias de arquitectura entre una CPU y una GPU a nivel de hardware, así como en explicar cómo este hardware interactúa con el software destinado a la programación de GPUs.
 
-==== Hardware
+=== Hardware
 
 La tarea de renderizado requería de un hardware diferente al presente en la CPU debido a la gran cantidad de cálculos matemáticos que requiere. Desde transformaciones geométricas hasta el cálculo de la iluminación y la aplicación de texturas, todas estas tareas se basan en manipulaciones matemáticas haciendo uso de vectores y matrices. Para optimizar el proceso de renderizado, es esencial reducir el tiempo necesario para llevar a cabo estas operaciones @GPGP-Architecture.
 
@@ -83,7 +78,7 @@ La gran cantidad de cores presentes en una GPU, están agrupados en estructuras 
   ],
 )
 
-==== Software 
+=== Software 
 
 Debido a que la implementacion de CUDA fue un punto de inflexión en el desarrollo de GPUs y asentó las bases de lo que hoy es la computación de propósito general en unidades de procesamiento gráfico, se explicará cómo se enlaza el software al hardware ya explicado haciendo uso de CUDA. Todos los conceptos son extrapolables a otras APIs de desarrollo como pueden ser SYCL o OpenMP.
 
@@ -124,7 +119,3 @@ Los interbloqueos y problemas de inanición son problemas resultantes del uso in
 Existe una alternativa para evitar estos problemas relacionados con los mecanismos de sincronización: `canales`. Los canales son estructuras de datos que permiten la comunicación entre hilos de manera segura y eficiente. Cada hilo puede enviar y recibir mensajes a través de un canal, lo que evita la necesidad de utilizar mecanismos de sincronización y reduce la posibilidad de condiciones de carrera.
 
 El uso de canales posibilita un tipo de balance de trabajo entre hilos llamado `work stealing` @workStealing. En este modelo, los hilos ejecutan tareas, al terminar, envía un mensaje a otro hilo para que le envíe una tarea. De esta forma, los hilos que terminan antes pueden ayudar a los que todavía tienen tareas pendientes, evitando la inanición y mejorando el rendimiento del programa.
-
-#text(red)[No estoy seguro de si he explicado el work stealing de la forma más correcta, pero es la forma en la que se ha implementado en nuestro caso. Cuando programé el multithread en Lua ni siquiera sabía que estaba usando un patrón llamando work stealing, me di cuenta más tarde al investigar sobre el tema. En mi caso mi motivación para implementar este sistema no es la inanición, era que crear 8-16 threads 60 veces por segundo era costoso, por lo que esta era la form más sencilla de crear los threads una vez y reutilizarlos. No estoy muy seguro de esta última parte, quizás pueda mencionarlo como una técnica similar al work stealing que no es "puramente" work stealing. Y es algo particular de nuestra implementación, no he visto que implementarlo de esta forma sea algo común o al menos algo que esté documentado. De todas formas voy a dejarlo aquí en estado del arte porque sino sé que luego habrá una nota diciendo que ya debería haber sido explicado antes... Y no me gusta tener que explicarlo aquí porque luego al explicar el simulador solo referencio esta parte y ale, cuadno este sistema es una parte importante de nuestra contribución y ponerlo aquí me parece que lo desmerece.]
-
-#text(red)[No estoy seguro de si debería añadir algo más aquí.No he querido ir a cosas más técnicas como que problemas de sincronización de caché y demás ya que los lenguajes de alto nivel se encargan de estas cosas y no es algo que nos afectara en el desarrollo del proyecto (a diferencia de los 3 problemas expuestos que sí los padecimos). En este apartado solo he mencionado las cosas relevantes de procesamiento paralelo en CPU que nos afectaron en el desarrollo del proyecto. (por eso menciono los canales y el work stealing)]

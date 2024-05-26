@@ -17,8 +17,6 @@ Sin embargo, a diferencia de los autómatas celulares, donde la evolución de ca
 
 Sin embargo, existen casos en los que este comportamiento no es deseado. Es posible simular el comportamiento de un autómata celular en un simulador de arena aún procesando de forma secuencial mediante una técnica conocida como "doble buffer". En esta técnica, se tienen dos matrices, una que representa el estado actual de la simulación y otra que representa el estado futuro. En cada paso de la simulación, se procesa el estado actual y se guarda el resultado en el estado futuro. Una vez se ha procesado toda la matriz, se intercambian los estados de las matrices. De esta forma, se consigue que el estado futuro de una celda no se vea afectado por el estado futuro de otra celda, es decir, que una celda cambie su estado o el de su vecina no afecta a dicha celda en el mismo paso de simulación.
 
-#text(red)[Traté de explicar de forma sencilla y a alta nivel sin tener que entrar en detalles de donde se lee y donde se escribe en cada una de las matrices, aún así... No estoy seguro de si está bien explicado o debería explayarme más. El párrafo de arriba es el resultado de pensar durante un buen rato como sintetizar mi conocimiento de forma clara y concisa. En cuanto a referencias, esta técnica suele usarse en GPU por razones distintas, los libros que tengo de autómatas celulares no mencionan nada similar así que no puedo referenciarlos.]
-
 En un simulador de arena, pueden existir multitud de tipos de partículas, cada una con unas reglas distintas de evolución e interacción con otras celdas de la matriz, lo que puede dar lugar a ejecuciones con dinámicas muy complejas. Para explicar el funcionamiento de los simuladores de arena, se tomará un ejemplo básico de un simulador que contenga solo un tipo de partícula, la de arena. Esta partícula tiene el siguiente comportamiento:
 
 - Si la celda de abajo esta vacía, me muevo a ella.
@@ -55,13 +53,3 @@ Probablemente el primer videojuego comercial de este subgénero. A diferencia de
 Actualmente el sandbox basado en partículas más completo y complejo del mercado. Este no solo proporciona interacciones ya existentes en sus predecesores, como Falling Sand Game, sino que añade otros elementos físicos de gran complejidad como pueden ser temperatura, presión, gravedad, fricción, conductividad, densidad, viento etc.
 - Sandspiel @sandspiel
 Este proyecto utiliza la misma base que sus predecesores, proporcionando al jugador libertad de hacer interaccionar partículas a su gusto. Además, añade elementos presentes en Powder Toy como el viento, aunque la escala de este proyecto es más limitada que la de proyectos anteriores. De Sandspiel, nace otro proyecto llamado Sandspiel Club @sandspiel_club, el cual utiliza como base Sandspiel, pero, en esta versión, el creador porporciona a cualquier usuario de este proyecto la capacidad de crear partículas propias mediante un sistema de scripting visual haciendo uso de la librería Blockly @blockly de Google. Además, similar a otros títulos menos relevantes como Powder Game (no confundir con Powder Toy), es posible guardar el estado de la simulación y compartirla con otros usuarios.
-
-//habria que ser consistentes con estas introducciones, o se ponen en todos lados o no se pone en ninguno
-#text(weight: "bold")[Proximo capítulo]
-
-Cuanto más grande sea el tamaño de la matriz que represente el estado de un autómata celular, menor será el rendimiento, ya que procesar las reglas de evolución de cada una de las celdas de manera secuencial, que es la forma que tiene la CPU de ejecutar instrucciones, llega a resultar muy costoso a medida que aumenta el número de celdas. Sin embargo, se puede aprovechar una particularidad de los autómatas celulares, y es que el cálculo de evolución de cada celda es independiente del cálculo de evolución del resto de celdas. Este tipo de problemas se conoce comúnmente como 'Embarrassingly parallel', problemas donde la sub-separación de una tarea grande en tareas muy pequeñas independientes entre ellas es obvia o directa.
-
-Esto no ocurre de manera tan directa en los simuladores de arena, donde el orden de ejecución de las celdas afecta al resultado final, aunque se verá en el @SimuladorGPU cómo modificando un poco las reglas, se puede conseguir transformar un problema de simulación de partículas en un problema 'Embarrassingly parallel'.
-
-Existe un componente de ordenador que, por su arquitectura, es muy eficaz en la resolución de este tipo de problemas. Este componente se llama GPU, y se hablará de él a continuación. 
-

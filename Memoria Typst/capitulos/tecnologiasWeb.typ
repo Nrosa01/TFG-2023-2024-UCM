@@ -27,8 +27,3 @@ Para poder alojar webs de forma gratuita, la opción más popular es GitHub Page
 Como se vio antes, usar un framework suele implicar un proceso de build para poder generar la página final. Tener que hacer una build cada vez que se quiera subir una página a GitHub Pages u otro servicio resulta molesto. Para solucionar este problema, existen soluciones de integración continua (CI) específicas para webs. Los más populares son GitHub Actions y Netlify CI. Estos servicios permiten automatizar el proceso de build y subida de la web a GitHub Pages.
 
 En el caso de GitHub, GitHub Actions permite definir la acción de compilación que se ejecutará en los servidores de GitHub y se desplegará en GitHub Pages. Este proceso puede configurarse para que se realize automáticamente en cada subida de código (push) al respositorio. De esta forma, los desarrolladores no tienen que preocuparse de hacer la build manualmente.
-
-== WebAssembly
-
-#text(red)[Este capitulo tiene sentido que esté antes de lenguajes de scripting, por lo que no puedo mencionar aquí javascript y que es lento porque es un lenguaje de scripting porque eso es algo que se explicará más adelante. Por ahora creo que es lo mejor introducir webassembly en el apartado de simulador CPU. Alternavitamente, se podría mencionar aquí porque tampoco es que vaya a ir mucho a detalle sobre cosas técnicas de lenguajes interpretados, compilados y demás pero no sé, tengo dudas.]
-
