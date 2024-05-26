@@ -22,6 +22,8 @@
 
 #pagebreak(weak: true)
 
+#set heading(outlined: false, numbering: none, bookmarked: true)
+
 = Agradecimientos
 
 #include "capitulos/Agradecimientos.typ"
@@ -35,6 +37,7 @@
 #linebreak()
 
 = Palabras clave 
+#v(8pt)
 
 - Simuladores de arena
 - Automatas celulares
@@ -56,6 +59,7 @@
 #linebreak()
 
 = Key Words
+#v(8pt)
 
 - Sand simulators
 - Cellular automata
@@ -80,6 +84,8 @@
 
 
 #pagebreak(weak: true)
+
+#set heading(outlined: true, numbering: "1.")
 
 = Introducción
 

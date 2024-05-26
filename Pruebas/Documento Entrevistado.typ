@@ -5,7 +5,7 @@
 
 == Arena
 
-La partícula de arena se desplaza hacia abajo si el espacio está vacío o si hay agua. En caso contrario, intenta moverse hacia la derecha y luego hacia abajo; si no es posible, intenta moverse hacia la izquierda y luego hacia abajo. Adicionalmente, para mayor dinamismo, en lugar de probar siempre hacia abajo a la derecha, se sugiere hacerlo de manera aleatoria.
+La partícula de arena se desplaza hacia abajo si el espacio está vacío o si hay agua. En caso contrario, intenta moverse hacia la derecha y luego hacia abajo; si no es posible, intenta moverse hacia la izquierda y luego hacia abajo. Adicionalmente, para mayor dinamismo, en lugar de probar siempre hacia abajo a la derecha, se sugiere hacerlo de manera aleatoria entre derecha e izquierda.
 
 == Vapor
 
