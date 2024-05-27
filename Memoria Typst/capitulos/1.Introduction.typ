@@ -44,6 +44,8 @@ After completing the different implementations, user tests will be conducted to 
 
 == Relevant links
 
+#set text(10pt)
+
 Project repository: https://github.com/Nrosa01/TFG-2023-2024-UCM
 
 Base C++ simulation: https://youtu.be/Z-1gW8dN7lM

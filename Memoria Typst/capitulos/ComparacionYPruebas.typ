@@ -15,6 +15,7 @@ Las características de los equipos usados para las pruebas son las siguientes:
 #set align(center)
 
 #rect()[
+  #set text(9pt)
 #grid(columns: 2, column-gutter: 40pt, inset: 0.5em,
 [
   #set align(left)
@@ -36,8 +37,6 @@ Las características de los equipos usados para las pruebas son las siguientes:
 
 #set align(left)
 #v(10pt)
-
-
 
 Se han realizado las diversas pruebas:
 
