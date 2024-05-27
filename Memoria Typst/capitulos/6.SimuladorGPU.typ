@@ -36,7 +36,6 @@ Esta implementación, a cambio de ser la más rápida en ejecución, como ya se 
 Se utilizó Vulkano @vulkano, una librería hecha en Rust que actúa como wrapper de Vulkan @vulkan, como librería gráfica para renderizar partículas debido a la flexibilidad y rendimiento que aporta el tener control sobre el pipeline gráfico a la hora del renderizado. 
 Se hizo uso de Bevy @bevy, motor de videojuegos hecho en Rust, para implementar mecánicas básicas como el bucle principal de juego o procesamiento de input y de Egui @egui para crear la interfaz. 
 
-
-
+Se puede ver un video de esta simulación haciendo click en el siguiente #link("https://youtu.be/XyaOdjyOXFU")[#text(blue)[enlace]]
 
 

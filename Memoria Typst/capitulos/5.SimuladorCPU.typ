@@ -36,7 +36,9 @@ La @simuladorcplusplus muestra la interacción entre partículas en este simulad
 
 Esta implementación ejecuta una lógica directa en un solo hilo. Debido a esto es la base para comparar el rendimiento de las siguientes implementaciones.
 
-Para poder mostrar el estado de la simulación de forma visual, se escribe en un buffer el color de cada partícula después de cada paso de simulación. Este buffer se envía a la GPU para ser renderizado en pantalla. 
+Para poder mostrar el estado de la simulación de forma visual, se escribe en un buffer el color de cada partícula después de cada paso de simulación. Este buffer se envía a la GPU para ser renderizado en pantalla.
+
+Se puede ver un video de esta simulación haciendo click en el siguiente #link("https://youtu.be/Z-1gW8dN7lM")[#text(blue)[enlace]]
 
 == Simulador en Lua con LÖVE <luathreading>
 
@@ -113,6 +115,8 @@ Finalmente, para gestionar el procesamiento de los chunks se implementó la téc
 
 El procesamiento de una partícula tiene una segunda fase. Una vez todos los chunks han sido procesados, se actualizan los buffers y se actualiza la textura que posteriormente se renderiza en pantalla. La actualización de los buffers consiste en copiar el buffer de la generación actual al buffer de la generación anterior. Esto se hace debido a que hay partículas que podrían no realizar ninguna acción y por tanto no modifican el buffer de la generación actual, por lo que intercambiarlos no es suficiente.
 
+Se puede ver un video de esta simulación haciendo click en el siguiente #link("https://youtu.be/ZlvuIUjA7Ug")[#text(blue)[enlace]]
+
 == Simulador en la web
 
 La siguiente implementación es distinta a las demás en dos aspectos. Esta se ejecuta en el navegador y además permite a los usuarios definir las reglas de las partículas mediante Blockly. Se profundizará de esto más adelante.
@@ -138,3 +142,5 @@ Cuando una partícula se crea en este sistema, se le asigna un `color fade` alea
 Al igual que en la implementación anterior, cada tipo de partícula tiene una función asociada cuyo único parámetro de entrada es un objeto API que contiene las funciones necesarias para interactuar con la simulación. Esta función es generada en tiempo de ejecución. Nuestra implementación de Blockly no genera código, sino que genera datos en formato JSON. Este JSON se envía de JavaScript a WebAssembly (Rust) para ser procesado. Cada bloque de Blockly está asociado a una variante de un enum en Rust, además, estas variantes son tuplas que pueden contener parámetros. El fichero JSON se deserializa en dicha estructura para poder ser procesado mejor. Con esta estructura puede generarse una función. Para ello se define una función que devuelve una función anónima. Se usa pattern matching para que cada variante devuelva una función distinta. Algunas variantes contienen instancias de otras variantes, por lo que en estas se llama de nuevo a la función que devuelve una función anónima en una suerte de recursión. Finalmente la función obtenida se guarda para ser usada posteriormente.
 
 Este procesamiento no es directo, sino que en función de los datos de las tuplas se toman unas u otras decisiones. Existen dos tipos de datos: constantes y dinámicos. Los datos constantes son aquellos que nunca cambian, mientras que los datos dinámicos dependen del estado de la simulación. Al "convertir" las variantes del enum a funciones, esto se tiene en cuenta. Los datos estáticos son capturados por la función anónima que se devuelve, mientras que los datos dinámicos son recalculados dentro de la función que se devuelve. Un ejemplo sería la dirección. La dirección es un enum que tiene dos variantes: CONSTANT([i32; 2]) y RANDOM. Es evidente que la dirección constante no cambia y puede capturarse en la función anónima, mientras que la dirección aleatoria debe ser recalculada en cada iteración. Esta optimización se aplica en cada variante que tenga una dirección como dato.
+
+Se puede ver un video de esta simulación haciendo click en el siguiente #link("https://youtu.be/obA7wZbHb9M")[#text(blue)[enlace]]

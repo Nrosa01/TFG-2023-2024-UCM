@@ -41,3 +41,15 @@ After this, four implementations are planned:
 The possibility of creating more simulators will be considered if the research reveals an alternative that adds value to the comparison.
 
 After completing the different implementations, user tests will be conducted to compare the results obtained from each. The data obtained will be analyzed, and the results will be compared to draw conclusions about the advantages and disadvantages of each implementation. These tests are expected to take two to three weeks.
+
+== Relevant links
+
+Project repository: https://github.com/Nrosa01/TFG-2023-2024-UCM
+
+Base C++ simulation: https://youtu.be/Z-1gW8dN7lM
+
+GPU simulation: https://youtu.be/XyaOdjyOXFU
+
+Simulation with Lua: https://youtu.be/ZlvuIUjA7Ug
+
+Web simulation with Blockly: https://youtu.be/obA7wZbHb9M

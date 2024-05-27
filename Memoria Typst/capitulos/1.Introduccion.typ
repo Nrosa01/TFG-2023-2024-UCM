@@ -43,3 +43,14 @@ Se considera la posibilidad de que se realicen más simuladores si la investigac
 
 Tras realizar las distintas implementaciones, se realizarán pruebas de usuario para comparar los resultados obtenidos por cada una de ellas. Se analizarán los datos obtenidos y se compararán los resultados para extraer conclusiones sobre las ventajas y desventajas de cada implementación. Se espera realizar estas pruebas en un periodo de dos a tres semanas.
 
+== Enlaces de interés
+
+Repositorio del proyecto: https://github.com/Nrosa01/TFG-2023-2024-UCM
+
+Simulación base en C++: https://youtu.be/Z-1gW8dN7lM
+
+Simulación en GPU: https://youtu.be/XyaOdjyOXFU
+
+Simulación con Lua: https://youtu.be/ZlvuIUjA7Ug
+
+Simulación web con Blockly: https://youtu.be/obA7wZbHb9M
